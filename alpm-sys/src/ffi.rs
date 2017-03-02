@@ -1,6 +1,6 @@
 
 use libc::*;
-use libarchive3_sys::ffi::{Struct_archive, Struct_archive_entry};
+pub use libarchive3_sys::ffi::{Struct_archive, Struct_archive_entry};
 
 // Constants
 // alpm_errno_t

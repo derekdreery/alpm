@@ -1,0 +1,7 @@
+[package]
+name = "libalpm"
+version = "0.1.0"
+authors = ["Richard Dodd <richard.o.dodd@gmail.com>"]
+
+[dependencies]
+alpm-sys = "*"

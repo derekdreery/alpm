@@ -1,0 +1,12 @@
+[package]
+name = "printf"
+version = "0.1.0"
+authors = ["Richard Dodd <richard.o.dodd@gmail.com>"]
+
+[dependencies]
+libc = "*"
+va_list = { path = "../../va_list-rs" }
+nom = "*"
+
+[dev-dependencies]
+printf_helper = { path = "../printf_helper" }

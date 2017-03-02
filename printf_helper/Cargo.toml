@@ -1,0 +1,8 @@
+[package]
+name = "printf_helper"
+version = "0.1.0"
+authors = ["Richard Dodd <richard.o.dodd@gmail.com>"]
+build = "build.rs"
+
+[build-dependencies]
+gcc = "*"
