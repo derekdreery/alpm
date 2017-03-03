@@ -1,7 +1,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-static char* format1 = "testing printf format: %-02d\n";
+static char* format1 = "testing printf format: %d\n";
 static char* format2 = "Characters: %c %c";
 static char* format3 = "Decimals: %d %ld";
 static char* format4 = "Preceding with blanks: %10d";
@@ -13,9 +13,9 @@ static char* format9 = "%s";
 
 /* turns a variadic set of arguments into a va_list */
 __attribute__ (( format( printf, 2, 3 ) ))
-char* test_printf(char* (*cb)(char*, va_list), char* format, ...)
+void* test_printf(char* (*cb)(char*, va_list), char* format, ...)
 {
-    char* out;
+    void* out;
     va_list args1;
 
     va_start(args1, format);
@@ -44,7 +44,7 @@ char* dispatch(int test_no, char* (*cb)(char*, va_list))
     case 8:
         return test_printf(cb, format8, 5, 10);
     case 9:
-        return test_printf(cb, format8, "A string");
+        return test_printf(cb, format9, "A string");
     default:
         return "";
     }

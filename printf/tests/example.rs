@@ -1,27 +1,22 @@
 extern crate printf;
-extern crate va_list;
+extern crate libc;
 
-use va_list::VaList;
-use std::os::raw::{c_char, c_int};
-use std::ffi::CString;
+use libc::{c_char, c_int, c_void};
 
 // Test function takes a format string, and a variadic list
-type Callback = extern "C" fn(*const c_char, VaList) -> *mut c_char;
+type Callback = extern "C" fn(*const c_char, *mut c_void) -> *mut c_void;
 
 #[link(name="printf_test_helper")]
 extern "C" {
-    fn dispatch(test_no: c_int, cb: Callback) -> *mut c_char;
+    fn dispatch(test_no: c_int, cb: Callback) -> *mut c_void;
 }
 
 // This should match Callback signature
-extern "C" fn test_cb(format: *const c_char, args: VaList) -> *mut c_char {
+extern "C" fn test_cb(format: *const c_char, args: *mut c_void) -> *mut c_void {
     unsafe {
-        let mut out: Vec<u8> = Vec::new();
-        printf::printf(&mut out, format, args);
-        match CString::new(out) {
-            Ok(out) => out.into_raw(),
-            _ => 0 as *mut c_char
-        }
+        let out = Box::new(printf::printf(format, args));
+        println!("{:?}", out);
+        Box::into_raw(out) as *mut c_void
     }
 }
 
@@ -29,21 +24,20 @@ extern "C" fn test_cb(format: *const c_char, args: VaList) -> *mut c_char {
 fn simple() {
 
     let tests = vec![
-        (1, &b"testing printf format: 01\n"[..]),
-        (2, b"Characters: a A"),
-        (3, b"Decimals: 1977 650000"),
-        (4, b"Preceding with blanks:       1977"),
-        (5, b"Preceding with zeros: 0000001977"),
-        (6, b"Some different radices: 100 64 144 0x64 0144"),
-        (7, b"floats: 3.14 +3e+000 3.141600E+000"),
-        (8, b"Width trick:    10"),
-        (9, b"A string")
+        (1, "testing printf format: 1\n"),
+        (2, "Characters: a A"),
+        (3, "Decimals: 1977 650000"),
+        (4, "Preceding with blanks:       1977"),
+        (5, "Preceding with zeros: 0000001977"),
+        (6, "Some different radices: 100 64 144 0x64 0144"),
+        (7, "floats: 3.14 +3e+00 3.141600E+00"),
+        (8, "Width trick:    10"),
+        (9, "A string")
     ];
     for (num, cstr) in tests {
         unsafe {
-            let out = dispatch(num, test_cb);
-            let out = CString::from_raw(out);
-            assert_eq!(CString::new(cstr).unwrap(), out);
+            let out: Box<String> = Box::from_raw(dispatch(num, test_cb) as *mut String);
+            assert_eq!(cstr, *out);
         }
     }
 }

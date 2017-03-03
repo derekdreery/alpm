@@ -2,14 +2,13 @@
 name = "printf"
 version = "0.1.0"
 authors = ["Richard Dodd <richard.o.dodd@gmail.com>"]
+build = "./build.rs"
 
 [dependencies]
 libc = "*"
-nom = "*"
-
-[dependencies.va_list]
-git = "https://github.com/derekdreery/va_list-rs"
-branch = "improve_elf64_support"
 
 [dev-dependencies]
 printf_helper = { path = "../printf_helper" }
+
+[build-dependencies]
+gcc = "*"
