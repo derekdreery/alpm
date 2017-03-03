@@ -29,7 +29,7 @@ extern "C" fn test_cb(format: *const c_char, args: VaList) -> *mut c_char {
 fn simple() {
 
     let tests = vec![
-        (1, &b"testing printf format: 1\n"[..]),
+        (1, &b"testing printf format: 01\n"[..]),
         (2, b"Characters: a A"),
         (3, b"Decimals: 1977 650000"),
         (4, b"Preceding with blanks:       1977"),

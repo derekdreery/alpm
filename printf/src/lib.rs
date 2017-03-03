@@ -7,7 +7,7 @@ use std::io::Write;
 use std::ffi::CStr;
 use std::fmt;
 
-use libc::{c_char, c_short, c_int, c_long, c_longlong, intmax_t, size_t, ptrdiff_t};
+use libc as c;
 use va_list::VaList;
 
 mod parser;
@@ -20,7 +20,7 @@ use parser::*;
 ///
 /// There must be no panics in this function, so quite often errors are deliberately ignored
 pub unsafe fn printf<W: Write>(mut w: &mut W,
-                               format: *const c_char,
+                               format: *const c::c_char,
                                mut args: VaList)
 {
     let format_str = CStr::from_ptr(format).to_bytes();
@@ -44,53 +44,133 @@ pub unsafe fn printf<W: Write>(mut w: &mut W,
                 precision: precision,
                 modifier: modifier,
                 token_type: token_type,
-            } => match token_type {
-                TokenType::SignedInteger => {
-                    let width = width.map(|width| match width {
-                        Width::Static(w) => w,
-                        Width::Dynamic => args.get::<c_int>() as usize,
-                    });
-                    let num = match modifier {
-                        Modifier::Char => get_formatted::<c_char>(&mut args, width),
-                        Modifier::Short => get_formatted::<c_short>(&mut args, width),
-                        Modifier::Long => get_formatted::<c_long>(&mut args, width),
-                        Modifier::LongLong => get_formatted::<c_longlong>(&mut args, width),
-                        Modifier::IntMax => get_formatted::<intmax_t>(&mut args, width),
-                        Modifier::Size => get_formatted::<size_t>(&mut args, width),
-                        Modifier::PtrDiff => get_formatted::<ptrdiff_t>(&mut args, width),
-                        _ => get_formatted::<c_int>(&mut args, width),
-                    }.into_bytes();
-                    write_stuff_before_number(&mut w,
-                                              num.len(),
-                                              num.get(0).map(|v| *v) == Some(b'-'),
-                                              width,
-                                              right_align,
-                                              preceding_plus,
-                                              pad_sign,
-                                              prefix,
-                                              pad_zero);
-                    write(&mut w, &num[..]);
-                },
-                TokenType::UnsignedInteger => {},
-                TokenType::UnsignedOctal => {},
-                TokenType::UnsignedHex => {},
-                TokenType::UnsignedHexUpper => {},
-                TokenType::Float => {},
-                TokenType::FloatUpper => {},
-                TokenType::Scientific => {},
-                TokenType::ScientificUpper => {},
-                TokenType::ShortestFloat => {},
-                TokenType::ShortestFloatUpper => {},
-                TokenType::HexFloat => {},
-                TokenType::HexFloatUpper => {},
-                TokenType::Character => {
-                    let arg = args.get::<i8>();
-                    write(&mut w, &[arg as u8]);
-                },
-                TokenType::String => {},
-                TokenType::PointerAddress => {},
-                TokenType::StoreChars => { },
-                TokenType::PercentLiteral => {},
+            } => {
+                let width = width.map(|width| match width {
+                    Width::Static(w) => w,
+                    Width::Dynamic => args.get::<c::c_int>() as usize,
+                });
+                let precision = precision.map(|width| match width {
+                    Width::Static(w) => w,
+                    Width::Dynamic => args.get::<c::c_int>() as usize,
+                });
+                let num: Vec<u8> = match (token_type, modifier) {
+                    (TokenType::SignedInteger, Modifier::Char)
+                        => get_formatted::<c::c_char>(&mut args).into_bytes(),
+                    (TokenType::SignedInteger, Modifier::Short)
+                        => get_formatted::<c::c_short>(&mut args).into_bytes(),
+                    (TokenType::SignedInteger, Modifier::Long)
+                        => get_formatted::<c::c_long>(&mut args).into_bytes(),
+                    (TokenType::SignedInteger, Modifier::LongLong)
+                        => get_formatted::<c::c_longlong>(&mut args).into_bytes(),
+                    (TokenType::SignedInteger, Modifier::IntMax)
+                        => get_formatted::<c::intmax_t>(&mut args).into_bytes(),
+                    (TokenType::SignedInteger, Modifier::Size)
+                        => get_formatted::<c::size_t>(&mut args).into_bytes(),
+                    (TokenType::SignedInteger, Modifier::PtrDiff)
+                        => get_formatted::<c::ptrdiff_t>(&mut args).into_bytes(),
+                    (TokenType::SignedInteger, _)
+                        => get_formatted::<c::c_int>(&mut args).into_bytes(),
+
+                    (TokenType::UnsignedInteger, Modifier::Char)
+                        => get_formatted::<c::c_uchar>(&mut args).into_bytes(),
+                    (TokenType::UnsignedOctal, Modifier::Char)
+                        => get_formatted_octal::<c::c_uchar>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedHex, Modifier::Char)
+                        => get_formatted_hex::<c::c_uchar>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedHexUpper, Modifier::Char)
+                        => get_formatted_hexupper::<c::c_uchar>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedInteger, Modifier::Short)
+                        => get_formatted::<c::c_ushort>(&mut args).into_bytes(),
+                    (TokenType::UnsignedOctal, Modifier::Short)
+                        => get_formatted_octal::<c::c_ushort>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedHex, Modifier::Short)
+                        => get_formatted_hex::<c::c_ushort>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedHexUpper, Modifier::Short)
+                        => get_formatted_hexupper::<c::c_ushort>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedInteger, Modifier::Long)
+                        => get_formatted::<c::c_ulong>(&mut args).into_bytes(),
+                    (TokenType::UnsignedOctal, Modifier::Long)
+                        => get_formatted_octal::<c::c_ulong>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedHex, Modifier::Long)
+                        => get_formatted_hex::<c::c_ulong>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedHexUpper, Modifier::Long)
+                        => get_formatted_hexupper::<c::c_ulong>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedInteger, Modifier::LongLong)
+                        => get_formatted::<c::c_ulonglong>(&mut args).into_bytes(),
+                    (TokenType::UnsignedOctal, Modifier::LongLong)
+                        => get_formatted_octal::<c::c_ulonglong>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedHex, Modifier::LongLong)
+                        => get_formatted_hex::<c::c_ulonglong>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedHexUpper, Modifier::LongLong)
+                        => get_formatted_hexupper::<c::c_ulonglong>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedInteger, Modifier::IntMax)
+                        => get_formatted::<c::uintmax_t>(&mut args).into_bytes(),
+                    (TokenType::UnsignedOctal, Modifier::IntMax)
+                        => get_formatted_octal::<c::uintmax_t>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedHex, Modifier::IntMax)
+                        => get_formatted_hex::<c::uintmax_t>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedHexUpper, Modifier::IntMax)
+                        => get_formatted_hexupper::<c::uintmax_t>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedInteger, Modifier::Size)
+                        => get_formatted::<c::size_t>(&mut args).into_bytes(),
+                    (TokenType::UnsignedOctal, Modifier::Size)
+                        => get_formatted_octal::<c::size_t>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedHex, Modifier::Size)
+                        => get_formatted_hex::<c::size_t>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedHexUpper, Modifier::Size)
+                        => get_formatted_hexupper::<c::size_t>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedInteger, Modifier::PtrDiff)
+                        => get_formatted::<c::ptrdiff_t>(&mut args).into_bytes(),
+                    (TokenType::UnsignedOctal, Modifier::PtrDiff)
+                        => get_formatted_octal::<c::ptrdiff_t>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedHex, Modifier::PtrDiff)
+                        => get_formatted_hex::<c::ptrdiff_t>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedHexUpper, Modifier::PtrDiff)
+                        => get_formatted_hexupper::<c::ptrdiff_t>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedInteger, _)
+                        => get_formatted::<c::c_uint>(&mut args).into_bytes(),
+                    (TokenType::UnsignedOctal, _)
+                        => get_formatted_octal::<c::c_uint>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedHex, _)
+                        => get_formatted_hex::<c::c_uint>(&mut args, prefix).into_bytes(),
+                    (TokenType::UnsignedHexUpper, _)
+                        => get_formatted_hexupper::<c::c_uint>(&mut args, prefix).into_bytes(),
+
+                    // TODO c_longdouble is not supported yet
+                    (TokenType::Float, _) =>
+                        get_formatted_double::<c::c_double>(&mut args, precision).into_bytes(),
+                    (TokenType::FloatUpper, _) =>
+                        get_formatted_double::<c::c_double>(&mut args, precision).into_bytes(),
+                    (TokenType::Scientific, _) =>
+                        get_formatted_double::<c::c_double>(&mut args, precision).into_bytes(),
+                    (TokenType::ScientificUpper, _) =>
+                        get_formatted_double::<c::c_double>(&mut args, precision).into_bytes(),
+                    (TokenType::ShortestFloat, _) =>
+                        get_formatted_double::<c::c_double>(&mut args, precision).into_bytes(),
+                    (TokenType::ShortestFloatUpper, _) =>
+                        get_formatted_double::<c::c_double>(&mut args, precision).into_bytes(),
+                    (TokenType::HexFloat, _) =>
+                        get_formatted_double::<c::c_double>(&mut args, precision).into_bytes(),
+                    (TokenType::HexFloatUpper, _) =>
+                        get_formatted_double::<c::c_double>(&mut args, precision).into_bytes(),
+
+                    (TokenType::Character, _) => vec![args.get::<i8>() as u8],
+                    (TokenType::String, _) => vec![],
+                    (TokenType::PointerAddress, _) => vec![],
+                    (TokenType::StoreChars, _) => vec![],
+                    (TokenType::PercentLiteral, _) => vec![],
+                };
+                write_stuff_before_number(&mut w,
+                                          token_type,
+                                          num.len(),
+                                          num.get(0).map(|v| *v) == Some(b'-'),
+                                          width,
+                                          right_align,
+                                          preceding_plus,
+                                          pad_sign,
+                                          prefix,
+                                          pad_zero);
+                write(&mut w, &num[..]);
             },
             Token::Error => {
                 // give up
@@ -104,6 +184,7 @@ pub unsafe fn printf<W: Write>(mut w: &mut W,
 /// Responsible for writing the text before the actual number. Needs to know the length of
 /// chars of the actual number
 fn write_stuff_before_number<W: Write>(mut w: &mut W,
+                                       token_type: TokenType,
                                        len: usize,
                                        is_negative: bool,
                                        width: Option<usize>,
@@ -144,13 +225,57 @@ fn write<W: Write>(mut w: &mut W, i: &[u8]) {
 }
 
 /// Get a value formatted as a string with the given number of decimal points
-unsafe fn get_formatted<T>(args: &mut VaList, width: Option<usize>) -> String
+unsafe fn get_formatted<T>(args: &mut VaList) -> String
     where T: va_list::VaPrimitive + fmt::Display
 {
     let t = args.get::<T>();
-    if let Some(width) = width {
-        format!("{:.*}", width, t)
+    format!("{:}", t)
+}
+
+unsafe fn get_formatted_octal<T>(args: &mut VaList, prefix: bool) -> String
+    where T: va_list::VaPrimitive + fmt::Octal
+{
+    let t = args.get::<T>();
+
+    if prefix {
+        // rust adds 'o' between '0' and num, c doesn't, so can't use '#' in format str
+        let mut out = format!("{:o}", t);
+        out.insert(0, '0');
+        out
     } else {
-        format!("{}", t)
+        format!("{:o}", t)
+    }
+}
+
+unsafe fn get_formatted_hex<T>(args: &mut VaList, prefix: bool) -> String
+    where T: va_list::VaPrimitive + fmt::LowerHex
+{
+    let t = args.get::<T>();
+
+    match prefix {
+        true => format!("{:#x}", t),
+        false => format!("{:x}", t),
+    }
+}
+
+unsafe fn get_formatted_hexupper<T>(args: &mut VaList, prefix: bool) -> String
+    where T: va_list::VaPrimitive + fmt::UpperHex
+{
+    let t = args.get::<T>();
+
+    match prefix {
+        true => format!("{:#X}", t),
+        false => format!("{:X}", t),
+    }
+}
+
+unsafe fn get_formatted_double<T>(args: &mut VaList, precision: Option<usize>) -> String
+    where T: va_list::VaPrimitive + fmt::Display
+{
+    let t = args.get::<T>();
+
+    match precision {
+        Some(width) => format!("{:.*}", width, t),
+        None => format!("{:}", t),
     }
 }

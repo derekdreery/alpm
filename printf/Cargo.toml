@@ -5,8 +5,11 @@ authors = ["Richard Dodd <richard.o.dodd@gmail.com>"]
 
 [dependencies]
 libc = "*"
-va_list = { path = "../../va_list-rs" }
 nom = "*"
+
+[dependencies.va_list]
+git = "https://github.com/derekdreery/va_list-rs"
+branch = "improve_elf64_support"
 
 [dev-dependencies]
 printf_helper = { path = "../printf_helper" }
