@@ -1,14 +1,20 @@
 [package]
 name = "printf"
+description = "A library to convert a fmt string and va_list into rust String"
 version = "0.1.0"
 authors = ["Richard Dodd <richard.o.dodd@gmail.com>"]
 build = "./build.rs"
+include = ["Cargo.toml", "build.rs", "README.md", "src/**/*.rs", "src/**/*.c"]
+documentation = "https://docs.rs/printf/0.1.0/printf/"
+repository = "https://github.com/derekdreery/alpm"
+readme = "README.md"
+keywords = ["printf", "sprintf", "va_args", "stdarg", "vsprintf"]
+categories = ["api-bindings", "text-processing", "external-ffi-bindings", "value-formatting"]
+license = "MIT/Apache-2.0"
+
 
 [dependencies]
-libc = "*"
-
-[dev-dependencies]
-printf_helper = { path = "../printf_helper" }
+libc = "0.2"
 
 [build-dependencies]
-gcc = "*"
+gcc = "0.3"
