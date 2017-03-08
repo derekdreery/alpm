@@ -119,6 +119,7 @@ pub enum Error {
     Gpgme,
     /// error invoking external downloader
     ExternalDownload,
+
     // non-alpm
     /// io error
     IO,
@@ -239,36 +240,34 @@ impl From<u32> for Error {
             ALPM_ERR_TRANS_HOOK_FAILED => Error::TransHookFailed,
             /* Packages */
             ALPM_ERR_PKG_NOT_FOUND => Error::PkgNotFound,
-            /*
-            ALPM_ERR_PKG_IGNORED => ,
-            ALPM_ERR_PKG_INVALID => ,
-            ALPM_ERR_PKG_INVALID_CHECKSUM => ,
-            ALPM_ERR_PKG_INVALID_SIG => ,
-            ALPM_ERR_PKG_MISSING_SIG => ,
-            ALPM_ERR_PKG_OPEN => ,
-            ALPM_ERR_PKG_CANT_REMOVE => ,
-            ALPM_ERR_PKG_INVALID_NAME => ,
-            ALPM_ERR_PKG_INVALID_ARCH => ,
-            ALPM_ERR_PKG_REPO_NOT_FOUND => ,
+            ALPM_ERR_PKG_IGNORED => Error::PkgIgnored,
+            ALPM_ERR_PKG_INVALID => Error::PkgInvalid,
+            ALPM_ERR_PKG_INVALID_CHECKSUM => Error::PkgInvalidChecksum,
+            ALPM_ERR_PKG_INVALID_SIG => Error::PkgInvalidSig,
+            ALPM_ERR_PKG_MISSING_SIG => Error::PkgMissingSig,
+            ALPM_ERR_PKG_OPEN => Error::PkgOpen,
+            ALPM_ERR_PKG_CANT_REMOVE => Error::PkgCantRemove,
+            ALPM_ERR_PKG_INVALID_NAME => Error::PkgInvalidName,
+            ALPM_ERR_PKG_INVALID_ARCH => Error::PkgInvalidArch,
+            ALPM_ERR_PKG_REPO_NOT_FOUND => Error::PkgRepoNotFound,
             /* Signatures */
-            ALPM_ERR_SIG_MISSING => ,
-            ALPM_ERR_SIG_INVALID => ,
+            ALPM_ERR_SIG_MISSING => Error::SigMissing,
+            ALPM_ERR_SIG_INVALID => Error::SigInvalid,
             /* Deltas */
-            ALPM_ERR_DLT_INVALID => ,
-            ALPM_ERR_DLT_PATCHFAILED => ,
+            ALPM_ERR_DLT_INVALID => Error::DltInvalid,
+            ALPM_ERR_DLT_PATCHFAILED => Error::DltPatchFailed,
             /* Dependencies */
-            ALPM_ERR_UNSATISFIED_DEPS => ,
-            ALPM_ERR_CONFLICTING_DEPS => ,
-            ALPM_ERR_FILE_CONFLICTS => ,
+            ALPM_ERR_UNSATISFIED_DEPS => Error::UnsatisfiedDeps,
+            ALPM_ERR_CONFLICTING_DEPS => Error::ConflictingDeps,
+            ALPM_ERR_FILE_CONFLICTS => Error::FileConflicts,
             /* Misc */
-            ALPM_ERR_RETRIEVE => ,
-            ALPM_ERR_INVALID_REGEX => ,
+            ALPM_ERR_RETRIEVE => Error::Retrieve,
+            ALPM_ERR_INVALID_REGEX => Error::InvalidRegex,
             /* External library errors */
-            ALPM_ERR_LIBARCHIVE => ,
-            ALPM_ERR_LIBCURL => ,
-            ALPM_ERR_EXTERNAL_DOWNLOAD => ,
-            ALPM_ERR_GPGME => ,
-            */
+            ALPM_ERR_LIBARCHIVE => Error::Libarchive,
+            ALPM_ERR_LIBCURL => Error::Libcurl,
+            ALPM_ERR_EXTERNAL_DOWNLOAD => Error::ExternalDownload,
+            ALPM_ERR_GPGME => Error::Gpgme,
             _ => Error::__Unknown,
         }
     }

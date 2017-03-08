@@ -7,7 +7,7 @@ use libc as c;
 
 #[link(name = "printf_wrapper")]
 extern "C" {
-    fn printf_wrapper(format: *const c::c_char, args: *mut c::c_void) -> *mut c::c_char;
+    fn printf_wrapper(format: *const c::c_char, args: *mut c::c_void) -> *const c::c_char;
 }
 
 /// Take a printf c-string and variadic array, and write equiv. out to the formatter

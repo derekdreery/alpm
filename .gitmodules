@@ -1,0 +1,3 @@
+[submodule "alpm"]
+	path = alpm
+	url = git@github.com:derekdreery/alpm-rs

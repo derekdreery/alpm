@@ -1,7 +1,9 @@
 [workspace]
 
-members = [ "alpm-sys", "libalpm", "printf", "printf_helper" ]
+members = [ "alpm-sys", "libalpm", "printf", "printf_helper", "alpm-rs" ]
 
 
 [replace]
+"alpm-sys:0.1.0" = { "path" = "./alpm-sys" }
+"printf:0.1.0" = { "path" = "./printf" }
 

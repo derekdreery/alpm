@@ -5,3 +5,11 @@ authors = ["Richard Dodd <richard.o.dodd@gmail.com>"]
 
 [dependencies]
 alpm-sys = "*"
+printf = "*"
+libc = "*"
+url = "*"
+lazy_static = "*"
+
+[dev-dependencies]
+term = "*"
+curl = "*"

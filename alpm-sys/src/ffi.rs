@@ -108,10 +108,10 @@ pub const ALPM_SIGVALIDITY_UNKNOWN: alpm_sigvalidity_t = 3;
 pub const ALPM_HOOK_PRE_TRANSACTION: alpm_hook_when_t = 1;
 pub const ALPM_HOOK_POST_TRANSACTION: alpm_hook_when_t = 2;
 // alpm_loglevel_t
-pub const ALPM_LOG_ERROR: alpm_loglevel_t = 1 >> 0;
-pub const ALPM_LOG_WARNING: alpm_loglevel_t = 1 >> 1;
-pub const ALPM_LOG_DEBUG: alpm_loglevel_t = 1 >> 2;
-pub const ALPM_LOG_FUNCTION: alpm_loglevel_t = 1 >> 3;
+pub const ALPM_LOG_ERROR: alpm_loglevel_t = 1 << 0;
+pub const ALPM_LOG_WARNING: alpm_loglevel_t = 1 << 1;
+pub const ALPM_LOG_DEBUG: alpm_loglevel_t = 1 << 2;
+pub const ALPM_LOG_FUNCTION: alpm_loglevel_t = 1 << 3;
 // alpm_event_type_t {
 pub const ALPM_EVENT_CHECKDEPS_START: alpm_event_type_t = 1;
 pub const ALPM_EVENT_CHECKDEPS_DONE: alpm_event_type_t = 2;
@@ -217,7 +217,6 @@ pub enum Struct_alpm_pkg { }
 pub enum Struct_va_list { }
 
 pub type mode_t = c_uint;
-pub type off_t = c_long;
 pub type alpm_time_t = c_long;
 
 // const'd enums
@@ -241,20 +240,13 @@ pub type alpm_transflag_t = u32;
 pub type alpm_caps = u32;
 
 // callbacks
-pub type alpm_list_fn_free = Option<unsafe extern "C" fn(arg1: *mut c_void)>;
+pub type alpm_list_fn_free = Option<unsafe extern "C" fn(arg1: *const c_void)>;
 pub type alpm_list_fn_cmp = Option<unsafe extern "C" fn(arg1: *const c_void,
                                                         arg2: *const c_void)
                                                         -> c_int>;
 pub type alpm_cb_log = Option<unsafe extern "C" fn(arg1: alpm_loglevel_t,
                                                    arg2: *const c_char,
-                                                   arg3: *mut Struct_va_list)>;
-pub type alpm_cb_event = Option<unsafe extern "C" fn(arg1: *mut alpm_event_t)>;
-pub type alpm_cb_question = Option<unsafe extern "C" fn(arg1: *mut alpm_question_t)>;
-pub type alpm_cb_progress = Option<unsafe extern "C" fn(arg1: alpm_progress_t,
-                                                        arg2: *const c_char,
-                                                        arg3: c_int,
-                                                        arg4: usize,
-                                                        arg5: usize)>;
+                                                   arg3: *const Struct_va_list)>;
 pub type alpm_cb_download = Option<unsafe extern "C" fn(filename: *const c_char,
                                                         xfered: off_t,
                                                         total: off_t)>;
@@ -263,67 +255,74 @@ pub type alpm_cb_fetch = Option<unsafe extern "C" fn(url: *const c_char,
                                                      localpath: *const c_char,
                                                      force: c_int)
                                                      -> c_int>;
+pub type alpm_cb_event = Option<unsafe extern "C" fn(arg1: *const alpm_event_t)>;
+pub type alpm_cb_question = Option<unsafe extern "C" fn(arg1: *const alpm_question_t)>;
+pub type alpm_cb_progress = Option<unsafe extern "C" fn(arg1: alpm_progress_t,
+                                                        arg2: *const c_char,
+                                                        arg3: c_int,
+                                                        arg4: usize,
+                                                        arg5: usize)>;
 
 // structs
 #[repr(C)]
 pub struct alpm_list_t {
-    pub data: *mut c_void,
-    pub prev: *mut alpm_list_t,
-    pub next: *mut alpm_list_t,
+    pub data: *const c_void,
+    pub prev: *const alpm_list_t,
+    pub next: *const alpm_list_t,
 }
 
 #[repr(C)]
 pub struct alpm_depend_t {
-    pub name: *mut c_char,
-    pub version: *mut c_char,
-    pub desc: *mut c_char,
+    pub name: *const c_char,
+    pub version: *const c_char,
+    pub desc: *const c_char,
     pub name_hash: c_ulong,
     pub mod_: alpm_depmod_t,
 }
 
 #[repr(C)]
 pub struct alpm_depmissing_t {
-    pub target: *mut c_char,
-    pub depend: *mut alpm_depend_t,
-    pub causingpkg: *mut c_char,
+    pub target: *const c_char,
+    pub depend: *const alpm_depend_t,
+    pub causingpkg: *const c_char,
 }
 
 #[repr(C)]
 pub struct alpm_conflict_t {
     pub package1_hash: c_ulong,
     pub package2_hash: c_ulong,
-    pub package1: *mut c_char,
-    pub package2: *mut c_char,
-    pub reason: *mut alpm_depend_t,
+    pub package1: *const c_char,
+    pub package2: *const c_char,
+    pub reason: *const alpm_depend_t,
 }
 
 #[repr(C)]
 pub struct alpm_fileconflict_t {
-    pub target: *mut c_char,
+    pub target: *const c_char,
     pub type_: alpm_fileconflicttype_t,
-    pub file: *mut c_char,
-    pub ctarget: *mut c_char,
+    pub file: *const c_char,
+    pub ctarget: *const c_char,
 }
 
 #[repr(C)]
 pub struct alpm_group_t {
-    pub name: *mut c_char,
-    pub packages: *mut alpm_list_t,
+    pub name: *const c_char,
+    pub packages: *const alpm_list_t,
 }
 
 #[repr(C)]
 pub struct alpm_delta_t {
-    pub delta: *mut c_char,
-    pub delta_md5: *mut c_char,
-    pub from: *mut c_char,
-    pub to: *mut c_char,
+    pub delta: *const c_char,
+    pub delta_md5: *const c_char,
+    pub from: *const c_char,
+    pub to: *const c_char,
     pub delta_size: off_t,
     pub download_size: off_t,
 }
 
 #[repr(C)]
 pub struct alpm_file_t {
-    pub name: *mut c_char,
+    pub name: *const c_char,
     pub size: off_t,
     pub mode: mode_t,
 }
@@ -331,16 +330,16 @@ pub struct alpm_file_t {
 #[repr(C)]
 pub struct alpm_filelist_t {
     pub count: usize,
-    pub files: *mut alpm_file_t,
+    pub files: *const alpm_file_t,
 }
 
 #[repr(C)]
 pub struct alpm_pgpkey_t {
-    pub data: *mut c_void,
-    pub fingerprint: *mut c_char,
-    pub uid: *mut c_char,
-    pub name: *mut c_char,
-    pub email: *mut c_char,
+    pub data: *const c_void,
+    pub fingerprint: *const c_char,
+    pub uid: *const c_char,
+    pub name: *const c_char,
+    pub email: *const c_char,
     pub created: alpm_time_t,
     pub expires: alpm_time_t,
     pub length: c_uint,
@@ -358,7 +357,7 @@ pub struct alpm_sigresult_t {
 #[repr(C)]
 pub struct alpm_siglist_t {
     pub count: usize,
-    pub results: *mut alpm_sigresult_t,
+    pub results: *const alpm_sigresult_t,
 }
 
 #[repr(C)]
@@ -370,21 +369,21 @@ pub struct alpm_event_any_t {
 pub struct alpm_event_package_operation_t {
     pub type_: alpm_event_type_t,
     pub operation: alpm_package_operation_t,
-    pub oldpkg: *mut Struct_alpm_pkg,
-    pub newpkg: *mut Struct_alpm_pkg,
+    pub oldpkg: *const Struct_alpm_pkg,
+    pub newpkg: *const Struct_alpm_pkg,
 }
 
 #[repr(C)]
 pub struct alpm_event_optdep_removal_t {
     pub type_: alpm_event_type_t,
-    pub pkg: *mut Struct_alpm_pkg,
-    pub optdep: *mut alpm_depend_t,
+    pub pkg: *const Struct_alpm_pkg,
+    pub optdep: *const alpm_depend_t,
 }
 
 #[repr(C)]
 pub struct alpm_event_delta_patch_t {
     pub type_: alpm_event_type_t,
-    pub delta: *mut alpm_delta_t,
+    pub delta: *const alpm_delta_t,
 }
 
 #[repr(C)]
@@ -409,15 +408,15 @@ pub struct alpm_event_pkgdownload_t {
 pub struct alpm_event_pacnew_created_t {
     pub type_: alpm_event_type_t,
     pub from_noupgrade: c_int,
-    pub oldpkg: *mut Struct_alpm_pkg,
-    pub newpkg: *mut Struct_alpm_pkg,
+    pub oldpkg: *const Struct_alpm_pkg,
+    pub newpkg: *const Struct_alpm_pkg,
     pub file: *const c_char,
 }
 
 #[repr(C)]
 pub struct alpm_event_pacsave_created_t {
     pub type_: alpm_event_type_t,
-    pub oldpkg: *mut Struct_alpm_pkg,
+    pub oldpkg: *const Struct_alpm_pkg,
     pub file: *const c_char,
 }
 
@@ -462,23 +461,23 @@ pub struct alpm_question_any_t {
 pub struct alpm_question_install_ignorepkg_t {
     pub type_: alpm_question_type_t,
     pub install: c_int,
-    pub pkg: *mut Struct_alpm_pkg,
+    pub pkg: *const Struct_alpm_pkg,
 }
 
 #[repr(C)]
 pub struct alpm_question_replace_t {
     pub type_: alpm_question_type_t,
     pub replace: c_int,
-    pub oldpkg: *mut Struct_alpm_pkg,
-    pub newpkg: *mut Struct_alpm_pkg,
-    pub newdb: *mut Struct_alpm_db,
+    pub oldpkg: *const Struct_alpm_pkg,
+    pub newpkg: *const Struct_alpm_pkg,
+    pub newdb: *const Struct_alpm_db,
 }
 
 #[repr(C)]
 pub struct alpm_question_conflict_t {
     pub type_: alpm_question_type_t,
     pub remove: c_int,
-    pub conflict: *mut alpm_conflict_t,
+    pub conflict: *const alpm_conflict_t,
 }
 
 #[repr(C)]
@@ -493,22 +492,22 @@ pub struct alpm_question_corrupted_t {
 pub struct alpm_question_remove_pkgs_t {
     pub type_: alpm_question_type_t,
     pub skip: c_int,
-    pub packages: *mut alpm_list_t,
+    pub packages: *const alpm_list_t,
 }
 
 #[repr(C)]
 pub struct alpm_question_select_provider_t {
     pub type_: alpm_question_type_t,
     pub use_index: c_int,
-    pub providers: *mut alpm_list_t,
-    pub depend: *mut alpm_depend_t,
+    pub providers: *const alpm_list_t,
+    pub depend: *const alpm_depend_t,
 }
 
 #[repr(C)]
 pub struct alpm_question_import_key_t {
     pub type_: alpm_question_type_t,
     pub import: c_int,
-    pub key: *mut alpm_pgpkey_t,
+    pub key: *const alpm_pgpkey_t,
 }
 
 #[repr(C)]
@@ -527,325 +526,325 @@ pub union alpm_question_t {
 #[link(name = "alpm")]
 extern "C" {
     // alpm_list
-    pub fn alpm_list_free(list: *mut alpm_list_t);
-    pub fn alpm_list_free_inner(list: *mut alpm_list_t, fn_: alpm_list_fn_free);
-    pub fn alpm_list_add(list: *mut alpm_list_t, data: *mut c_void) -> *mut alpm_list_t;
-    pub fn alpm_list_append(list: *mut *mut alpm_list_t, data: *mut c_void) -> *mut alpm_list_t;
-    pub fn alpm_list_add_sorted(list: *mut alpm_list_t,
-                                data: *mut c_void,
+    pub fn alpm_list_free(list: *const alpm_list_t);
+    pub fn alpm_list_free_inner(list: *const alpm_list_t, fn_: alpm_list_fn_free);
+    pub fn alpm_list_add(list: *const alpm_list_t, data: *const c_void) -> *const alpm_list_t;
+    pub fn alpm_list_append(list: *const *mut alpm_list_t, data: *const c_void) -> *const alpm_list_t;
+    pub fn alpm_list_add_sorted(list: *const alpm_list_t,
+                                data: *const c_void,
                                 fn_: alpm_list_fn_cmp)
-                                -> *mut alpm_list_t;
-    pub fn alpm_list_join(first: *mut alpm_list_t, second: *mut alpm_list_t) -> *mut alpm_list_t;
-    pub fn alpm_list_mmerge(left: *mut alpm_list_t,
-                            right: *mut alpm_list_t,
+                                -> *const alpm_list_t;
+    pub fn alpm_list_join(first: *const alpm_list_t, second: *const alpm_list_t) -> *const alpm_list_t;
+    pub fn alpm_list_mmerge(left: *const alpm_list_t,
+                            right: *const alpm_list_t,
                             fn_: alpm_list_fn_cmp)
-                            -> *mut alpm_list_t;
-    pub fn alpm_list_msort(list: *mut alpm_list_t,
+                            -> *const alpm_list_t;
+    pub fn alpm_list_msort(list: *const alpm_list_t,
                            n: usize,
                            fn_: alpm_list_fn_cmp)
-                           -> *mut alpm_list_t;
-    pub fn alpm_list_remove_item(haystack: *mut alpm_list_t,
-                                 item: *mut alpm_list_t)
-                                 -> *mut alpm_list_t;
-    pub fn alpm_list_remove(haystack: *mut alpm_list_t,
+                           -> *const alpm_list_t;
+    pub fn alpm_list_remove_item(haystack: *const alpm_list_t,
+                                 item: *const alpm_list_t)
+                                 -> *const alpm_list_t;
+    pub fn alpm_list_remove(haystack: *const alpm_list_t,
                             needle: *const c_void,
                             fn_: alpm_list_fn_cmp,
-                            data: *mut *mut c_void)
-                            -> *mut alpm_list_t;
-    pub fn alpm_list_remove_str(haystack: *mut alpm_list_t,
+                            data: *const *mut c_void)
+                            -> *const alpm_list_t;
+    pub fn alpm_list_remove_str(haystack: *const alpm_list_t,
                                 needle: *const c_char,
-                                data: *mut *mut c_char)
-                                -> *mut alpm_list_t;
-    pub fn alpm_list_remove_dupes(list: *const alpm_list_t) -> *mut alpm_list_t;
-    pub fn alpm_list_strdup(list: *const alpm_list_t) -> *mut alpm_list_t;
-    pub fn alpm_list_copy(list: *const alpm_list_t) -> *mut alpm_list_t;
-    pub fn alpm_list_copy_data(list: *const alpm_list_t, size: usize) -> *mut alpm_list_t;
-    pub fn alpm_list_reverse(list: *mut alpm_list_t) -> *mut alpm_list_t;
-    pub fn alpm_list_nth(list: *const alpm_list_t, n: usize) -> *mut alpm_list_t;
-    pub fn alpm_list_next(list: *const alpm_list_t) -> *mut alpm_list_t;
-    pub fn alpm_list_previous(list: *const alpm_list_t) -> *mut alpm_list_t;
-    pub fn alpm_list_last(list: *const alpm_list_t) -> *mut alpm_list_t;
+                                data: *const *mut c_char)
+                                -> *const alpm_list_t;
+    pub fn alpm_list_remove_dupes(list: *const alpm_list_t) -> *const alpm_list_t;
+    pub fn alpm_list_strdup(list: *const alpm_list_t) -> *const alpm_list_t;
+    pub fn alpm_list_copy(list: *const alpm_list_t) -> *const alpm_list_t;
+    pub fn alpm_list_copy_data(list: *const alpm_list_t, size: usize) -> *const alpm_list_t;
+    pub fn alpm_list_reverse(list: *const alpm_list_t) -> *const alpm_list_t;
+    pub fn alpm_list_nth(list: *const alpm_list_t, n: usize) -> *const alpm_list_t;
+    pub fn alpm_list_next(list: *const alpm_list_t) -> *const alpm_list_t;
+    pub fn alpm_list_previous(list: *const alpm_list_t) -> *const alpm_list_t;
+    pub fn alpm_list_last(list: *const alpm_list_t) -> *const alpm_list_t;
     pub fn alpm_list_count(list: *const alpm_list_t) -> usize;
     pub fn alpm_list_find(haystack: *const alpm_list_t,
                           needle: *const c_void,
                           fn_: alpm_list_fn_cmp)
-                          -> *mut c_void;
-    pub fn alpm_list_find_ptr(haystack: *const alpm_list_t, needle: *const c_void) -> *mut c_void;
-    pub fn alpm_list_find_str(haystack: *const alpm_list_t, needle: *const c_char) -> *mut c_char;
+                          -> *const c_void;
+    pub fn alpm_list_find_ptr(haystack: *const alpm_list_t, needle: *const c_void) -> *const c_void;
+    pub fn alpm_list_find_str(haystack: *const alpm_list_t, needle: *const c_char) -> *const c_char;
     pub fn alpm_list_diff(lhs: *const alpm_list_t,
                           rhs: *const alpm_list_t,
                           fn_: alpm_list_fn_cmp)
-                          -> *mut alpm_list_t;
+                          -> *const alpm_list_t;
     pub fn alpm_list_diff_sorted(left: *const alpm_list_t,
                                  right: *const alpm_list_t,
                                  fn_: alpm_list_fn_cmp,
-                                 onlyleft: *mut *mut alpm_list_t,
-                                 onlyright: *mut *mut alpm_list_t);
-    pub fn alpm_list_to_array(list: *const alpm_list_t, n: usize, size: usize) -> *mut c_void;
+                                 onlyleft: *const *mut alpm_list_t,
+                                 onlyright: *const *mut alpm_list_t);
+    pub fn alpm_list_to_array(list: *const alpm_list_t, n: usize, size: usize) -> *const c_void;
 
     // alpm
-    pub fn alpm_errno(handle: *mut Struct_alpm_handle) -> alpm_errno_t;
+    pub fn alpm_errno(handle: *const Struct_alpm_handle) -> alpm_errno_t;
     pub fn alpm_strerror(err: alpm_errno_t) -> *const c_char;
-    pub fn alpm_logaction(handle: *mut Struct_alpm_handle,
+    pub fn alpm_logaction(handle: *const Struct_alpm_handle,
                           prefix: *const c_char,
                           fmt: *const c_char, ...)
                           -> c_int;
-    pub fn alpm_fetch_pkgurl(handle: *mut Struct_alpm_handle,
+    pub fn alpm_fetch_pkgurl(handle: *const Struct_alpm_handle,
                              url: *const c_char)
-                             -> *mut c_char;
-    pub fn alpm_option_get_logcb(handle: *mut Struct_alpm_handle) -> alpm_cb_log;
-    pub fn alpm_option_set_logcb(handle: *mut Struct_alpm_handle, cb: alpm_cb_log) -> c_int;
-    pub fn alpm_option_get_dlcb(handle: *mut Struct_alpm_handle) -> alpm_cb_download;
-    pub fn alpm_option_set_dlcb(handle: *mut Struct_alpm_handle, cb: alpm_cb_download) -> c_int;
-    pub fn alpm_option_get_fetchcb(handle: *mut Struct_alpm_handle) -> alpm_cb_fetch;
-    pub fn alpm_option_set_fetchcb(handle: *mut Struct_alpm_handle, cb: alpm_cb_fetch) -> c_int;
-    pub fn alpm_option_get_totaldlcb(handle: *mut Struct_alpm_handle) -> alpm_cb_totaldl;
-    pub fn alpm_option_set_totaldlcb(handle: *mut Struct_alpm_handle, cb: alpm_cb_totaldl) -> c_int;
-    pub fn alpm_option_get_eventcb(handle: *mut Struct_alpm_handle) -> alpm_cb_event;
-    pub fn alpm_option_set_eventcb(handle: *mut Struct_alpm_handle, cb: alpm_cb_event) -> c_int;
-    pub fn alpm_option_get_questioncb(handle: *mut Struct_alpm_handle) -> alpm_cb_question;
-    pub fn alpm_option_set_questioncb(handle: *mut Struct_alpm_handle, cb: alpm_cb_question) -> c_int;
-    pub fn alpm_option_get_progresscb(handle: *mut Struct_alpm_handle) -> alpm_cb_progress;
-    pub fn alpm_option_set_progresscb(handle: *mut Struct_alpm_handle, cb: alpm_cb_progress) -> c_int;
-    pub fn alpm_option_get_root(handle: *mut Struct_alpm_handle) -> *const c_char;
-    pub fn alpm_option_get_dbpath(handle: *mut Struct_alpm_handle) -> *const c_char;
-    pub fn alpm_option_get_lockfile(handle: *mut Struct_alpm_handle) -> *const c_char;
-    pub fn alpm_option_get_cachedirs(handle: *mut Struct_alpm_handle) -> *mut alpm_list_t;
-    pub fn alpm_option_set_cachedirs(handle: *mut Struct_alpm_handle,
-                                     cachedirs: *mut alpm_list_t)
+                             -> *const c_char;
+    pub fn alpm_option_get_logcb(handle: *const Struct_alpm_handle) -> alpm_cb_log;
+    pub fn alpm_option_set_logcb(handle: *const Struct_alpm_handle, cb: alpm_cb_log) -> c_int;
+    pub fn alpm_option_get_dlcb(handle: *const Struct_alpm_handle) -> alpm_cb_download;
+    pub fn alpm_option_set_dlcb(handle: *const Struct_alpm_handle, cb: alpm_cb_download) -> c_int;
+    pub fn alpm_option_get_fetchcb(handle: *const Struct_alpm_handle) -> alpm_cb_fetch;
+    pub fn alpm_option_set_fetchcb(handle: *const Struct_alpm_handle, cb: alpm_cb_fetch) -> c_int;
+    pub fn alpm_option_get_totaldlcb(handle: *const Struct_alpm_handle) -> alpm_cb_totaldl;
+    pub fn alpm_option_set_totaldlcb(handle: *const Struct_alpm_handle, cb: alpm_cb_totaldl) -> c_int;
+    pub fn alpm_option_get_eventcb(handle: *const Struct_alpm_handle) -> alpm_cb_event;
+    pub fn alpm_option_set_eventcb(handle: *const Struct_alpm_handle, cb: alpm_cb_event) -> c_int;
+    pub fn alpm_option_get_questioncb(handle: *const Struct_alpm_handle) -> alpm_cb_question;
+    pub fn alpm_option_set_questioncb(handle: *const Struct_alpm_handle, cb: alpm_cb_question) -> c_int;
+    pub fn alpm_option_get_progresscb(handle: *const Struct_alpm_handle) -> alpm_cb_progress;
+    pub fn alpm_option_set_progresscb(handle: *const Struct_alpm_handle, cb: alpm_cb_progress) -> c_int;
+    pub fn alpm_option_get_root(handle: *const Struct_alpm_handle) -> *const c_char;
+    pub fn alpm_option_get_dbpath(handle: *const Struct_alpm_handle) -> *const c_char;
+    pub fn alpm_option_get_lockfile(handle: *const Struct_alpm_handle) -> *const c_char;
+    pub fn alpm_option_get_cachedirs(handle: *const Struct_alpm_handle) -> *const alpm_list_t;
+    pub fn alpm_option_set_cachedirs(handle: *const Struct_alpm_handle,
+                                     cachedirs: *const alpm_list_t)
                                      -> c_int;
-    pub fn alpm_option_add_cachedir(handle: *mut Struct_alpm_handle, cachedir: *const c_char) -> c_int;
-    pub fn alpm_option_remove_cachedir(handle: *mut Struct_alpm_handle,
+    pub fn alpm_option_add_cachedir(handle: *const Struct_alpm_handle, cachedir: *const c_char) -> c_int;
+    pub fn alpm_option_remove_cachedir(handle: *const Struct_alpm_handle,
                                        cachedir: *const c_char)
                                        -> c_int;
-    pub fn alpm_option_get_hookdirs(handle: *mut Struct_alpm_handle) -> *mut alpm_list_t;
-    pub fn alpm_option_set_hookdirs(handle: *mut Struct_alpm_handle,
-                                    hookdirs: *mut alpm_list_t)
+    pub fn alpm_option_get_hookdirs(handle: *const Struct_alpm_handle) -> *const alpm_list_t;
+    pub fn alpm_option_set_hookdirs(handle: *const Struct_alpm_handle,
+                                    hookdirs: *const alpm_list_t)
                                     -> c_int;
-    pub fn alpm_option_add_hookdir(handle: *mut Struct_alpm_handle,
+    pub fn alpm_option_add_hookdir(handle: *const Struct_alpm_handle,
                                    hookdir: *const c_char)
                                    -> c_int;
-    pub fn alpm_option_remove_hookdir(handle: *mut Struct_alpm_handle,
+    pub fn alpm_option_remove_hookdir(handle: *const Struct_alpm_handle,
                                       hookdir: *const c_char)
                                       -> c_int;
-    pub fn alpm_option_get_logfile(handle: *mut Struct_alpm_handle) -> *const c_char;
-    pub fn alpm_option_set_logfile(handle: *mut Struct_alpm_handle,
+    pub fn alpm_option_get_logfile(handle: *const Struct_alpm_handle) -> *const c_char;
+    pub fn alpm_option_set_logfile(handle: *const Struct_alpm_handle,
                                    logfile: *const c_char)
                                    -> c_int;
-    pub fn alpm_option_get_gpgdir(handle: *mut Struct_alpm_handle)
+    pub fn alpm_option_get_gpgdir(handle: *const Struct_alpm_handle)
                                   -> *const c_char;
-    pub fn alpm_option_set_gpgdir(handle: *mut Struct_alpm_handle,
+    pub fn alpm_option_set_gpgdir(handle: *const Struct_alpm_handle,
                                   gpgdir: *const c_char)
                                   -> c_int;
-    pub fn alpm_option_get_usesyslog(handle: *mut Struct_alpm_handle) -> c_int;
-    pub fn alpm_option_set_usesyslog(handle: *mut Struct_alpm_handle, usesyslog: c_int) -> c_int;
-    pub fn alpm_option_get_noupgrades(handle: *mut Struct_alpm_handle) -> *mut alpm_list_t;
-    pub fn alpm_option_add_noupgrade(handle: *mut Struct_alpm_handle, path: *const c_char) -> c_int;
-    pub fn alpm_option_set_noupgrades(handle: *mut Struct_alpm_handle,
-                                      noupgrade: *mut alpm_list_t)
+    pub fn alpm_option_get_usesyslog(handle: *const Struct_alpm_handle) -> c_int;
+    pub fn alpm_option_set_usesyslog(handle: *const Struct_alpm_handle, usesyslog: c_int) -> c_int;
+    pub fn alpm_option_get_noupgrades(handle: *const Struct_alpm_handle) -> *const alpm_list_t;
+    pub fn alpm_option_add_noupgrade(handle: *const Struct_alpm_handle, path: *const c_char) -> c_int;
+    pub fn alpm_option_set_noupgrades(handle: *const Struct_alpm_handle,
+                                      noupgrade: *const alpm_list_t)
                                       -> c_int;
-    pub fn alpm_option_remove_noupgrade(handle: *mut Struct_alpm_handle,
+    pub fn alpm_option_remove_noupgrade(handle: *const Struct_alpm_handle,
                                         path: *const c_char)
                                         -> c_int;
-    pub fn alpm_option_match_noupgrade(handle: *mut Struct_alpm_handle, path: *const c_char) -> c_int;
-    pub fn alpm_option_get_noextracts(handle: *mut Struct_alpm_handle) -> *mut alpm_list_t;
-    pub fn alpm_option_add_noextract(handle: *mut Struct_alpm_handle, path: *const c_char) -> c_int;
-    pub fn alpm_option_set_noextracts(handle: *mut Struct_alpm_handle,
-                                      noextract: *mut alpm_list_t)
+    pub fn alpm_option_match_noupgrade(handle: *const Struct_alpm_handle, path: *const c_char) -> c_int;
+    pub fn alpm_option_get_noextracts(handle: *const Struct_alpm_handle) -> *const alpm_list_t;
+    pub fn alpm_option_add_noextract(handle: *const Struct_alpm_handle, path: *const c_char) -> c_int;
+    pub fn alpm_option_set_noextracts(handle: *const Struct_alpm_handle,
+                                      noextract: *const alpm_list_t)
                                       -> c_int;
-    pub fn alpm_option_remove_noextract(handle: *mut Struct_alpm_handle, path: *const c_char) -> c_int;
-    pub fn alpm_option_match_noextract(handle: *mut Struct_alpm_handle, path: *const c_char) -> c_int;
-    pub fn alpm_option_get_ignorepkgs(handle: *mut Struct_alpm_handle) -> *mut alpm_list_t;
-    pub fn alpm_option_add_ignorepkg(handle: *mut Struct_alpm_handle, pkg: *const c_char) -> c_int;
-    pub fn alpm_option_set_ignorepkgs(handle: *mut Struct_alpm_handle,
-                                      ignorepkgs: *mut alpm_list_t)
+    pub fn alpm_option_remove_noextract(handle: *const Struct_alpm_handle, path: *const c_char) -> c_int;
+    pub fn alpm_option_match_noextract(handle: *const Struct_alpm_handle, path: *const c_char) -> c_int;
+    pub fn alpm_option_get_ignorepkgs(handle: *const Struct_alpm_handle) -> *const alpm_list_t;
+    pub fn alpm_option_add_ignorepkg(handle: *const Struct_alpm_handle, pkg: *const c_char) -> c_int;
+    pub fn alpm_option_set_ignorepkgs(handle: *const Struct_alpm_handle,
+                                      ignorepkgs: *const alpm_list_t)
                                       -> c_int;
-    pub fn alpm_option_remove_ignorepkg(handle: *mut Struct_alpm_handle, pkg: *const c_char) -> c_int;
-    pub fn alpm_option_get_ignoregroups(handle: *mut Struct_alpm_handle) -> *mut alpm_list_t;
-    pub fn alpm_option_add_ignoregroup(handle: *mut Struct_alpm_handle, grp: *const c_char) -> c_int;
-    pub fn alpm_option_set_ignoregroups(handle: *mut Struct_alpm_handle,
-                                        ignoregrps: *mut alpm_list_t)
+    pub fn alpm_option_remove_ignorepkg(handle: *const Struct_alpm_handle, pkg: *const c_char) -> c_int;
+    pub fn alpm_option_get_ignoregroups(handle: *const Struct_alpm_handle) -> *const alpm_list_t;
+    pub fn alpm_option_add_ignoregroup(handle: *const Struct_alpm_handle, grp: *const c_char) -> c_int;
+    pub fn alpm_option_set_ignoregroups(handle: *const Struct_alpm_handle,
+                                        ignoregrps: *const alpm_list_t)
                                         -> c_int;
-    pub fn alpm_option_remove_ignoregroup(handle: *mut Struct_alpm_handle, grp: *const c_char) -> c_int;
-    pub fn alpm_option_get_assumeinstalled(handle: *mut Struct_alpm_handle) -> *mut alpm_list_t;
-    pub fn alpm_option_add_assumeinstalled(handle: *mut Struct_alpm_handle,
+    pub fn alpm_option_remove_ignoregroup(handle: *const Struct_alpm_handle, grp: *const c_char) -> c_int;
+    pub fn alpm_option_get_assumeinstalled(handle: *const Struct_alpm_handle) -> *const alpm_list_t;
+    pub fn alpm_option_add_assumeinstalled(handle: *const Struct_alpm_handle,
                                            dep: *const alpm_depend_t)
                                            -> c_int;
-    pub fn alpm_option_set_assumeinstalled(handle: *mut Struct_alpm_handle,
-                                           deps: *mut alpm_list_t)
+    pub fn alpm_option_set_assumeinstalled(handle: *const Struct_alpm_handle,
+                                           deps: *const alpm_list_t)
                                            -> c_int;
-    pub fn alpm_option_remove_assumeinstalled(handle: *mut Struct_alpm_handle,
+    pub fn alpm_option_remove_assumeinstalled(handle: *const Struct_alpm_handle,
                                               dep: *const alpm_depend_t)
                                               -> c_int;
-    pub fn alpm_option_get_arch(handle: *mut Struct_alpm_handle) -> *const c_char;
-    pub fn alpm_option_set_arch(handle: *mut Struct_alpm_handle, arch: *const c_char) -> c_int;
-    pub fn alpm_option_get_deltaratio(handle: *mut Struct_alpm_handle) -> f64;
-    pub fn alpm_option_set_deltaratio(handle: *mut Struct_alpm_handle, ratio: f64) -> c_int;
-    pub fn alpm_option_get_checkspace(handle: *mut Struct_alpm_handle) -> c_int;
-    pub fn alpm_option_set_checkspace(handle: *mut Struct_alpm_handle, checkspace: c_int) -> c_int;
-    pub fn alpm_option_get_dbext(handle: *mut Struct_alpm_handle) -> *const c_char;
-    pub fn alpm_option_set_dbext(handle: *mut Struct_alpm_handle, dbext: *const c_char) -> c_int;
-    pub fn alpm_option_get_default_siglevel(handle: *mut Struct_alpm_handle) -> alpm_siglevel_t;
-    pub fn alpm_option_set_default_siglevel(handle: *mut Struct_alpm_handle,
+    pub fn alpm_option_get_arch(handle: *const Struct_alpm_handle) -> *const c_char;
+    pub fn alpm_option_set_arch(handle: *const Struct_alpm_handle, arch: *const c_char) -> c_int;
+    pub fn alpm_option_get_deltaratio(handle: *const Struct_alpm_handle) -> f64;
+    pub fn alpm_option_set_deltaratio(handle: *const Struct_alpm_handle, ratio: f64) -> c_int;
+    pub fn alpm_option_get_checkspace(handle: *const Struct_alpm_handle) -> c_int;
+    pub fn alpm_option_set_checkspace(handle: *const Struct_alpm_handle, checkspace: c_int) -> c_int;
+    pub fn alpm_option_get_dbext(handle: *const Struct_alpm_handle) -> *const c_char;
+    pub fn alpm_option_set_dbext(handle: *const Struct_alpm_handle, dbext: *const c_char) -> c_int;
+    pub fn alpm_option_get_default_siglevel(handle: *const Struct_alpm_handle) -> alpm_siglevel_t;
+    pub fn alpm_option_set_default_siglevel(handle: *const Struct_alpm_handle,
                                             level: alpm_siglevel_t)
                                             -> c_int;
-    pub fn alpm_option_get_local_file_siglevel(handle: *mut Struct_alpm_handle) -> alpm_siglevel_t;
-    pub fn alpm_option_set_local_file_siglevel(handle: *mut Struct_alpm_handle,
+    pub fn alpm_option_get_local_file_siglevel(handle: *const Struct_alpm_handle) -> alpm_siglevel_t;
+    pub fn alpm_option_set_local_file_siglevel(handle: *const Struct_alpm_handle,
                                                level: alpm_siglevel_t)
                                                -> c_int;
-    pub fn alpm_option_get_remote_file_siglevel(handle: *mut Struct_alpm_handle) -> alpm_siglevel_t;
-    pub fn alpm_option_set_remote_file_siglevel(handle: *mut Struct_alpm_handle,
+    pub fn alpm_option_get_remote_file_siglevel(handle: *const Struct_alpm_handle) -> alpm_siglevel_t;
+    pub fn alpm_option_set_remote_file_siglevel(handle: *const Struct_alpm_handle,
                                                 level: alpm_siglevel_t)
                                                 -> c_int;
-    pub fn alpm_get_localdb(handle: *mut Struct_alpm_handle) -> *mut Struct_alpm_db;
-    pub fn alpm_get_syncdbs(handle: *mut Struct_alpm_handle) -> *mut alpm_list_t;
-    pub fn alpm_register_syncdb(handle: *mut Struct_alpm_handle,
+    pub fn alpm_get_localdb(handle: *const Struct_alpm_handle) -> *const Struct_alpm_db;
+    pub fn alpm_get_syncdbs(handle: *const Struct_alpm_handle) -> *const alpm_list_t;
+    pub fn alpm_register_syncdb(handle: *const Struct_alpm_handle,
                                 treename: *const c_char,
                                 level: alpm_siglevel_t)
-                                -> *mut Struct_alpm_db;
-    pub fn alpm_unregister_all_syncdbs(handle: *mut Struct_alpm_handle) -> c_int;
-    pub fn alpm_db_unregister(db: *mut Struct_alpm_db) -> c_int;
+                                -> *const Struct_alpm_db;
+    pub fn alpm_unregister_all_syncdbs(handle: *const Struct_alpm_handle) -> c_int;
+    pub fn alpm_db_unregister(db: *const Struct_alpm_db) -> c_int;
     pub fn alpm_db_get_name(db: *const Struct_alpm_db) -> *const c_char;
-    pub fn alpm_db_get_siglevel(db: *mut Struct_alpm_db) -> alpm_siglevel_t;
-    pub fn alpm_db_get_valid(db: *mut Struct_alpm_db) -> c_int;
-    pub fn alpm_db_get_servers(db: *const Struct_alpm_db) -> *mut alpm_list_t;
-    pub fn alpm_db_set_servers(db: *mut Struct_alpm_db, servers: *mut alpm_list_t) -> c_int;
-    pub fn alpm_db_add_server(db: *mut Struct_alpm_db, url: *const c_char) -> c_int;
-    pub fn alpm_db_remove_server(db: *mut Struct_alpm_db, url: *const c_char) -> c_int;
-    pub fn alpm_db_update(force: c_int, db: *mut Struct_alpm_db) -> c_int;
-    pub fn alpm_db_get_pkg(db: *mut Struct_alpm_db, name: *const c_char) -> *mut Struct_alpm_pkg;
-    pub fn alpm_db_get_pkgcache(db: *mut Struct_alpm_db) -> *mut alpm_list_t;
-    pub fn alpm_db_get_group(db: *mut Struct_alpm_db, name: *const c_char) -> *mut alpm_group_t;
-    pub fn alpm_db_get_groupcache(db: *mut Struct_alpm_db) -> *mut alpm_list_t;
-    pub fn alpm_db_search(db: *mut Struct_alpm_db, needles: *const alpm_list_t) -> *mut alpm_list_t;
-    pub fn alpm_db_set_usage(db: *mut Struct_alpm_db, usage: alpm_db_usage_t) -> c_int;
-    pub fn alpm_db_get_usage(db: *mut Struct_alpm_db, usage: *mut alpm_db_usage_t) -> c_int;
-    pub fn alpm_pkg_load(handle: *mut Struct_alpm_handle,
+    pub fn alpm_db_get_siglevel(db: *const Struct_alpm_db) -> alpm_siglevel_t;
+    pub fn alpm_db_get_valid(db: *const Struct_alpm_db) -> c_int;
+    pub fn alpm_db_get_servers(db: *const Struct_alpm_db) -> *const alpm_list_t;
+    pub fn alpm_db_set_servers(db: *const Struct_alpm_db, servers: *const alpm_list_t) -> c_int;
+    pub fn alpm_db_add_server(db: *const Struct_alpm_db, url: *const c_char) -> c_int;
+    pub fn alpm_db_remove_server(db: *const Struct_alpm_db, url: *const c_char) -> c_int;
+    pub fn alpm_db_update(force: c_int, db: *const Struct_alpm_db) -> c_int;
+    pub fn alpm_db_get_pkg(db: *const Struct_alpm_db, name: *const c_char) -> *const Struct_alpm_pkg;
+    pub fn alpm_db_get_pkgcache(db: *const Struct_alpm_db) -> *const alpm_list_t;
+    pub fn alpm_db_get_group(db: *const Struct_alpm_db, name: *const c_char) -> *const alpm_group_t;
+    pub fn alpm_db_get_groupcache(db: *const Struct_alpm_db) -> *const alpm_list_t;
+    pub fn alpm_db_search(db: *const Struct_alpm_db, needles: *const alpm_list_t) -> *const alpm_list_t;
+    pub fn alpm_db_set_usage(db: *const Struct_alpm_db, usage: alpm_db_usage_t) -> c_int;
+    pub fn alpm_db_get_usage(db: *const Struct_alpm_db, usage: *const alpm_db_usage_t) -> c_int;
+    pub fn alpm_pkg_load(handle: *const Struct_alpm_handle,
                          filename: *const c_char,
                          full: c_int, level: alpm_siglevel_t,
-                         pkg: *mut *mut Struct_alpm_pkg)
+                         pkg: *const *mut Struct_alpm_pkg)
                          -> c_int;
-    pub fn alpm_pkg_find(haystack: *mut alpm_list_t, needle: *const c_char) -> *mut Struct_alpm_pkg;
-    pub fn alpm_pkg_free(pkg: *mut Struct_alpm_pkg) -> c_int;
-    pub fn alpm_pkg_checkmd5sum(pkg: *mut Struct_alpm_pkg) -> c_int;
+    pub fn alpm_pkg_find(haystack: *const alpm_list_t, needle: *const c_char) -> *const Struct_alpm_pkg;
+    pub fn alpm_pkg_free(pkg: *const Struct_alpm_pkg) -> c_int;
+    pub fn alpm_pkg_checkmd5sum(pkg: *const Struct_alpm_pkg) -> c_int;
     pub fn alpm_pkg_vercmp(a: *const c_char, b: *const c_char) -> c_int;
-    pub fn alpm_pkg_compute_requiredby(pkg: *mut Struct_alpm_pkg) -> *mut alpm_list_t;
-    pub fn alpm_pkg_compute_optionalfor(pkg: *mut Struct_alpm_pkg) -> *mut alpm_list_t;
-    pub fn alpm_pkg_should_ignore(handle: *mut Struct_alpm_handle, pkg: *mut Struct_alpm_pkg) -> c_int;
-    pub fn alpm_pkg_get_filename(pkg: *mut Struct_alpm_pkg) -> *const c_char;
-    pub fn alpm_pkg_get_base(pkg: *mut Struct_alpm_pkg) -> *const c_char;
-    pub fn alpm_pkg_get_name(pkg: *mut Struct_alpm_pkg) -> *const c_char;
-    pub fn alpm_pkg_get_version(pkg: *mut Struct_alpm_pkg) -> *const c_char;
-    pub fn alpm_pkg_get_origin(pkg: *mut Struct_alpm_pkg) -> alpm_pkgfrom_t;
-    pub fn alpm_pkg_get_desc(pkg: *mut Struct_alpm_pkg) -> *const c_char;
-    pub fn alpm_pkg_get_url(pkg: *mut Struct_alpm_pkg) -> *const c_char;
-    pub fn alpm_pkg_get_builddate(pkg: *mut Struct_alpm_pkg) -> alpm_time_t;
-    pub fn alpm_pkg_get_installdate(pkg: *mut Struct_alpm_pkg) -> alpm_time_t;
-    pub fn alpm_pkg_get_packager(pkg: *mut Struct_alpm_pkg) -> *const c_char;
-    pub fn alpm_pkg_get_md5sum(pkg: *mut Struct_alpm_pkg) -> *const c_char;
-    pub fn alpm_pkg_get_sha256sum(pkg: *mut Struct_alpm_pkg) -> *const c_char;
-    pub fn alpm_pkg_get_arch(pkg: *mut Struct_alpm_pkg) -> *const c_char;
-    pub fn alpm_pkg_get_size(pkg: *mut Struct_alpm_pkg) -> off_t;
-    pub fn alpm_pkg_get_isize(pkg: *mut Struct_alpm_pkg) -> off_t;
-    pub fn alpm_pkg_get_reason(pkg: *mut Struct_alpm_pkg) -> alpm_pkgreason_t;
-    pub fn alpm_pkg_get_licenses(pkg: *mut Struct_alpm_pkg) -> *mut alpm_list_t;
-    pub fn alpm_pkg_get_groups(pkg: *mut Struct_alpm_pkg) -> *mut alpm_list_t;
-    pub fn alpm_pkg_get_depends(pkg: *mut Struct_alpm_pkg) -> *mut alpm_list_t;
-    pub fn alpm_pkg_get_optdepends(pkg: *mut Struct_alpm_pkg) -> *mut alpm_list_t;
-    pub fn alpm_pkg_get_conflicts(pkg: *mut Struct_alpm_pkg) -> *mut alpm_list_t;
-    pub fn alpm_pkg_get_provides(pkg: *mut Struct_alpm_pkg) -> *mut alpm_list_t;
-    pub fn alpm_pkg_get_deltas(pkg: *mut Struct_alpm_pkg) -> *mut alpm_list_t;
-    pub fn alpm_pkg_get_replaces(pkg: *mut Struct_alpm_pkg) -> *mut alpm_list_t;
-    pub fn alpm_pkg_get_files(pkg: *mut Struct_alpm_pkg) -> *mut alpm_filelist_t;
-    pub fn alpm_pkg_get_backup(pkg: *mut Struct_alpm_pkg) -> *mut alpm_list_t;
-    pub fn alpm_pkg_get_db(pkg: *mut Struct_alpm_pkg) -> *mut Struct_alpm_db;
-    pub fn alpm_pkg_get_base64_sig(pkg: *mut Struct_alpm_pkg) -> *const c_char;
-    pub fn alpm_pkg_get_validation(pkg: *mut Struct_alpm_pkg) -> alpm_pkgvalidation_t;
-    pub fn alpm_pkg_changelog_open(pkg: *mut Struct_alpm_pkg) -> *mut c_void;
-    pub fn alpm_pkg_changelog_read(ptr: *mut c_void,
+    pub fn alpm_pkg_compute_requiredby(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
+    pub fn alpm_pkg_compute_optionalfor(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
+    pub fn alpm_pkg_should_ignore(handle: *const Struct_alpm_handle, pkg: *const Struct_alpm_pkg) -> c_int;
+    pub fn alpm_pkg_get_filename(pkg: *const Struct_alpm_pkg) -> *const c_char;
+    pub fn alpm_pkg_get_base(pkg: *const Struct_alpm_pkg) -> *const c_char;
+    pub fn alpm_pkg_get_name(pkg: *const Struct_alpm_pkg) -> *const c_char;
+    pub fn alpm_pkg_get_version(pkg: *const Struct_alpm_pkg) -> *const c_char;
+    pub fn alpm_pkg_get_origin(pkg: *const Struct_alpm_pkg) -> alpm_pkgfrom_t;
+    pub fn alpm_pkg_get_desc(pkg: *const Struct_alpm_pkg) -> *const c_char;
+    pub fn alpm_pkg_get_url(pkg: *const Struct_alpm_pkg) -> *const c_char;
+    pub fn alpm_pkg_get_builddate(pkg: *const Struct_alpm_pkg) -> alpm_time_t;
+    pub fn alpm_pkg_get_installdate(pkg: *const Struct_alpm_pkg) -> alpm_time_t;
+    pub fn alpm_pkg_get_packager(pkg: *const Struct_alpm_pkg) -> *const c_char;
+    pub fn alpm_pkg_get_md5sum(pkg: *const Struct_alpm_pkg) -> *const c_char;
+    pub fn alpm_pkg_get_sha256sum(pkg: *const Struct_alpm_pkg) -> *const c_char;
+    pub fn alpm_pkg_get_arch(pkg: *const Struct_alpm_pkg) -> *const c_char;
+    pub fn alpm_pkg_get_size(pkg: *const Struct_alpm_pkg) -> off_t;
+    pub fn alpm_pkg_get_isize(pkg: *const Struct_alpm_pkg) -> off_t;
+    pub fn alpm_pkg_get_reason(pkg: *const Struct_alpm_pkg) -> alpm_pkgreason_t;
+    pub fn alpm_pkg_get_licenses(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
+    pub fn alpm_pkg_get_groups(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
+    pub fn alpm_pkg_get_depends(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
+    pub fn alpm_pkg_get_optdepends(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
+    pub fn alpm_pkg_get_conflicts(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
+    pub fn alpm_pkg_get_provides(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
+    pub fn alpm_pkg_get_deltas(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
+    pub fn alpm_pkg_get_replaces(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
+    pub fn alpm_pkg_get_files(pkg: *const Struct_alpm_pkg) -> *const alpm_filelist_t;
+    pub fn alpm_pkg_get_backup(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
+    pub fn alpm_pkg_get_db(pkg: *const Struct_alpm_pkg) -> *const Struct_alpm_db;
+    pub fn alpm_pkg_get_base64_sig(pkg: *const Struct_alpm_pkg) -> *const c_char;
+    pub fn alpm_pkg_get_validation(pkg: *const Struct_alpm_pkg) -> alpm_pkgvalidation_t;
+    pub fn alpm_pkg_changelog_open(pkg: *const Struct_alpm_pkg) -> *const c_void;
+    pub fn alpm_pkg_changelog_read(ptr: *const c_void,
                                    size: usize,
                                    pkg: *const Struct_alpm_pkg,
-                                   fp: *mut c_void)
+                                   fp: *const c_void)
                                    -> usize;
-    pub fn alpm_pkg_changelog_close(pkg: *const Struct_alpm_pkg, fp: *mut c_void) -> c_int;
-    pub fn alpm_pkg_mtree_open(pkg: *mut Struct_alpm_pkg) -> *mut Struct_archive;
+    pub fn alpm_pkg_changelog_close(pkg: *const Struct_alpm_pkg, fp: *const c_void) -> c_int;
+    pub fn alpm_pkg_mtree_open(pkg: *const Struct_alpm_pkg) -> *const Struct_archive;
     pub fn alpm_pkg_mtree_next(pkg: *const Struct_alpm_pkg,
-                               archive: *mut Struct_archive,
-                               entry: *mut *mut Struct_archive_entry)
+                               archive: *const Struct_archive,
+                               entry: *const *mut Struct_archive_entry)
                                -> c_int;
     pub fn alpm_pkg_mtree_close(pkg: *const Struct_alpm_pkg,
-                                archive: *mut Struct_archive)
+                                archive: *const Struct_archive)
                                 -> c_int;
-    pub fn alpm_pkg_has_scriptlet(pkg: *mut Struct_alpm_pkg) -> c_int;
-    pub fn alpm_pkg_download_size(newpkg: *mut Struct_alpm_pkg) -> off_t;
-    pub fn alpm_pkg_unused_deltas(pkg: *mut Struct_alpm_pkg) -> *mut alpm_list_t;
-    pub fn alpm_pkg_set_reason(pkg: *mut Struct_alpm_pkg, reason: alpm_pkgreason_t) -> c_int;
-    pub fn alpm_filelist_contains(filelist: *mut alpm_filelist_t,
+    pub fn alpm_pkg_has_scriptlet(pkg: *const Struct_alpm_pkg) -> c_int;
+    pub fn alpm_pkg_download_size(newpkg: *const Struct_alpm_pkg) -> off_t;
+    pub fn alpm_pkg_unused_deltas(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
+    pub fn alpm_pkg_set_reason(pkg: *const Struct_alpm_pkg, reason: alpm_pkgreason_t) -> c_int;
+    pub fn alpm_filelist_contains(filelist: *const alpm_filelist_t,
                                   path: *const c_char)
-                                  -> *mut alpm_file_t;
-    pub fn alpm_pkg_check_pgp_signature(pkg: *mut Struct_alpm_pkg,
-                                        siglist: *mut alpm_siglist_t)
+                                  -> *const alpm_file_t;
+    pub fn alpm_pkg_check_pgp_signature(pkg: *const Struct_alpm_pkg,
+                                        siglist: *const alpm_siglist_t)
                                         -> c_int;
-    pub fn alpm_db_check_pgp_signature(db: *mut Struct_alpm_db, siglist: *mut alpm_siglist_t) -> c_int;
-    pub fn alpm_siglist_cleanup(siglist: *mut alpm_siglist_t) -> c_int;
+    pub fn alpm_db_check_pgp_signature(db: *const Struct_alpm_db, siglist: *const alpm_siglist_t) -> c_int;
+    pub fn alpm_siglist_cleanup(siglist: *const alpm_siglist_t) -> c_int;
     pub fn alpm_decode_signature(base64_data: *const c_char,
-                                 data: *mut *mut c_uchar,
-                                 data_len: *mut usize)
+                                 data: *const *mut c_uchar,
+                                 data_len: *const usize)
                                  -> c_int;
-    pub fn alpm_extract_keyid(handle: *mut Struct_alpm_handle,
+    pub fn alpm_extract_keyid(handle: *const Struct_alpm_handle,
                               identifier: *const c_char,
                               sig: *const c_uchar, len: usize,
-                              keys: *mut *mut alpm_list_t)
+                              keys: *const *mut alpm_list_t)
                               -> c_int;
-    pub fn alpm_find_group_pkgs(dbs: *mut alpm_list_t, name: *const c_char) -> *mut alpm_list_t;
-    pub fn alpm_sync_newversion(pkg: *mut Struct_alpm_pkg,
-                                dbs_sync: *mut alpm_list_t)
-                                -> *mut Struct_alpm_pkg;
-    pub fn alpm_trans_get_flags(handle: *mut Struct_alpm_handle) -> alpm_transflag_t;
-    pub fn alpm_trans_get_add(handle: *mut Struct_alpm_handle) -> *mut alpm_list_t;
-    pub fn alpm_trans_get_remove(handle: *mut Struct_alpm_handle) -> *mut alpm_list_t;
-    pub fn alpm_trans_init(handle: *mut Struct_alpm_handle, flags: alpm_transflag_t) -> c_int;
-    pub fn alpm_trans_prepare(handle: *mut Struct_alpm_handle,
-                              data: *mut *mut alpm_list_t)
+    pub fn alpm_find_group_pkgs(dbs: *const alpm_list_t, name: *const c_char) -> *const alpm_list_t;
+    pub fn alpm_sync_newversion(pkg: *const Struct_alpm_pkg,
+                                dbs_sync: *const alpm_list_t)
+                                -> *const Struct_alpm_pkg;
+    pub fn alpm_trans_get_flags(handle: *const Struct_alpm_handle) -> alpm_transflag_t;
+    pub fn alpm_trans_get_add(handle: *const Struct_alpm_handle) -> *const alpm_list_t;
+    pub fn alpm_trans_get_remove(handle: *const Struct_alpm_handle) -> *const alpm_list_t;
+    pub fn alpm_trans_init(handle: *const Struct_alpm_handle, flags: alpm_transflag_t) -> c_int;
+    pub fn alpm_trans_prepare(handle: *const Struct_alpm_handle,
+                              data: *const *mut alpm_list_t)
                               -> c_int;
-    pub fn alpm_trans_commit(handle: *mut Struct_alpm_handle,
-                             data: *mut *mut alpm_list_t)
+    pub fn alpm_trans_commit(handle: *const Struct_alpm_handle,
+                             data: *const *mut alpm_list_t)
                              -> c_int;
-    pub fn alpm_trans_interrupt(handle: *mut Struct_alpm_handle) -> c_int;
-    pub fn alpm_trans_release(handle: *mut Struct_alpm_handle) -> c_int;
-    pub fn alpm_sync_sysupgrade(handle: *mut Struct_alpm_handle, enable_downgrade: c_int) -> c_int;
-    pub fn alpm_add_pkg(handle: *mut Struct_alpm_handle, pkg: *mut Struct_alpm_pkg) -> c_int;
-    pub fn alpm_remove_pkg(handle: *mut Struct_alpm_handle, pkg: *mut Struct_alpm_pkg) -> c_int;
-    pub fn alpm_checkdeps(handle: *mut Struct_alpm_handle,
-                          pkglist: *mut alpm_list_t,
-                          remove: *mut alpm_list_t,
-                          upgrade: *mut alpm_list_t,
+    pub fn alpm_trans_interrupt(handle: *const Struct_alpm_handle) -> c_int;
+    pub fn alpm_trans_release(handle: *const Struct_alpm_handle) -> c_int;
+    pub fn alpm_sync_sysupgrade(handle: *const Struct_alpm_handle, enable_downgrade: c_int) -> c_int;
+    pub fn alpm_add_pkg(handle: *const Struct_alpm_handle, pkg: *const Struct_alpm_pkg) -> c_int;
+    pub fn alpm_remove_pkg(handle: *const Struct_alpm_handle, pkg: *const Struct_alpm_pkg) -> c_int;
+    pub fn alpm_checkdeps(handle: *const Struct_alpm_handle,
+                          pkglist: *const alpm_list_t,
+                          remove: *const alpm_list_t,
+                          upgrade: *const alpm_list_t,
                           reversedeps: c_int)
-                          -> *mut alpm_list_t;
-    pub fn alpm_find_satisfier(pkgs: *mut alpm_list_t,
+                          -> *const alpm_list_t;
+    pub fn alpm_find_satisfier(pkgs: *const alpm_list_t,
                                depstring: *const c_char)
-                               -> *mut Struct_alpm_pkg;
-    pub fn alpm_find_dbs_satisfier(handle: *mut Struct_alpm_handle,
-                                   dbs: *mut alpm_list_t,
+                               -> *const Struct_alpm_pkg;
+    pub fn alpm_find_dbs_satisfier(handle: *const Struct_alpm_handle,
+                                   dbs: *const alpm_list_t,
                                    depstring: *const c_char)
-                                   -> *mut Struct_alpm_pkg;
-    pub fn alpm_checkconflicts(handle: *mut Struct_alpm_handle,
-                               pkglist: *mut alpm_list_t)
-                               -> *mut alpm_list_t;
-    pub fn alpm_dep_compute_string(dep: *const alpm_depend_t) -> *mut c_char;
-    pub fn alpm_dep_from_string(depstring: *const c_char) -> *mut alpm_depend_t;
-    pub fn alpm_dep_free(dep: *mut alpm_depend_t);
-    pub fn alpm_compute_md5sum(filename: *const c_char) -> *mut c_char;
-    pub fn alpm_compute_sha256sum(filename: *const c_char) -> *mut c_char;
+                                   -> *const Struct_alpm_pkg;
+    pub fn alpm_checkconflicts(handle: *const Struct_alpm_handle,
+                               pkglist: *const alpm_list_t)
+                               -> *const alpm_list_t;
+    pub fn alpm_dep_compute_string(dep: *const alpm_depend_t) -> *const c_char;
+    pub fn alpm_dep_from_string(depstring: *const c_char) -> *const alpm_depend_t;
+    pub fn alpm_dep_free(dep: *const alpm_depend_t);
+    pub fn alpm_compute_md5sum(filename: *const c_char) -> *const c_char;
+    pub fn alpm_compute_sha256sum(filename: *const c_char) -> *const c_char;
     pub fn alpm_initialize(root: *const c_char,
                            dbpath: *const c_char,
-                           err: *mut alpm_errno_t)
-                           -> *mut Struct_alpm_handle;
-    pub fn alpm_release(handle: *mut Struct_alpm_handle) -> c_int;
-    pub fn alpm_unlock(handle: *mut Struct_alpm_handle) -> c_int;
+                           err: *const alpm_errno_t)
+                           -> *const Struct_alpm_handle;
+    pub fn alpm_release(handle: *const Struct_alpm_handle) -> c_int;
+    pub fn alpm_unlock(handle: *const Struct_alpm_handle) -> c_int;
     pub fn alpm_version() -> *const c_char;
     pub fn alpm_capabilities() -> alpm_caps;
-    pub fn alpm_fileconflict_free(conflict: *mut alpm_fileconflict_t);
-    pub fn alpm_depmissing_free(miss: *mut alpm_depmissing_t);
-    pub fn alpm_conflict_free(conflict: *mut alpm_conflict_t);
+    pub fn alpm_fileconflict_free(conflict: *const alpm_fileconflict_t);
+    pub fn alpm_depmissing_free(miss: *const alpm_depmissing_t);
+    pub fn alpm_conflict_free(conflict: *const alpm_conflict_t);
 }
