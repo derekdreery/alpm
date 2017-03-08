@@ -25,7 +25,7 @@ impl Default for SigLevel {
             database_optional: false,
             database_marginal_ok: false,
             database_unknown_ok: false,
-            use_default: false,
+            use_default: true,
         }
     }
 }

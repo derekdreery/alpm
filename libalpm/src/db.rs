@@ -6,6 +6,7 @@ use pgp::SigLevel;
 use {Alpm, AlpmResult, Error, PackageRef};
 
 /// A database of packages. This is only ever available as a reference
+#[derive(Debug)]
 pub struct Db<'a> {
     inner: *const Struct_alpm_db,
     // we need this handle so we can get error codes
@@ -54,7 +55,8 @@ impl<'a> Db<'a> {
 
     /// Adds a server to the list of servers used by the database.
     pub fn add_server(&self, url: &str) -> AlpmResult<()> {
-        let url = CString::new(url)?;
+        let url = CString::new(url.replacen("$arch", "", 1).replacen("$repo", "", 1))?;
+        println!("{:?}", url);
         if unsafe { alpm_db_add_server(self.inner, url.as_ptr()) } == 0 {
             Ok(())
         } else {
@@ -72,6 +74,7 @@ impl<'a> Db<'a> {
         }
     }
 
+    /// Update (sync) the database with remote.
     pub fn update(&self, force: bool) -> AlpmResult<()> {
         let force = if force { 1 } else { 0 };
         if unsafe { alpm_db_update(force, self.inner) } == 0 {

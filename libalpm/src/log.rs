@@ -2,17 +2,54 @@
 
 use std::default::Default;
 use std::fmt;
+use std::cmp::{self, Ordering};
 
 use alpm_sys::*;
 
 /// The highest log level marked true
-#[derive(Debug, PartialEq, Copy, Clone)]
+#[derive(Debug, PartialEq, Eq, Copy, Clone)]
 pub enum LogLevel {
     Error,
     Warning,
     Debug,
     Function,
     None
+}
+
+impl cmp::Ord for LogLevel {
+    fn cmp(&self, other: &LogLevel) -> Ordering {
+        match *self {
+            LogLevel::Error => match *other {
+                LogLevel::Error => Ordering::Equal,
+                _ => Ordering::Greater,
+            },
+            LogLevel::Warning => match *other {
+                LogLevel::Error => Ordering::Less,
+                LogLevel::Warning => Ordering::Equal,
+                _ => Ordering::Greater,
+            },
+            LogLevel::Debug => match *other {
+                LogLevel::Error | LogLevel::Warning => Ordering::Less,
+                LogLevel::Debug => Ordering::Equal,
+                _ => Ordering::Greater,
+            },
+            LogLevel::Function => match *other {
+                LogLevel::None => Ordering::Greater,
+                LogLevel::Function => Ordering::Equal,
+                _ => Ordering::Less,
+            },
+            LogLevel::None => match *other {
+                LogLevel::None => Ordering::Equal,
+                _ => Ordering::Less,
+            }
+        }
+    }
+}
+
+impl cmp::PartialOrd for LogLevel {
+    fn partial_cmp(&self, other: &LogLevel) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
 }
 
 impl fmt::Display for LogLevel {

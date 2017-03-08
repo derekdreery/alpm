@@ -3,6 +3,7 @@
 use std::error::Error as StdError;
 use std::fmt;
 use std::ffi;
+use std::str;
 
 use alpm_sys::*;
 
@@ -125,6 +126,8 @@ pub enum Error {
     IO,
     /// null string error
     StrNull,
+    /// utf8 decode error
+    Utf8Error,
     /// unknown error
     __Unknown,
 }
@@ -189,6 +192,7 @@ impl StdError for Error {
             Error::ExternalDownload => "error invoking external downloader",
             Error::IO => "io error",
             Error::StrNull => "null string error",
+            Error::Utf8Error => "utf8 decode error",
             Error::__Unknown => "unknown error",
         }
     }
@@ -276,6 +280,12 @@ impl From<u32> for Error {
 impl From<ffi::NulError> for Error {
     fn from(_: ffi::NulError) -> Error {
         Error::StrNull
+    }
+}
+
+impl From<str::Utf8Error> for Error {
+    fn from(_: str::Utf8Error) -> Error {
+        Error::Utf8Error
     }
 }
 

@@ -1,6 +1,6 @@
 [workspace]
 
-members = [ "alpm-sys", "libalpm", "printf", "printf_helper", "alpm-rs" ]
+members = [ "alpm-sys", "libalpm", "printf", "printf_helper" ]
 
 
 [replace]

@@ -1,103 +1,35 @@
 //! The alpm_list type wrapper
 
-use std::ptr;
-use std::marker::PhantomData;
+use std::collections::LinkedList;
 
 use libc::c_void;
 use alpm_sys::*;
 
-/// A linked list, where the data is behind a void pointer
-#[repr(C)]
-pub struct ListNode {
-    data: *const c_void,
-    prev: *const ListNode,
-    next: *const ListNode,
-}
+// NOTE the linked list in alpm_list_t is actually a doubly linked list, where you can't rely on
+// the first item->prev = null
 
-impl ListNode {
-    fn new() -> ListNode {
-        ListNode {
-            data: ptr::null(),
-            prev: ptr::null(),
-            next: ptr::null(),
-        }
+/// Convert an alpm_list_t to a rust Vec.
+///
+/// It's important not to take ownership of the data pointer (raw->data). It should be cleared
+/// using the original data structure. If you do this you can let the vec go out of scope and not
+/// touch the original data. The vec must not outlive the underlying struct, this bound can be
+/// enforced by the type T having a lifetime parameter.
+pub unsafe fn alpm_list_to_vec<T, F>(raw: *const alpm_list_t, f: F) -> Vec<T>
+    where F: Fn(*const c_void) -> T
+{
+    let mut vec = Vec::new();
+    if raw.is_null() {
+        return vec;
     }
+    // get first node
+    let first = raw;
+    let mut raw = raw;
 
-}
-
-#[repr(C)]
-pub struct List<T> {
-    first: *const ListNode,
-    p: PhantomData<T>,
-}
-
-impl<T> List<T> {
-    /// Finds the first node
-    pub(crate) unsafe fn from_raw<U>(raw: *const alpm_list_t) -> List<U> {
-        let mut raw = raw;
-        while ! (*raw).prev.is_null() {
-            raw = (*raw).prev;
-        }
-        List {
-            first: raw as _,
-            p: PhantomData,
-        }
+    // copy list (not data)
+    vec.push(f((*raw).data as *const c_void));
+    while ! (*raw).next.is_null() {
+        raw = (*raw).next;
+        vec.push(f((*raw).data as *const c_void));
     }
-
-    /// Adds the given element to the back of the list.
-    pub fn push_back(&mut self, el: T) {
-        unimplemented!()
-    }
-
-    /// Removes and returns the given element from the back of the list.
-    pub fn pop_back(&mut self) -> Option<T> {
-        unimplemented!()
-    }
-
-    /// Adds the given element to the front of the list.
-    pub fn push_front(&mut self, el: T) {
-        unimplemented!()
-    }
-
-    /// Removes and returns the given element from the front of the list.
-    pub fn pop_front(&mut self, el: T) {
-        unimplemented!()
-    }
-
-    /// Adds the given element before the element at idx.
-    pub fn insert_before(&mut self, idx: usize, el: T) {
-        unimplemented!()
-    }
-
-    /// Gets the element at idx. Returns `None` if index is out of bounds.
-    pub fn at(&mut self, idx: usize) -> Option<&T> {
-        unimplemented!()
-    }
-
-    /// Removes and returns the element at idx. Returns `None` if index is out of bounds.
-    pub fn pop_at(&mut self, idx: usize) -> Option<T> {
-        unimplemented!()
-    }
-
-}
-
-struct ListIterator<'a, T: 'a>(&'a mut List<T>, *const ListNode);
-
-impl<'a, T> Iterator for ListIterator<'a, T> {
-    type Item = &'a T;
-
-    fn next(&mut self) -> Option<&'a T> {
-        unsafe {
-            if self.1.is_null() {
-                return None;
-            };
-            let val_ptr = (*self.1).data;
-            self.1 = (*self.1).next;
-            Some(&*(val_ptr as *const T))
-        }
-    }
-}
-
-#[cfg(test)]
-mod tests {
+    vec
 }

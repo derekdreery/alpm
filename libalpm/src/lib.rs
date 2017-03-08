@@ -15,24 +15,28 @@ mod db;
 mod pgp;
 mod log;
 mod callbacks;
+mod options;
+mod util;
 
 use std::ffi::{CString, CStr};
 use std::ops::Drop;
 use std::path::{PathBuf};
 use std::sync::Mutex;
 use std::mem;
+use std::collections::LinkedList;
 
 use alpm_sys::*;
 use libc::{c_void};
 
-pub use list::List;
+pub use options::{Options, RepoOptions};
 pub use error::{Error, AlpmResult};
 pub use log::{LogLevel, LogLevels};
 pub use event::Event;
 pub use package::{Package, PackageRef};
-use callbacks::{alpm_cb_log, alpm_cb_download, alpm_cb_totaldl, alpm_cb_fetch, alpm_cb_event};
 pub use db::Db;
 pub use pgp::SigLevel;
+use callbacks::{alpm_cb_log, alpm_cb_download, alpm_cb_totaldl, alpm_cb_fetch, alpm_cb_event};
+use list::alpm_list_to_vec;
 
 // callbacks
 lazy_static! {
@@ -51,6 +55,7 @@ lazy_static! {
 /// instance of Alpm at present (doing your own synchronization if you want to share between
 /// threads). Also, callbacks must be stored in global state, so if they are changed for one they
 /// will be changed for all.
+#[derive(Debug)]
 pub struct Alpm {
     handle: *const Struct_alpm_handle,
 }
@@ -214,6 +219,18 @@ impl Alpm {
         lockfile.to_str().ok().expect("instance lockfile path is not utf8")
     }
 
+    /// Get the set architecture
+    pub fn arch(&self) -> AlpmResult<&str> {
+        unsafe {
+            let arch = alpm_option_get_arch(self.handle);
+            if arch.is_null() {
+                Err(Error::StrNull)
+            } else {
+                CStr::from_ptr(arch).to_str().map_err(|e| e.into())
+            }
+        }
+    }
+
     /// Fetch a remote pkg from the given URL and return its path.
     pub fn fetch_pkg(&self, url: url::Url) -> AlpmResult<PathBuf> {
         unsafe {
@@ -223,22 +240,44 @@ impl Alpm {
                 Err(Error::__Unknown)
             } else {
                 // copy path into rust alloc'd data struct
-                let path_rust = PathBuf::from(CStr::from_ptr(path).to_string_lossy().into_owned());
+                let path_rust = PathBuf::from(CStr::from_ptr(path).to_str()?);
                 libc::free(path as *mut c_void);
                 Ok(path_rust)
             }
         }
     }
 
-    /// Get the local database instance
-    pub fn localdb<'a>(&'a self) -> Db<'a> {
+    /// Get the local database instance.
+    pub fn local_db<'a>(&'a self) -> Db<'a> {
         unsafe { Db::new(alpm_get_localdb(self.handle), self) }
     }
 
-    /// Get a list of remote databases
-    pub fn sync_dbs<'a>(&'a self) -> List<Db<'a>> {
-        let list = unsafe { List<Db>::from_raw(alpm_get_syncdbs(self.handle)) };
-        unimplemented!()
+    /// Get a list of remote databases registered.
+    pub fn sync_dbs<'a>(&'a self) -> Vec<Db<'a>> {
+        //use std::error::Error;
+        unsafe {
+            let raw_list = alpm_get_syncdbs(self.handle);
+            //println!("{:?}", raw_list);
+            //println!("error: {:?}", self.error().unwrap().description());
+            alpm_list_to_vec(raw_list, |ptr| {
+                Db::new(ptr as *const Struct_alpm_db, &self)
+            })
+        }
+    }
+
+    /// Register a sync db (remote db). You will need to attach servers to the db to be able to
+    /// sync
+    pub fn register_sync_db<'a>(&'a self, treename: &str, level: SigLevel) -> AlpmResult<Db<'a>> {
+        unsafe {
+            let db = alpm_register_syncdb(self.handle,
+                                          (CString::new(treename)?).as_ptr(),
+                                          level.into());
+            if db.is_null() {
+                Err(self.error().unwrap_or(Error::__Unknown))
+            } else {
+                Ok(Db::new(db, &self))
+            }
+        }
     }
 }
 
