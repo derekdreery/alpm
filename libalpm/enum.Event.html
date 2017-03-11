@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Event` enum in crate `libalpm`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Event">
+
+    <title>libalpm::Event - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>libalpm</a></p><script>window.sidebarCurrent = {name: 'Event', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='index.html'>libalpm</a>::<wbr><a class='enum' href=''>Event</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/libalpm/event.rs.html#8-98' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum Event&lt;'a&gt; {
+    CheckDepsStart,
+    CheckDepsDone,
+    FileConflictsStart,
+    FileConflictsDone,
+    ResolveDepsStart,
+    ResolveDepsDone,
+    InterConflictsStart,
+    InterConflictsDone,
+    TransactionStart,
+    TransactionDone,
+    PackageOperationStart(PackageOperation&lt;'a&gt;),
+    PackageOperationDone(PackageOperation&lt;'a&gt;),
+    IntegrityStart,
+    IntegrityDone,
+    LoadStart,
+    LoadDone,
+    DeltaIntegrityStart,
+    DeltaIntegrityDone,
+    DeltaPatchesStart,
+    DeltaPatchesDone,
+    DeltaPatchStart,
+    DeltaPatchDone,
+    DeltaPatchFailed,
+    ScriptletInfo,
+    RetrieveStart,
+    RetrieveDone,
+    RetrieveFailed,
+    PkgDownloadStart,
+    PkgDownloadDone,
+    PkgDownloadFailed,
+    DiskspaceStart,
+    DiskspaceDone,
+    OptDepRemoval,
+    DatabaseMissing,
+    KeyringStart,
+    KeyringDone,
+    KeyDownloadStart,
+    KeyDownloadDone,
+    PacnewCreated,
+    PacsaveCreated,
+    HookStart,
+    HookDone,
+    HookRunStart,
+    HookRunDone,
+    __Unknown,
+}</pre><div class='docblock'><p>An event emitted from libalpm</p>
+</div><h2 class='variants'>Variants</h2>
+<span id='variant.CheckDepsStart' class='variant'><span id='CheckDepsStart.v' class='invisible'><code>CheckDepsStart</code></span></span><div class='docblock'><p>Dependencies will be computed for a package.</p>
+</div><span id='variant.CheckDepsDone' class='variant'><span id='CheckDepsDone.v' class='invisible'><code>CheckDepsDone</code></span></span><div class='docblock'><p>Dependencies were computed for a package.</p>
+</div><span id='variant.FileConflictsStart' class='variant'><span id='FileConflictsStart.v' class='invisible'><code>FileConflictsStart</code></span></span><div class='docblock'><p>File conflicts will be computed for a package.</p>
+</div><span id='variant.FileConflictsDone' class='variant'><span id='FileConflictsDone.v' class='invisible'><code>FileConflictsDone</code></span></span><div class='docblock'><p>File conflicts were computed for a package.</p>
+</div><span id='variant.ResolveDepsStart' class='variant'><span id='ResolveDepsStart.v' class='invisible'><code>ResolveDepsStart</code></span></span><div class='docblock'><p>Dependencies will be resolved for target package.</p>
+</div><span id='variant.ResolveDepsDone' class='variant'><span id='ResolveDepsDone.v' class='invisible'><code>ResolveDepsDone</code></span></span><div class='docblock'><p>Dependencies were resolved for target package.</p>
+</div><span id='variant.InterConflictsStart' class='variant'><span id='InterConflictsStart.v' class='invisible'><code>InterConflictsStart</code></span></span><div class='docblock'><p>Inter-conflicts will be checked for target package.</p>
+</div><span id='variant.InterConflictsDone' class='variant'><span id='InterConflictsDone.v' class='invisible'><code>InterConflictsDone</code></span></span><div class='docblock'><p>Inter-conflicts were checked for target package.</p>
+</div><span id='variant.TransactionStart' class='variant'><span id='TransactionStart.v' class='invisible'><code>TransactionStart</code></span></span><div class='docblock'><p>Processing the package transaction is starting.</p>
+</div><span id='variant.TransactionDone' class='variant'><span id='TransactionDone.v' class='invisible'><code>TransactionDone</code></span></span><div class='docblock'><p>Processing the package transaction is finished.</p>
+</div><span id='variant.PackageOperationStart' class='variant'><span id='PackageOperationStart.v' class='invisible'><code>PackageOperationStart(PackageOperation&lt;'a&gt;)</code></span></span><div class='docblock'><p>Package will be installed/upgraded/downgraded/re-installed/removed; See alpm_event_package_operation_t for arguments.</p>
+</div><span id='variant.PackageOperationDone' class='variant'><span id='PackageOperationDone.v' class='invisible'><code>PackageOperationDone(PackageOperation&lt;'a&gt;)</code></span></span><div class='docblock'><p>Package was installed/upgraded/downgraded/re-installed/removed; See alpm_event_package_operation_t for arguments.</p>
+</div><span id='variant.IntegrityStart' class='variant'><span id='IntegrityStart.v' class='invisible'><code>IntegrityStart</code></span></span><div class='docblock'><p>Target package&#39;s integrity will be checked.</p>
+</div><span id='variant.IntegrityDone' class='variant'><span id='IntegrityDone.v' class='invisible'><code>IntegrityDone</code></span></span><div class='docblock'><p>Target package&#39;s integrity was checked.</p>
+</div><span id='variant.LoadStart' class='variant'><span id='LoadStart.v' class='invisible'><code>LoadStart</code></span></span><div class='docblock'><p>Target package will be loaded.</p>
+</div><span id='variant.LoadDone' class='variant'><span id='LoadDone.v' class='invisible'><code>LoadDone</code></span></span><div class='docblock'><p>Target package is finished loading.</p>
+</div><span id='variant.DeltaIntegrityStart' class='variant'><span id='DeltaIntegrityStart.v' class='invisible'><code>DeltaIntegrityStart</code></span></span><div class='docblock'><p>Target delta&#39;s integrity will be checked.</p>
+</div><span id='variant.DeltaIntegrityDone' class='variant'><span id='DeltaIntegrityDone.v' class='invisible'><code>DeltaIntegrityDone</code></span></span><div class='docblock'><p>Target delta&#39;s integrity was checked.</p>
+</div><span id='variant.DeltaPatchesStart' class='variant'><span id='DeltaPatchesStart.v' class='invisible'><code>DeltaPatchesStart</code></span></span><div class='docblock'><p>Deltas will be applied to packages.</p>
+</div><span id='variant.DeltaPatchesDone' class='variant'><span id='DeltaPatchesDone.v' class='invisible'><code>DeltaPatchesDone</code></span></span><div class='docblock'><p>Deltas were applied to packages.</p>
+</div><span id='variant.DeltaPatchStart' class='variant'><span id='DeltaPatchStart.v' class='invisible'><code>DeltaPatchStart</code></span></span><div class='docblock'><p>Delta patch will be applied to target package; See alpm_event_delta_patch_t for arguments..</p>
+</div><span id='variant.DeltaPatchDone' class='variant'><span id='DeltaPatchDone.v' class='invisible'><code>DeltaPatchDone</code></span></span><div class='docblock'><p>Delta patch was applied to target package.</p>
+</div><span id='variant.DeltaPatchFailed' class='variant'><span id='DeltaPatchFailed.v' class='invisible'><code>DeltaPatchFailed</code></span></span><div class='docblock'><p>Delta patch failed to apply to target package.</p>
+</div><span id='variant.ScriptletInfo' class='variant'><span id='ScriptletInfo.v' class='invisible'><code>ScriptletInfo</code></span></span><div class='docblock'><p>Scriptlet has printed information; See alpm_event_scriptlet_info_t for arguments.</p>
+</div><span id='variant.RetrieveStart' class='variant'><span id='RetrieveStart.v' class='invisible'><code>RetrieveStart</code></span></span><div class='docblock'><p>Files will be downloaded from a repository.</p>
+</div><span id='variant.RetrieveDone' class='variant'><span id='RetrieveDone.v' class='invisible'><code>RetrieveDone</code></span></span><div class='docblock'><p>Files were downloaded from a repository.</p>
+</div><span id='variant.RetrieveFailed' class='variant'><span id='RetrieveFailed.v' class='invisible'><code>RetrieveFailed</code></span></span><div class='docblock'><p>Not all files were successfully downloaded from a repository.</p>
+</div><span id='variant.PkgDownloadStart' class='variant'><span id='PkgDownloadStart.v' class='invisible'><code>PkgDownloadStart</code></span></span><div class='docblock'><p>A file will be downloaded from a repository; See alpm_event_pkgdownload_t for arguments</p>
+</div><span id='variant.PkgDownloadDone' class='variant'><span id='PkgDownloadDone.v' class='invisible'><code>PkgDownloadDone</code></span></span><div class='docblock'><p>A file was downloaded from a repository; See alpm_event_pkgdownload_t for arguments</p>
+</div><span id='variant.PkgDownloadFailed' class='variant'><span id='PkgDownloadFailed.v' class='invisible'><code>PkgDownloadFailed</code></span></span><div class='docblock'><p>A file failed to be downloaded from a repository; See alpm_event_pkgdownload_t for arguments</p>
+</div><span id='variant.DiskspaceStart' class='variant'><span id='DiskspaceStart.v' class='invisible'><code>DiskspaceStart</code></span></span><div class='docblock'><p>Disk space usage will be computed for a package.</p>
+</div><span id='variant.DiskspaceDone' class='variant'><span id='DiskspaceDone.v' class='invisible'><code>DiskspaceDone</code></span></span><div class='docblock'><p>Disk space usage was computed for a package.</p>
+</div><span id='variant.OptDepRemoval' class='variant'><span id='OptDepRemoval.v' class='invisible'><code>OptDepRemoval</code></span></span><div class='docblock'><p>An optdepend for another package is being removed; See alpm_event_optdep_removal_t for arguments.</p>
+</div><span id='variant.DatabaseMissing' class='variant'><span id='DatabaseMissing.v' class='invisible'><code>DatabaseMissing</code></span></span><div class='docblock'><p>A configured repository database is missing; See alpm_event_database_missing_t for arguments.</p>
+</div><span id='variant.KeyringStart' class='variant'><span id='KeyringStart.v' class='invisible'><code>KeyringStart</code></span></span><div class='docblock'><p>Checking keys used to create signatures are in keyring.</p>
+</div><span id='variant.KeyringDone' class='variant'><span id='KeyringDone.v' class='invisible'><code>KeyringDone</code></span></span><div class='docblock'><p>Keyring checking is finished.</p>
+</div><span id='variant.KeyDownloadStart' class='variant'><span id='KeyDownloadStart.v' class='invisible'><code>KeyDownloadStart</code></span></span><div class='docblock'><p>Downloading missing keys into keyring.</p>
+</div><span id='variant.KeyDownloadDone' class='variant'><span id='KeyDownloadDone.v' class='invisible'><code>KeyDownloadDone</code></span></span><div class='docblock'><p>Key downloading is finished.</p>
+</div><span id='variant.PacnewCreated' class='variant'><span id='PacnewCreated.v' class='invisible'><code>PacnewCreated</code></span></span><div class='docblock'><p>A .pacnew file was created; See alpm_event_pacnew_created_t for arguments.</p>
+</div><span id='variant.PacsaveCreated' class='variant'><span id='PacsaveCreated.v' class='invisible'><code>PacsaveCreated</code></span></span><div class='docblock'><p>A .pacsave file was created; See alpm_event_pacsave_created_t for arguments</p>
+</div><span id='variant.HookStart' class='variant'><span id='HookStart.v' class='invisible'><code>HookStart</code></span></span><div class='docblock'><p>Processing hooks will be started.</p>
+</div><span id='variant.HookDone' class='variant'><span id='HookDone.v' class='invisible'><code>HookDone</code></span></span><div class='docblock'><p>Processing hooks is finished.</p>
+</div><span id='variant.HookRunStart' class='variant'><span id='HookRunStart.v' class='invisible'><code>HookRunStart</code></span></span><div class='docblock'><p>A hook is starting</p>
+</div><span id='variant.HookRunDone' class='variant'><span id='HookRunDone.v' class='invisible'><code>HookRunDone</code></span></span><div class='docblock'><p>A hook has finished running</p>
+</div><span id='variant.__Unknown' class='variant'><span id='__Unknown.v' class='invisible'><code>__Unknown</code></span></span></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "libalpm";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

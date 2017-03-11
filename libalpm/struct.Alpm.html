@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Alpm` struct in crate `libalpm`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Alpm">
+
+    <title>libalpm::Alpm - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>libalpm</a></p><script>window.sidebarCurrent = {name: 'Alpm', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>libalpm</a>::<wbr><a class='struct' href=''>Alpm</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/libalpm/lib.rs.html#60-62' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Alpm { /* fields omitted */ }</pre><div class='docblock'><p>A handle on an alpm instance</p>
+
+<p>Note that I have NOT checked whether the interface is threadsafe, so it&#39;s best to use only one
+instance of Alpm at present (doing your own synchronization if you want to share between
+threads). Also, callbacks must be stored in global state, so if they are changed for one they
+will be changed for all.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../libalpm/struct.Alpm.html' title='struct libalpm::Alpm'>Alpm</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/lib.rs.html#64-574' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(root: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, db_path: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../libalpm/type.AlpmResult.html' title='type libalpm::AlpmResult'>AlpmResult</a>&lt;<a class='struct' href='../libalpm/struct.Alpm.html' title='struct libalpm::Alpm'>Alpm</a>&gt;</code></span></h4>
+<div class='docblock'><p>Get a handle on the alpm instance defined by the given root/db_path</p>
+</div><h4 id='method.with_options' class='method'><span id='with_options.v' class='invisible'><code>fn <a href='#method.with_options' class='fnname'>with_options</a>(options: &amp;<a class='struct' href='../libalpm/struct.Options.html' title='struct libalpm::Options'>Options</a>) -&gt; <a class='type' href='../libalpm/type.AlpmResult.html' title='type libalpm::AlpmResult'>AlpmResult</a>&lt;<a class='struct' href='../libalpm/struct.Alpm.html' title='struct libalpm::Alpm'>Alpm</a>&gt;</code></span></h4>
+<div class='docblock'><p>Creates an alpm instance with the given options.</p>
+
+<p>TODO will only be implemented after the rest of the library is finished.</p>
+</div><h4 id='method.error' class='method'><span id='error.v' class='invisible'><code>fn <a href='#method.error' class='fnname'>error</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='enum core::option::Option'>Option</a>&lt;<a class='enum' href='../libalpm/enum.Error.html' title='enum libalpm::Error'>Error</a>&gt;</code></span></h4>
+<div class='docblock'><p>Gets the current (last) error status. Most functions use this internally to get the
+error type to return, so there isn&#39;t much need to use this externally.</p>
+</div><h4 id='method.log_action' class='method'><span id='log_action.v' class='invisible'><code>fn <a href='#method.log_action' class='fnname'>log_action</a>&lt;T, U&gt;(&amp;self, prefix: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, msg: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../libalpm/type.AlpmResult.html' title='type libalpm::AlpmResult'>AlpmResult</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Logs a message using alpm&#39;s built in logging functionality.</p>
+</div><h4 id='method.fetch_pkgurl' class='method'><span id='fetch_pkgurl.v' class='invisible'><code>fn <a href='#method.fetch_pkgurl' class='fnname'>fetch_pkgurl</a>(&amp;self, url: <a class='struct' href='../url/struct.Url.html' title='struct url::Url'>Url</a>) -&gt; <a class='type' href='../libalpm/type.AlpmResult.html' title='type libalpm::AlpmResult'>AlpmResult</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html' title='struct std::path::PathBuf'>PathBuf</a>&gt;</code></span></h4>
+<div class='docblock'><p>Fetch a remote pkg from the given URL and return its path.</p>
+</div><h4 id='method.log_function' class='method'><span id='log_function.v' class='invisible'><code>fn <a href='#method.log_function' class='fnname'>log_function</a>&lt;F&gt;(&amp;self, func: F) <span class='where fmt-newline'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html' title='trait core::ops::FnMut'>FnMut</a>(<a class='struct' href='../libalpm/struct.LogLevels.html' title='struct libalpm::LogLevels'>LogLevels</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>) + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='trait core::marker::Send'>Send</a> + 'static</span></code></span></h4>
+<div class='docblock'><p>Set the callback called when a log message is received.</p>
+</div><h4 id='method.clear_log_function' class='method'><span id='clear_log_function.v' class='invisible'><code>fn <a href='#method.clear_log_function' class='fnname'>clear_log_function</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Clears the log callback.</p>
+</div><h4 id='method.file_download_progress_function' class='method'><span id='file_download_progress_function.v' class='invisible'><code>fn <a href='#method.file_download_progress_function' class='fnname'>file_download_progress_function</a>&lt;F&gt;(&amp;self, func: F) <span class='where fmt-newline'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html' title='trait core::ops::FnMut'>FnMut</a>(&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='trait core::marker::Send'>Send</a> + 'static</span></code></span></h4>
+<div class='docblock'><p>Set the callback called to report progress on downloading a file.</p>
+</div><h4 id='method.clear_file_download_progress_function' class='method'><span id='clear_file_download_progress_function.v' class='invisible'><code>fn <a href='#method.clear_file_download_progress_function' class='fnname'>clear_file_download_progress_function</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Clears the file download progress callback.</p>
+</div><h4 id='method.total_download_progress_function' class='method'><span id='total_download_progress_function.v' class='invisible'><code>fn <a href='#method.total_download_progress_function' class='fnname'>total_download_progress_function</a>&lt;F&gt;(&amp;self, func: F) <span class='where fmt-newline'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html' title='trait core::ops::FnMut'>FnMut</a>(<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='trait core::marker::Send'>Send</a> + 'static</span></code></span></h4>
+<div class='docblock'><p>Set the callback called to report progress on total download</p>
+</div><h4 id='method.clear_total_download_progress_function' class='method'><span id='clear_total_download_progress_function.v' class='invisible'><code>fn <a href='#method.clear_total_download_progress_function' class='fnname'>clear_total_download_progress_function</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Clears the total download progress callback.</p>
+</div><h4 id='method.fetch_function' class='method'><span id='fetch_function.v' class='invisible'><code>unsafe fn <a href='#method.fetch_function' class='fnname'>fetch_function</a>&lt;F&gt;(&amp;self, func: F) <span class='where fmt-newline'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html' title='trait core::ops::FnMut'>FnMut</a>(&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='enum' href='../libalpm/enum.DownloadResult.html' title='enum libalpm::DownloadResult'>DownloadResult</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='trait core::marker::Send'>Send</a> + 'static</span></code></span></h4>
+<div class='docblock'><p>Set the callback called to download a file.</p>
+
+<p>Providing this function is optional and it is recommended that you don&#39;t set it (and use
+the built-in fetch fn). This could be useful e.g. if you are behind a complicated proxy or
+want to use something other than http to fetch.</p>
+
+<h1 id='safety' class='section-header'><a href='#safety'>Safety</a></h1>
+<p>Note that if you supply this function, you promise that if you return DownloadResult::Ok,
+the requested file is correctly located in the given location.</p>
+
+<p>A panic in the function will cause DownloadResult::Err to be sent to the underlying
+libalpm (i.e. not undefined behaviour).</p>
+
+<p>TODO investigate whether safe to relax &#39;static bound</p>
+</div><h4 id='method.clear_fetch_function' class='method'><span id='clear_fetch_function.v' class='invisible'><code>fn <a href='#method.clear_fetch_function' class='fnname'>clear_fetch_function</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Clears the file download callback, falling back to built-in fetch functionality.</p>
+</div><h4 id='method.event_function' class='method'><span id='event_function.v' class='invisible'><code>fn <a href='#method.event_function' class='fnname'>event_function</a>&lt;F&gt;(&amp;self, func: F) <span class='where fmt-newline'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html' title='trait core::ops::FnMut'>FnMut</a>(<a class='enum' href='../libalpm/enum.Event.html' title='enum libalpm::Event'>Event</a>) + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='trait core::marker::Send'>Send</a> + 'static</span></code></span></h4>
+<div class='docblock'><p>Sets the function called when an event occurs</p>
+</div><h4 id='method.clear_event_function' class='method'><span id='clear_event_function.v' class='invisible'><code>fn <a href='#method.clear_event_function' class='fnname'>clear_event_function</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Clears the file download callback, falling back to built-in fetch functionality.</p>
+</div><h4 id='method.question_function' class='method'><span id='question_function.v' class='invisible'><code>fn <a href='#method.question_function' class='fnname'>question_function</a>&lt;F&gt;(&amp;self, func: F) <span class='where fmt-newline'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html' title='trait core::ops::FnMut'>FnMut</a>() + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='trait core::marker::Send'>Send</a> + 'static</span></code></span></h4>
+<div class='docblock'><p>Sets the function called when a question needs answering (todo i think)</p>
+</div><h4 id='method.clear_question_function' class='method'><span id='clear_question_function.v' class='invisible'><code>fn <a href='#method.clear_question_function' class='fnname'>clear_question_function</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Clears the function called when a question needs answering (todo i think)</p>
+</div><h4 id='method.progress_function' class='method'><span id='progress_function.v' class='invisible'><code>fn <a href='#method.progress_function' class='fnname'>progress_function</a>&lt;F&gt;(&amp;self, func: F) <span class='where fmt-newline'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html' title='trait core::ops::FnMut'>FnMut</a>() + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='trait core::marker::Send'>Send</a> + 'static</span></code></span></h4>
+<div class='docblock'><p>Sets the function called to show operation progress</p>
+</div><h4 id='method.clear_progress_function' class='method'><span id='clear_progress_function.v' class='invisible'><code>fn <a href='#method.clear_progress_function' class='fnname'>clear_progress_function</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Clears the function called to show operation progress</p>
+</div><h4 id='method.root' class='method'><span id='root.v' class='invisible'><code>fn <a href='#method.root' class='fnname'>root</a>&lt;'a&gt;(&amp;'a self) -&gt; &amp;'a <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></span></h4>
+<div class='docblock'><p>Get the root path used in this instance of alpm</p>
+
+<p>The api doesn&#39;t make clear the lifetime of the result, so I am conservative (same goes for
+db_path)</p>
+</div><h4 id='method.db_path' class='method'><span id='db_path.v' class='invisible'><code>fn <a href='#method.db_path' class='fnname'>db_path</a>&lt;'a&gt;(&amp;'a self) -&gt; &amp;'a <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></span></h4>
+<div class='docblock'><p>Get the database path used in this instance of alpm</p>
+</div><h4 id='method.lockfile' class='method'><span id='lockfile.v' class='invisible'><code>fn <a href='#method.lockfile' class='fnname'>lockfile</a>&lt;'a&gt;(&amp;'a self) -&gt; &amp;'a <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></span></h4>
+<div class='docblock'><p>Get the lockfile path used in this instance of alpm</p>
+</div><h4 id='method.cache_dirs' class='method'><span id='cache_dirs.v' class='invisible'><code>fn <a href='#method.cache_dirs' class='fnname'>cache_dirs</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></span></h4>
+<div class='docblock'><p>Gets a list of the cache directories in use by this instance of alpm</p>
+</div><h4 id='method.set_cache_dirs' class='method'><span id='set_cache_dirs.v' class='invisible'><code>fn <a href='#method.set_cache_dirs' class='fnname'>set_cache_dirs</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Sets a list of the cache directories in use by this instance of alpm</p>
+</div><h4 id='method.add_cache_dir' class='method'><span id='add_cache_dir.v' class='invisible'><code>fn <a href='#method.add_cache_dir' class='fnname'>add_cache_dir</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Adds a cache directory for use by this instance of alpm</p>
+</div><h4 id='method.remove_cache_dir' class='method'><span id='remove_cache_dir.v' class='invisible'><code>fn <a href='#method.remove_cache_dir' class='fnname'>remove_cache_dir</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Removes a cache directory in use by this instance of alpm</p>
+</div><h4 id='method.hook_dirs' class='method'><span id='hook_dirs.v' class='invisible'><code>fn <a href='#method.hook_dirs' class='fnname'>hook_dirs</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets a list of the hook directories in use by this instance of alpm</p>
+</div><h4 id='method.set_hook_dirs' class='method'><span id='set_hook_dirs.v' class='invisible'><code>fn <a href='#method.set_hook_dirs' class='fnname'>set_hook_dirs</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Sets a list of the hook directories in use by this instance of alpm</p>
+</div><h4 id='method.add_hook_dir' class='method'><span id='add_hook_dir.v' class='invisible'><code>fn <a href='#method.add_hook_dir' class='fnname'>add_hook_dir</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Adds a hook directory for use by this instance of alpm</p>
+</div><h4 id='method.remove_hook_dir' class='method'><span id='remove_hook_dir.v' class='invisible'><code>fn <a href='#method.remove_hook_dir' class='fnname'>remove_hook_dir</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Removes a hook directory in use by this instance of alpm</p>
+</div><h4 id='method.log_file' class='method'><span id='log_file.v' class='invisible'><code>fn <a href='#method.log_file' class='fnname'>log_file</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets the log file location used by this instance of alpm.</p>
+</div><h4 id='method.set_log_file' class='method'><span id='set_log_file.v' class='invisible'><code>fn <a href='#method.set_log_file' class='fnname'>set_log_file</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Sets the log file location used by this instance of alpm.</p>
+</div><h4 id='method.gpg_dir' class='method'><span id='gpg_dir.v' class='invisible'><code>fn <a href='#method.gpg_dir' class='fnname'>gpg_dir</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets the path to alpm&#39;s GnuPG home directory</p>
+</div><h4 id='method.set_gpg_dir' class='method'><span id='set_gpg_dir.v' class='invisible'><code>fn <a href='#method.set_gpg_dir' class='fnname'>set_gpg_dir</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Sets the path to alpm&#39;s GnuPG home directory</p>
+</div><h4 id='method.use_syslog' class='method'><span id='use_syslog.v' class='invisible'><code>fn <a href='#method.use_syslog' class='fnname'>use_syslog</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets whether this instance of alpm should log events to syslog</p>
+</div><h4 id='method.set_use_syslog' class='method'><span id='set_use_syslog.v' class='invisible'><code>fn <a href='#method.set_use_syslog' class='fnname'>set_use_syslog</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Sets whether this instance of alpm should log events to syslog</p>
+</div><h4 id='method.no_upgrades' class='method'><span id='no_upgrades.v' class='invisible'><code>fn <a href='#method.no_upgrades' class='fnname'>no_upgrades</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets a list of the packages that should not be upgraded.</p>
+</div><h4 id='method.set_no_upgrades' class='method'><span id='set_no_upgrades.v' class='invisible'><code>fn <a href='#method.set_no_upgrades' class='fnname'>set_no_upgrades</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Sets a list of the packages that should not be upgraded.</p>
+</div><h4 id='method.add_no_upgrade' class='method'><span id='add_no_upgrade.v' class='invisible'><code>fn <a href='#method.add_no_upgrade' class='fnname'>add_no_upgrade</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Adds a package to the list that should not be upgraded.</p>
+</div><h4 id='method.remove_no_upgrade' class='method'><span id='remove_no_upgrade.v' class='invisible'><code>fn <a href='#method.remove_no_upgrade' class='fnname'>remove_no_upgrade</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Removes a package from the list that should not be upgraded.</p>
+</div><h4 id='method.ignore_pkgs' class='method'><span id='ignore_pkgs.v' class='invisible'><code>fn <a href='#method.ignore_pkgs' class='fnname'>ignore_pkgs</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets a list of the packages that should be ignored.</p>
+</div><h4 id='method.set_ignore_pkgs' class='method'><span id='set_ignore_pkgs.v' class='invisible'><code>fn <a href='#method.set_ignore_pkgs' class='fnname'>set_ignore_pkgs</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Sets a list of the packages that should be ignored.</p>
+</div><h4 id='method.add_ignore_pkg' class='method'><span id='add_ignore_pkg.v' class='invisible'><code>fn <a href='#method.add_ignore_pkg' class='fnname'>add_ignore_pkg</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Adds a package to the list that should be ignored.</p>
+</div><h4 id='method.remove_ignore_pkg' class='method'><span id='remove_ignore_pkg.v' class='invisible'><code>fn <a href='#method.remove_ignore_pkg' class='fnname'>remove_ignore_pkg</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Removes a package from the list that should be ignored.</p>
+</div><h4 id='method.ignore_groups' class='method'><span id='ignore_groups.v' class='invisible'><code>fn <a href='#method.ignore_groups' class='fnname'>ignore_groups</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets a list of the groups that should be ignored.</p>
+</div><h4 id='method.set_ignore_groups' class='method'><span id='set_ignore_groups.v' class='invisible'><code>fn <a href='#method.set_ignore_groups' class='fnname'>set_ignore_groups</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Sets a list of the groups that should be ignored.</p>
+</div><h4 id='method.add_ignore_group' class='method'><span id='add_ignore_group.v' class='invisible'><code>fn <a href='#method.add_ignore_group' class='fnname'>add_ignore_group</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Adds a group to the list that should be ignored.</p>
+</div><h4 id='method.remove_ignore_group' class='method'><span id='remove_ignore_group.v' class='invisible'><code>fn <a href='#method.remove_ignore_group' class='fnname'>remove_ignore_group</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Removes a group from the list that should be ignored.</p>
+</div><h4 id='method.assume_installed' class='method'><span id='assume_installed.v' class='invisible'><code>fn <a href='#method.assume_installed' class='fnname'>assume_installed</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets a list of the dependencies that should be ignored by a sys-upgrade.</p>
+</div><h4 id='method.set_assume_installed' class='method'><span id='set_assume_installed.v' class='invisible'><code>fn <a href='#method.set_assume_installed' class='fnname'>set_assume_installed</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Sets a list of the dependencies that should be ignored by a sys-upgrade.</p>
+</div><h4 id='method.add_assume_installed' class='method'><span id='add_assume_installed.v' class='invisible'><code>fn <a href='#method.add_assume_installed' class='fnname'>add_assume_installed</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Adds a package to the list of dependencies that should be ignored by a sys-upgrade.</p>
+</div><h4 id='method.remove_assume_installed' class='method'><span id='remove_assume_installed.v' class='invisible'><code>fn <a href='#method.remove_assume_installed' class='fnname'>remove_assume_installed</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Removes a package from the list of dependencies that should be ignored by a sys-upgrade.</p>
+</div><h4 id='method.arch' class='method'><span id='arch.v' class='invisible'><code>fn <a href='#method.arch' class='fnname'>arch</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='enum core::option::Option'>Option</a>&lt;&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></span></h4>
+<div class='docblock'><p>Gets the targeted architecture.</p>
+</div><h4 id='method.set_arch' class='method'><span id='set_arch.v' class='invisible'><code>fn <a href='#method.set_arch' class='fnname'>set_arch</a>(&amp;self, arch: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../libalpm/type.AlpmResult.html' title='type libalpm::AlpmResult'>AlpmResult</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Sets the targeted architecture.</p>
+</div><h4 id='method.delta_ratio' class='method'><span id='delta_ratio.v' class='invisible'><code>fn <a href='#method.delta_ratio' class='fnname'>delta_ratio</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a></code></span></h4>
+<div class='docblock'><p>Gets the delta ratio</p>
+</div><h4 id='method.set_delta_ratio' class='method'><span id='set_delta_ratio.v' class='invisible'><code>fn <a href='#method.set_delta_ratio' class='fnname'>set_delta_ratio</a>(&amp;self, r: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>) -&gt; <a class='type' href='../libalpm/type.AlpmResult.html' title='type libalpm::AlpmResult'>AlpmResult</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Sets the targeted architecture</p>
+</div><h4 id='method.check_space' class='method'><span id='check_space.v' class='invisible'><code>fn <a href='#method.check_space' class='fnname'>check_space</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>Gets whether alpm will check disk space before operations</p>
+</div><h4 id='method.set_check_space' class='method'><span id='set_check_space.v' class='invisible'><code>fn <a href='#method.set_check_space' class='fnname'>set_check_space</a>(&amp;self, check: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='type' href='../libalpm/type.AlpmResult.html' title='type libalpm::AlpmResult'>AlpmResult</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Sets the targeted architecture</p>
+</div><h4 id='method.db_extension' class='method'><span id='db_extension.v' class='invisible'><code>fn <a href='#method.db_extension' class='fnname'>db_extension</a>(&amp;self) -&gt; &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></span></h4>
+<div class='docblock'><p>Gets the registered database extension used on the filesystem</p>
+</div><h4 id='method.set_db_extension' class='method'><span id='set_db_extension.v' class='invisible'><code>fn <a href='#method.set_db_extension' class='fnname'>set_db_extension</a>(&amp;self, ext: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../libalpm/type.AlpmResult.html' title='type libalpm::AlpmResult'>AlpmResult</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Sets the targeted architecture</p>
+</div><h4 id='method.default_sign_level' class='method'><span id='default_sign_level.v' class='invisible'><code>fn <a href='#method.default_sign_level' class='fnname'>default_sign_level</a>(&amp;self) -&gt; <a class='struct' href='../libalpm/struct.SigLevel.html' title='struct libalpm::SigLevel'>SigLevel</a></code></span></h4>
+<div class='docblock'><p>Gets the default signing level</p>
+</div><h4 id='method.set_default_sign_level' class='method'><span id='set_default_sign_level.v' class='invisible'><code>fn <a href='#method.set_default_sign_level' class='fnname'>set_default_sign_level</a>(&amp;self, s: <a class='struct' href='../libalpm/struct.SigLevel.html' title='struct libalpm::SigLevel'>SigLevel</a>) -&gt; <a class='type' href='../libalpm/type.AlpmResult.html' title='type libalpm::AlpmResult'>AlpmResult</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Sets the default signing level</p>
+</div><h4 id='method.local_file_sign_level' class='method'><span id='local_file_sign_level.v' class='invisible'><code>fn <a href='#method.local_file_sign_level' class='fnname'>local_file_sign_level</a>(&amp;self) -&gt; <a class='struct' href='../libalpm/struct.SigLevel.html' title='struct libalpm::SigLevel'>SigLevel</a></code></span></h4>
+<div class='docblock'><p>Gets the default signing level</p>
+</div><h4 id='method.set_local_file_sign_level' class='method'><span id='set_local_file_sign_level.v' class='invisible'><code>fn <a href='#method.set_local_file_sign_level' class='fnname'>set_local_file_sign_level</a>(&amp;self, s: <a class='struct' href='../libalpm/struct.SigLevel.html' title='struct libalpm::SigLevel'>SigLevel</a>) -&gt; <a class='type' href='../libalpm/type.AlpmResult.html' title='type libalpm::AlpmResult'>AlpmResult</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Sets the default signing level</p>
+</div><h4 id='method.remote_file_sign_level' class='method'><span id='remote_file_sign_level.v' class='invisible'><code>fn <a href='#method.remote_file_sign_level' class='fnname'>remote_file_sign_level</a>(&amp;self) -&gt; <a class='struct' href='../libalpm/struct.SigLevel.html' title='struct libalpm::SigLevel'>SigLevel</a></code></span></h4>
+<div class='docblock'><p>Gets the default signing level</p>
+</div><h4 id='method.set_remote_file_sign_level' class='method'><span id='set_remote_file_sign_level.v' class='invisible'><code>fn <a href='#method.set_remote_file_sign_level' class='fnname'>set_remote_file_sign_level</a>(&amp;self, s: <a class='struct' href='../libalpm/struct.SigLevel.html' title='struct libalpm::SigLevel'>SigLevel</a>) -&gt; <a class='type' href='../libalpm/type.AlpmResult.html' title='type libalpm::AlpmResult'>AlpmResult</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Sets the default signing level</p>
+</div><h4 id='method.local_db' class='method'><span id='local_db.v' class='invisible'><code>fn <a href='#method.local_db' class='fnname'>local_db</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class='struct' href='../libalpm/struct.Db.html' title='struct libalpm::Db'>Db</a>&lt;'a&gt;</code></span></h4>
+<div class='docblock'><p>Get the local database instance.</p>
+</div><h4 id='method.sync_dbs' class='method'><span id='sync_dbs.v' class='invisible'><code>fn <a href='#method.sync_dbs' class='fnname'>sync_dbs</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../libalpm/struct.Db.html' title='struct libalpm::Db'>Db</a>&lt;'a&gt;&gt;</code></span></h4>
+<div class='docblock'><p>Get a list of remote databases registered.</p>
+</div><h4 id='method.register_sync_db' class='method'><span id='register_sync_db.v' class='invisible'><code>fn <a href='#method.register_sync_db' class='fnname'>register_sync_db</a>&lt;'a&gt;(&amp;'a self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; treename: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; level: <a class='struct' href='../libalpm/struct.SigLevel.html' title='struct libalpm::SigLevel'>SigLevel</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='type' href='../libalpm/type.AlpmResult.html' title='type libalpm::AlpmResult'>AlpmResult</a>&lt;<a class='struct' href='../libalpm/struct.Db.html' title='struct libalpm::Db'>Db</a>&lt;'a&gt;&gt;</code></span></h4>
+<div class='docblock'><p>Register a sync db (remote db). You will need to attach servers to the db to be able to
+sync</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='trait core::fmt::Debug'>Debug</a> for <a class='struct' href='../libalpm/struct.Alpm.html' title='struct libalpm::Alpm'>Alpm</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/lib.rs.html#59' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='struct core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='type core::fmt::Result'>Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='trait core::ops::Drop'>Drop</a> for <a class='struct' href='../libalpm/struct.Alpm.html' title='struct libalpm::Alpm'>Alpm</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/lib.rs.html#576-580' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.drop' class='method'><span id='drop.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></span></h4>
+<div class='docblock'><p>A method called when the value goes out of scope. <a href="https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop">Read more</a></p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "libalpm";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

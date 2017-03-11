@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `alpm_question_t` union in crate `alpm_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, alpm_question_t">
+
+    <title>alpm_sys::alpm_question_t - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>alpm_sys</a></p><script>window.sidebarCurrent = {name: 'alpm_question_t', ty: 'union', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content union">
+<h1 class='fqn'><span class='in-band'>Union <a href='index.html'>alpm_sys</a>::<wbr><a class='union' href=''>alpm_question_t</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/alpm_sys/ffi.rs.html#514-524' title='goto source code'>[src]</a></span></h1>
+<pre class='rust union'><div class="docblock attributes">#[repr(C)]
+</div>pub union alpm_question_t {
+    pub type_: <a class='type' href='../alpm_sys/type.alpm_question_type_t.html' title='type alpm_sys::alpm_question_type_t'>alpm_question_type_t</a>,
+    pub any: <a class='struct' href='../alpm_sys/struct.alpm_question_any_t.html' title='struct alpm_sys::alpm_question_any_t'>alpm_question_any_t</a>,
+    pub install_ignorepkg: <a class='struct' href='../alpm_sys/struct.alpm_question_install_ignorepkg_t.html' title='struct alpm_sys::alpm_question_install_ignorepkg_t'>alpm_question_install_ignorepkg_t</a>,
+    pub replace: <a class='struct' href='../alpm_sys/struct.alpm_question_replace_t.html' title='struct alpm_sys::alpm_question_replace_t'>alpm_question_replace_t</a>,
+    pub conflict: <a class='struct' href='../alpm_sys/struct.alpm_question_conflict_t.html' title='struct alpm_sys::alpm_question_conflict_t'>alpm_question_conflict_t</a>,
+    pub corrupted: <a class='struct' href='../alpm_sys/struct.alpm_question_corrupted_t.html' title='struct alpm_sys::alpm_question_corrupted_t'>alpm_question_corrupted_t</a>,
+    pub remove_pkgs: <a class='struct' href='../alpm_sys/struct.alpm_question_remove_pkgs_t.html' title='struct alpm_sys::alpm_question_remove_pkgs_t'>alpm_question_remove_pkgs_t</a>,
+    pub select_provider: <a class='struct' href='../alpm_sys/struct.alpm_question_select_provider_t.html' title='struct alpm_sys::alpm_question_select_provider_t'>alpm_question_select_provider_t</a>,
+    pub import_key: <a class='struct' href='../alpm_sys/struct.alpm_question_import_key_t.html' title='struct alpm_sys::alpm_question_import_key_t'>alpm_question_import_key_t</a>,
+}</pre><h2 class='fields'>Fields</h2><span id='structfield.type_' class='structfield'><code>type_: <a class='type' href='../alpm_sys/type.alpm_question_type_t.html' title='type alpm_sys::alpm_question_type_t'>alpm_question_type_t</a></code>
+                       </span><span id='structfield.any' class='structfield'><code>any: <a class='struct' href='../alpm_sys/struct.alpm_question_any_t.html' title='struct alpm_sys::alpm_question_any_t'>alpm_question_any_t</a></code>
+                       </span><span id='structfield.install_ignorepkg' class='structfield'><code>install_ignorepkg: <a class='struct' href='../alpm_sys/struct.alpm_question_install_ignorepkg_t.html' title='struct alpm_sys::alpm_question_install_ignorepkg_t'>alpm_question_install_ignorepkg_t</a></code>
+                       </span><span id='structfield.replace' class='structfield'><code>replace: <a class='struct' href='../alpm_sys/struct.alpm_question_replace_t.html' title='struct alpm_sys::alpm_question_replace_t'>alpm_question_replace_t</a></code>
+                       </span><span id='structfield.conflict' class='structfield'><code>conflict: <a class='struct' href='../alpm_sys/struct.alpm_question_conflict_t.html' title='struct alpm_sys::alpm_question_conflict_t'>alpm_question_conflict_t</a></code>
+                       </span><span id='structfield.corrupted' class='structfield'><code>corrupted: <a class='struct' href='../alpm_sys/struct.alpm_question_corrupted_t.html' title='struct alpm_sys::alpm_question_corrupted_t'>alpm_question_corrupted_t</a></code>
+                       </span><span id='structfield.remove_pkgs' class='structfield'><code>remove_pkgs: <a class='struct' href='../alpm_sys/struct.alpm_question_remove_pkgs_t.html' title='struct alpm_sys::alpm_question_remove_pkgs_t'>alpm_question_remove_pkgs_t</a></code>
+                       </span><span id='structfield.select_provider' class='structfield'><code>select_provider: <a class='struct' href='../alpm_sys/struct.alpm_question_select_provider_t.html' title='struct alpm_sys::alpm_question_select_provider_t'>alpm_question_select_provider_t</a></code>
+                       </span><span id='structfield.import_key' class='structfield'><code>import_key: <a class='struct' href='../alpm_sys/struct.alpm_question_import_key_t.html' title='struct alpm_sys::alpm_question_import_key_t'>alpm_question_import_key_t</a></code>
+                       </span></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "alpm_sys";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

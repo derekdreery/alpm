@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["printf","Take a printf c-string and variadic array, and write equiv. out to the formatter"]]});

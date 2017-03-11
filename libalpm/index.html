@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `libalpm` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, libalpm">
+
+    <title>libalpm - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'libalpm', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>libalpm</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/libalpm/lib.rs.html#1-593' title='goto source code'>[src]</a></span></h1>
+<h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='util/index.html'
+                                  title='mod libalpm::util'>util</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Alpm.html'
+                                  title='struct libalpm::Alpm'>Alpm</a></td>
+                           <td class='docblock-short'>
+                                <p>A handle on an alpm instance</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Caps.html'
+                                  title='struct libalpm::Caps'>Caps</a></td>
+                           <td class='docblock-short'>
+                                <p>This version of libalpm&#39;s capabilities</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Db.html'
+                                  title='struct libalpm::Db'>Db</a></td>
+                           <td class='docblock-short'>
+                                <p>A database of packages. This is only ever available as a reference</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Group.html'
+                                  title='struct libalpm::Group'>Group</a></td>
+                           <td class='docblock-short'>
+                                <p>A group of related pacakges in a database</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.LogLevels.html'
+                                  title='struct libalpm::LogLevels'>LogLevels</a></td>
+                           <td class='docblock-short'>
+                                <p>The possible log-levels</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Options.html'
+                                  title='struct libalpm::Options'>Options</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Package.html'
+                                  title='struct libalpm::Package'>Package</a></td>
+                           <td class='docblock-short'>
+                                <p>An owning version of Package</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.PackageVersion.html'
+                                  title='struct libalpm::PackageVersion'>PackageVersion</a></td>
+                           <td class='docblock-short'>
+                                <p>A package version</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.RepoOptions.html'
+                                  title='struct libalpm::RepoOptions'>RepoOptions</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.SigLevel.html'
+                                  title='struct libalpm::SigLevel'>SigLevel</a></td>
+                           <td class='docblock-short'>
+                                <p>PGP signature verification options</p>
+                           </td>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.DownloadResult.html'
+                                  title='enum libalpm::DownloadResult'>DownloadResult</a></td>
+                           <td class='docblock-short'>
+                                <p>The result of a download</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Error.html'
+                                  title='enum libalpm::Error'>Error</a></td>
+                           <td class='docblock-short'>
+                                <p>An enum of possible errors in libalpm</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Event.html'
+                                  title='enum libalpm::Event'>Event</a></td>
+                           <td class='docblock-short'>
+                                <p>An event emitted from libalpm</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LogLevel.html'
+                                  title='enum libalpm::LogLevel'>LogLevel</a></td>
+                           <td class='docblock-short'>
+                                <p>The highest log level marked true</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.PackageFrom.html'
+                                  title='enum libalpm::PackageFrom'>PackageFrom</a></td>
+                           <td class='docblock-short'>
+                                <p>Where a package came from</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.PackageRef.html'
+                                  title='enum libalpm::PackageRef'>PackageRef</a></td>
+                           <td class='docblock-short'>
+                                <p>A package in libalpm that can only be held by reference.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Reason.html'
+                                  title='enum libalpm::Reason'>Reason</a></td>
+                           <td class='docblock-short'>
+                                <p>Why a package was installed, either because it was explicitally requested, or required as a
+dependency.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Validation.html'
+                                  title='enum libalpm::Validation'>Validation</a></td>
+                           <td class='docblock-short'>
+                                <p>Whether validation was performed.</p>
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.capabilities.html'
+                                  title='fn libalpm::capabilities'>capabilities</a></td>
+                           <td class='docblock-short'>
+                                <p>Get the capabilities of the attached libalpm</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.version.html'
+                                  title='fn libalpm::version'>version</a></td>
+                           <td class='docblock-short'>
+                                <p>Get the version of the attached libalpm</p>
+                           </td>
+                       </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.AlpmResult.html'
+                                  title='type libalpm::AlpmResult'>AlpmResult</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "libalpm";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

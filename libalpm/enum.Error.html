@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Error` enum in crate `libalpm`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Error">
+
+    <title>libalpm::Error - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>libalpm</a></p><script>window.sidebarCurrent = {name: 'Error', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='index.html'>libalpm</a>::<wbr><a class='enum' href=''>Error</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/libalpm/error.rs.html#12-133' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum Error {
+    Memory,
+    System,
+    BadPerms,
+    NotAFile,
+    NotADir,
+    WrongArgs,
+    DiskSpace,
+    HandleNull,
+    HandleNotNull,
+    HandleLock,
+    DbOpen,
+    DbCreate,
+    DbNull,
+    DbNotNull,
+    DbNotFound,
+    DbInvalid,
+    DbInvalidSig,
+    DbVersion,
+    DbWrite,
+    DbRemove,
+    ServerBadUrl,
+    ServerNone,
+    TransNotNull,
+    TransNull,
+    TransDupTarget,
+    TransNotInitialized,
+    TransNotPrepared,
+    TransAbort,
+    TransType,
+    TransNotLocked,
+    TransHookFailed,
+    PkgNotFound,
+    PkgIgnored,
+    PkgInvalid,
+    PkgInvalidChecksum,
+    PkgInvalidSig,
+    PkgMissingSig,
+    PkgOpen,
+    PkgCantRemove,
+    PkgInvalidName,
+    PkgInvalidArch,
+    PkgRepoNotFound,
+    SigMissing,
+    SigInvalid,
+    DltInvalid,
+    DltPatchFailed,
+    UnsatisfiedDeps,
+    ConflictingDeps,
+    FileConflicts,
+    Retrieve,
+    InvalidRegex,
+    Libarchive,
+    Libcurl,
+    Gpgme,
+    ExternalDownload,
+    IO,
+    StrNull,
+    Utf8Error,
+    __Unknown,
+}</pre><div class='docblock'><p>An enum of possible errors in libalpm</p>
+</div><h2 class='variants'>Variants</h2>
+<span id='variant.Memory' class='variant'><span id='Memory.v' class='invisible'><code>Memory</code></span></span><div class='docblock'><p>out of memory!</p>
+</div><span id='variant.System' class='variant'><span id='System.v' class='invisible'><code>System</code></span></span><div class='docblock'><p>unexpected system error</p>
+</div><span id='variant.BadPerms' class='variant'><span id='BadPerms.v' class='invisible'><code>BadPerms</code></span></span><div class='docblock'><p>permission denied</p>
+</div><span id='variant.NotAFile' class='variant'><span id='NotAFile.v' class='invisible'><code>NotAFile</code></span></span><div class='docblock'><p>could not find or read file</p>
+</div><span id='variant.NotADir' class='variant'><span id='NotADir.v' class='invisible'><code>NotADir</code></span></span><div class='docblock'><p>could not find or read directory</p>
+</div><span id='variant.WrongArgs' class='variant'><span id='WrongArgs.v' class='invisible'><code>WrongArgs</code></span></span><div class='docblock'><p>wrong or NULL argument passed</p>
+</div><span id='variant.DiskSpace' class='variant'><span id='DiskSpace.v' class='invisible'><code>DiskSpace</code></span></span><div class='docblock'><p>not enough free disk space</p>
+</div><span id='variant.HandleNull' class='variant'><span id='HandleNull.v' class='invisible'><code>HandleNull</code></span></span><div class='docblock'><p>library not initialized</p>
+</div><span id='variant.HandleNotNull' class='variant'><span id='HandleNotNull.v' class='invisible'><code>HandleNotNull</code></span></span><div class='docblock'><p>library already initialized</p>
+</div><span id='variant.HandleLock' class='variant'><span id='HandleLock.v' class='invisible'><code>HandleLock</code></span></span><div class='docblock'><p>unable to lock database</p>
+</div><span id='variant.DbOpen' class='variant'><span id='DbOpen.v' class='invisible'><code>DbOpen</code></span></span><div class='docblock'><p>could not open database</p>
+</div><span id='variant.DbCreate' class='variant'><span id='DbCreate.v' class='invisible'><code>DbCreate</code></span></span><div class='docblock'><p>could not create database</p>
+</div><span id='variant.DbNull' class='variant'><span id='DbNull.v' class='invisible'><code>DbNull</code></span></span><div class='docblock'><p>database not initialized</p>
+</div><span id='variant.DbNotNull' class='variant'><span id='DbNotNull.v' class='invisible'><code>DbNotNull</code></span></span><div class='docblock'><p>database already registered</p>
+</div><span id='variant.DbNotFound' class='variant'><span id='DbNotFound.v' class='invisible'><code>DbNotFound</code></span></span><div class='docblock'><p>could not find database</p>
+</div><span id='variant.DbInvalid' class='variant'><span id='DbInvalid.v' class='invisible'><code>DbInvalid</code></span></span><div class='docblock'><p>invalid or corrupted database</p>
+</div><span id='variant.DbInvalidSig' class='variant'><span id='DbInvalidSig.v' class='invisible'><code>DbInvalidSig</code></span></span><div class='docblock'><p>invalid or corrupted database (PGP signature)</p>
+</div><span id='variant.DbVersion' class='variant'><span id='DbVersion.v' class='invisible'><code>DbVersion</code></span></span><div class='docblock'><p>database is incorrect version</p>
+</div><span id='variant.DbWrite' class='variant'><span id='DbWrite.v' class='invisible'><code>DbWrite</code></span></span><div class='docblock'><p>could not update database</p>
+</div><span id='variant.DbRemove' class='variant'><span id='DbRemove.v' class='invisible'><code>DbRemove</code></span></span><div class='docblock'><p>could not remove database entry</p>
+</div><span id='variant.ServerBadUrl' class='variant'><span id='ServerBadUrl.v' class='invisible'><code>ServerBadUrl</code></span></span><div class='docblock'><p>invalid url for server</p>
+</div><span id='variant.ServerNone' class='variant'><span id='ServerNone.v' class='invisible'><code>ServerNone</code></span></span><div class='docblock'><p>no servers configured for repository</p>
+</div><span id='variant.TransNotNull' class='variant'><span id='TransNotNull.v' class='invisible'><code>TransNotNull</code></span></span><div class='docblock'><p>transaction already initialized</p>
+</div><span id='variant.TransNull' class='variant'><span id='TransNull.v' class='invisible'><code>TransNull</code></span></span><div class='docblock'><p>transaction not initialized</p>
+</div><span id='variant.TransDupTarget' class='variant'><span id='TransDupTarget.v' class='invisible'><code>TransDupTarget</code></span></span><div class='docblock'><p>duplicate target</p>
+</div><span id='variant.TransNotInitialized' class='variant'><span id='TransNotInitialized.v' class='invisible'><code>TransNotInitialized</code></span></span><div class='docblock'><p>transaction not initialized</p>
+</div><span id='variant.TransNotPrepared' class='variant'><span id='TransNotPrepared.v' class='invisible'><code>TransNotPrepared</code></span></span><div class='docblock'><p>transaction not prepared</p>
+</div><span id='variant.TransAbort' class='variant'><span id='TransAbort.v' class='invisible'><code>TransAbort</code></span></span><div class='docblock'><p>transaction aborted</p>
+</div><span id='variant.TransType' class='variant'><span id='TransType.v' class='invisible'><code>TransType</code></span></span><div class='docblock'><p>operation not compatible with the transaction type</p>
+</div><span id='variant.TransNotLocked' class='variant'><span id='TransNotLocked.v' class='invisible'><code>TransNotLocked</code></span></span><div class='docblock'><p>transaction commit attempt when database is not locked</p>
+</div><span id='variant.TransHookFailed' class='variant'><span id='TransHookFailed.v' class='invisible'><code>TransHookFailed</code></span></span><div class='docblock'><p>failed to run transaction hooks</p>
+</div><span id='variant.PkgNotFound' class='variant'><span id='PkgNotFound.v' class='invisible'><code>PkgNotFound</code></span></span><div class='docblock'><p>could not find or read package</p>
+</div><span id='variant.PkgIgnored' class='variant'><span id='PkgIgnored.v' class='invisible'><code>PkgIgnored</code></span></span><div class='docblock'><p>operation cancelled due to ignorepkg</p>
+</div><span id='variant.PkgInvalid' class='variant'><span id='PkgInvalid.v' class='invisible'><code>PkgInvalid</code></span></span><div class='docblock'><p>invalid or corrupted package</p>
+</div><span id='variant.PkgInvalidChecksum' class='variant'><span id='PkgInvalidChecksum.v' class='invisible'><code>PkgInvalidChecksum</code></span></span><div class='docblock'><p>invalid or corrupted package (checksum)</p>
+</div><span id='variant.PkgInvalidSig' class='variant'><span id='PkgInvalidSig.v' class='invisible'><code>PkgInvalidSig</code></span></span><div class='docblock'><p>invalid or corrupted package (PGP signature)</p>
+</div><span id='variant.PkgMissingSig' class='variant'><span id='PkgMissingSig.v' class='invisible'><code>PkgMissingSig</code></span></span><div class='docblock'><p>package missing required signature</p>
+</div><span id='variant.PkgOpen' class='variant'><span id='PkgOpen.v' class='invisible'><code>PkgOpen</code></span></span><div class='docblock'><p>cannot open package file</p>
+</div><span id='variant.PkgCantRemove' class='variant'><span id='PkgCantRemove.v' class='invisible'><code>PkgCantRemove</code></span></span><div class='docblock'><p>cannot remove all files for package</p>
+</div><span id='variant.PkgInvalidName' class='variant'><span id='PkgInvalidName.v' class='invisible'><code>PkgInvalidName</code></span></span><div class='docblock'><p>package filename is not valid</p>
+</div><span id='variant.PkgInvalidArch' class='variant'><span id='PkgInvalidArch.v' class='invisible'><code>PkgInvalidArch</code></span></span><div class='docblock'><p>package architecture is not valid</p>
+</div><span id='variant.PkgRepoNotFound' class='variant'><span id='PkgRepoNotFound.v' class='invisible'><code>PkgRepoNotFound</code></span></span><div class='docblock'><p>could not find repository for target</p>
+</div><span id='variant.SigMissing' class='variant'><span id='SigMissing.v' class='invisible'><code>SigMissing</code></span></span><div class='docblock'><p>missing PGP signature</p>
+</div><span id='variant.SigInvalid' class='variant'><span id='SigInvalid.v' class='invisible'><code>SigInvalid</code></span></span><div class='docblock'><p>invalid PGP signature</p>
+</div><span id='variant.DltInvalid' class='variant'><span id='DltInvalid.v' class='invisible'><code>DltInvalid</code></span></span><div class='docblock'><p>invalid or corrupted delta</p>
+</div><span id='variant.DltPatchFailed' class='variant'><span id='DltPatchFailed.v' class='invisible'><code>DltPatchFailed</code></span></span><div class='docblock'><p>delta patch failed</p>
+</div><span id='variant.UnsatisfiedDeps' class='variant'><span id='UnsatisfiedDeps.v' class='invisible'><code>UnsatisfiedDeps</code></span></span><div class='docblock'><p>could not satisfy dependencies</p>
+</div><span id='variant.ConflictingDeps' class='variant'><span id='ConflictingDeps.v' class='invisible'><code>ConflictingDeps</code></span></span><div class='docblock'><p>conflicting dependencies</p>
+</div><span id='variant.FileConflicts' class='variant'><span id='FileConflicts.v' class='invisible'><code>FileConflicts</code></span></span><div class='docblock'><p>conflicting files</p>
+</div><span id='variant.Retrieve' class='variant'><span id='Retrieve.v' class='invisible'><code>Retrieve</code></span></span><div class='docblock'><p>failed to retrieve some files</p>
+</div><span id='variant.InvalidRegex' class='variant'><span id='InvalidRegex.v' class='invisible'><code>InvalidRegex</code></span></span><div class='docblock'><p>invalid regular expression</p>
+</div><span id='variant.Libarchive' class='variant'><span id='Libarchive.v' class='invisible'><code>Libarchive</code></span></span><div class='docblock'><p>libarchive error</p>
+</div><span id='variant.Libcurl' class='variant'><span id='Libcurl.v' class='invisible'><code>Libcurl</code></span></span><div class='docblock'><p>download library error</p>
+</div><span id='variant.Gpgme' class='variant'><span id='Gpgme.v' class='invisible'><code>Gpgme</code></span></span><div class='docblock'><p>gpgme error</p>
+</div><span id='variant.ExternalDownload' class='variant'><span id='ExternalDownload.v' class='invisible'><code>ExternalDownload</code></span></span><div class='docblock'><p>error invoking external downloader</p>
+</div><span id='variant.IO' class='variant'><span id='IO.v' class='invisible'><code>IO</code></span></span><div class='docblock'><p>io error</p>
+</div><span id='variant.StrNull' class='variant'><span id='StrNull.v' class='invisible'><code>StrNull</code></span></span><div class='docblock'><p>null string error</p>
+</div><span id='variant.Utf8Error' class='variant'><span id='Utf8Error.v' class='invisible'><code>Utf8Error</code></span></span><div class='docblock'><p>utf8 decode error</p>
+</div><span id='variant.__Unknown' class='variant'><span id='__Unknown.v' class='invisible'><code>__Unknown</code></span></span><div class='docblock'><p>unknown error</p>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='trait core::fmt::Debug'>Debug</a> for <a class='enum' href='../libalpm/enum.Error.html' title='enum libalpm::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/error.rs.html#11' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='struct core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='type core::fmt::Result'>Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='trait core::marker::Copy'>Copy</a> for <a class='enum' href='../libalpm/enum.Error.html' title='enum libalpm::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/error.rs.html#11' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='trait core::clone::Clone'>Clone</a> for <a class='enum' href='../libalpm/enum.Error.html' title='enum libalpm::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/error.rs.html#11' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class='method'><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../libalpm/enum.Error.html' title='enum libalpm::Error'>Error</a></code></span></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class='method'><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='trait core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../libalpm/enum.Error.html' title='enum libalpm::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/error.rs.html#11' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class='method'><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../libalpm/enum.Error.html' title='enum libalpm::Error'>Error</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
+</div><h4 id='method.ne' class='method'><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, other: &amp;Rhs) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='trait core::cmp::Eq'>Eq</a> for <a class='enum' href='../libalpm/enum.Error.html' title='enum libalpm::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/error.rs.html#11' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html' title='trait std::error::Error'>StdError</a> for <a class='enum' href='../libalpm/enum.Error.html' title='enum libalpm::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/error.rs.html#135-199' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.description' class='method'><span id='description.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html#tymethod.description' class='fnname'>description</a>(&amp;self) -&gt; &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></span></h4>
+<div class='docblock'><p>A short description of the error. <a href="https://doc.rust-lang.org/nightly/std/error/trait.Error.html#tymethod.description">Read more</a></p>
+</div><h4 id='method.cause' class='method'><span id='cause.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html#method.cause' class='fnname'>cause</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='enum core::option::Option'>Option</a>&lt;&amp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html' title='trait std::error::Error'>Error</a>&gt;</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>The lower-level cause of this error, if any. <a href="https://doc.rust-lang.org/nightly/std/error/trait.Error.html#method.cause">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html' title='trait core::fmt::Display'>Display</a> for <a class='enum' href='../libalpm/enum.Error.html' title='enum libalpm::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/error.rs.html#201-205' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt-1' class='method'><span id='fmt.v-1' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='struct core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='type core::fmt::Result'>Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='trait core::convert::From'>From</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>&gt; for <a class='enum' href='../libalpm/enum.Error.html' title='enum libalpm::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/error.rs.html#207-278' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from' class='method'><span id='from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(from: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; <a class='enum' href='../libalpm/enum.Error.html' title='enum libalpm::Error'>Error</a></code></span></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='trait core::convert::From'>From</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/ffi/c_str/struct.NulError.html' title='struct std::ffi::c_str::NulError'>NulError</a>&gt; for <a class='enum' href='../libalpm/enum.Error.html' title='enum libalpm::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/error.rs.html#280-284' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from-1' class='method'><span id='from.v-1' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(_: <a class='struct' href='https://doc.rust-lang.org/nightly/std/ffi/c_str/struct.NulError.html' title='struct std::ffi::c_str::NulError'>NulError</a>) -&gt; <a class='enum' href='../libalpm/enum.Error.html' title='enum libalpm::Error'>Error</a></code></span></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='trait core::convert::From'>From</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/core/str/struct.Utf8Error.html' title='struct core::str::Utf8Error'>Utf8Error</a>&gt; for <a class='enum' href='../libalpm/enum.Error.html' title='enum libalpm::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/error.rs.html#286-290' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from-2' class='method'><span id='from.v-2' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(_: <a class='struct' href='https://doc.rust-lang.org/nightly/core/str/struct.Utf8Error.html' title='struct core::str::Utf8Error'>Utf8Error</a>) -&gt; <a class='enum' href='../libalpm/enum.Error.html' title='enum libalpm::Error'>Error</a></code></span></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "libalpm";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

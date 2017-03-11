@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `PackageRef` enum in crate `libalpm`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, PackageRef">
+
+    <title>libalpm::PackageRef - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>libalpm</a></p><script>window.sidebarCurrent = {name: 'PackageRef', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='index.html'>libalpm</a>::<wbr><a class='enum' href=''>PackageRef</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/libalpm/package.rs.html#68' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum PackageRef {}</pre><div class='docblock'><p>A package in libalpm that can only be held by reference.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='enum' href='../libalpm/enum.PackageRef.html' title='enum libalpm::PackageRef'>PackageRef</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/package.rs.html#76-389' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.check_md5' class='method'><span id='check_md5.v' class='invisible'><code>fn <a href='#method.check_md5' class='fnname'>check_md5</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>Checks package integrity using md5. Returns true on success.</p>
+</div><h4 id='method.compute_required_by' class='method'><span id='compute_required_by.v' class='invisible'><code>fn <a href='#method.compute_required_by' class='fnname'>compute_required_by</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;&amp;<a class='enum' href='../libalpm/enum.PackageRef.html' title='enum libalpm::PackageRef'>PackageRef</a>&gt;</code></span></h4>
+<div class='docblock'><p>Gets a list of all packages that require this package.</p>
+</div><h4 id='method.compute_optional_for' class='method'><span id='compute_optional_for.v' class='invisible'><code>fn <a href='#method.compute_optional_for' class='fnname'>compute_optional_for</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;&amp;<a class='enum' href='../libalpm/enum.PackageRef.html' title='enum libalpm::PackageRef'>PackageRef</a>&gt;</code></span></h4>
+<div class='docblock'><p>Gets a list of all packages optionally require this package.</p>
+</div><h4 id='method.should_ignore' class='method'><span id='should_ignore.v' class='invisible'><code>fn <a href='#method.should_ignore' class='fnname'>should_ignore</a>(&amp;self, alpm: &amp;<a class='struct' href='../libalpm/struct.Alpm.html' title='struct libalpm::Alpm'>Alpm</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>Should this package be ignored when upgrading (as set on the alpm handle).</p>
+</div><h4 id='method.filename' class='method'><span id='filename.v' class='invisible'><code>fn <a href='#method.filename' class='fnname'>filename</a>(&amp;self) -&gt; &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></span></h4>
+<div class='docblock'><p>Get the name of the file containing this package.</p>
+</div><h4 id='method.base' class='method'><span id='base.v' class='invisible'><code>fn <a href='#method.base' class='fnname'>base</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='enum core::option::Option'>Option</a>&lt;&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></span></h4>
+<div class='docblock'><p>Gets the package base name, if it has one.</p>
+</div><h4 id='method.name' class='method'><span id='name.v' class='invisible'><code>fn <a href='#method.name' class='fnname'>name</a>(&amp;self) -&gt; &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></span></h4>
+<div class='docblock'><p>Gets the package name.</p>
+</div><h4 id='method.version' class='method'><span id='version.v' class='invisible'><code>fn <a href='#method.version' class='fnname'>version</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class='struct' href='../libalpm/struct.PackageVersion.html' title='struct libalpm::PackageVersion'>PackageVersion</a>&lt;'a&gt;</code></span></h4>
+<div class='docblock'><p>Gets the package version.</p>
+</div><h4 id='method.origin' class='method'><span id='origin.v' class='invisible'><code>fn <a href='#method.origin' class='fnname'>origin</a>(&amp;self) -&gt; <a class='enum' href='../libalpm/enum.PackageFrom.html' title='enum libalpm::PackageFrom'>PackageFrom</a></code></span></h4>
+<div class='docblock'><p>Gets the origin of the package.</p>
+</div><h4 id='method.description' class='method'><span id='description.v' class='invisible'><code>fn <a href='#method.description' class='fnname'>description</a>(&amp;self) -&gt; &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></span></h4>
+<div class='docblock'><p>Gets the package description.</p>
+</div><h4 id='method.url' class='method'><span id='url.v' class='invisible'><code>fn <a href='#method.url' class='fnname'>url</a>(&amp;self) -&gt; &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></span></h4>
+<div class='docblock'><p>Gets the package url.</p>
+</div><h4 id='method.build_date' class='method'><span id='build_date.v' class='invisible'><code>fn <a href='#method.build_date' class='fnname'>build_date</a>(&amp;self) -&gt; <a class='struct' href='../chrono/naive/date/struct.NaiveDate.html' title='struct chrono::naive::date::NaiveDate'>NaiveDate</a></code></span></h4>
+<div class='docblock'><p>Gets the package build date.</p>
+</div><h4 id='method.install_date' class='method'><span id='install_date.v' class='invisible'><code>fn <a href='#method.install_date' class='fnname'>install_date</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='enum core::option::Option'>Option</a>&lt;<a class='struct' href='../chrono/naive/date/struct.NaiveDate.html' title='struct chrono::naive::date::NaiveDate'>NaiveDate</a>&gt;</code></span></h4>
+<div class='docblock'><p>Gets the install timestamp of this package.</p>
+</div><h4 id='method.packager' class='method'><span id='packager.v' class='invisible'><code>fn <a href='#method.packager' class='fnname'>packager</a>(&amp;self) -&gt; &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></span></h4>
+<div class='docblock'><p>Gets the packager&#39;s name</p>
+</div><h4 id='method.md5' class='method'><span id='md5.v' class='invisible'><code>fn <a href='#method.md5' class='fnname'>md5</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='enum core::option::Option'>Option</a>&lt;&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></span></h4>
+<div class='docblock'><p>Gets the md5 checksum for this package.</p>
+</div><h4 id='method.sha256' class='method'><span id='sha256.v' class='invisible'><code>fn <a href='#method.sha256' class='fnname'>sha256</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='enum core::option::Option'>Option</a>&lt;&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></span></h4>
+<div class='docblock'><p>Gets the sha256 checksum for this package.</p>
+</div><h4 id='method.arch' class='method'><span id='arch.v' class='invisible'><code>fn <a href='#method.arch' class='fnname'>arch</a>(&amp;self) -&gt; &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></span></h4>
+<div class='docblock'><p>Gets the architecture for which this package was built.</p>
+</div><h4 id='method.remote_size' class='method'><span id='remote_size.v' class='invisible'><code>fn <a href='#method.remote_size' class='fnname'>remote_size</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></span></h4>
+<div class='docblock'><p>Gets the size of the package on a sync database.</p>
+</div><h4 id='method.local_size' class='method'><span id='local_size.v' class='invisible'><code>fn <a href='#method.local_size' class='fnname'>local_size</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></span></h4>
+<div class='docblock'><p>Returns the size of the package when it is installed.</p>
+</div><h4 id='method.reason' class='method'><span id='reason.v' class='invisible'><code>fn <a href='#method.reason' class='fnname'>reason</a>(&amp;self) -&gt; <a class='enum' href='../libalpm/enum.Reason.html' title='enum libalpm::Reason'>Reason</a></code></span></h4>
+<div class='docblock'><p>Gets the reason this package was installed.</p>
+</div><h4 id='method.licenses' class='method'><span id='licenses.v' class='invisible'><code>fn <a href='#method.licenses' class='fnname'>licenses</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></span></h4>
+<div class='docblock'><p>Gets the licenses for this package</p>
+</div><h4 id='method.groups' class='method'><span id='groups.v' class='invisible'><code>fn <a href='#method.groups' class='fnname'>groups</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></span></h4>
+<div class='docblock'><p>Gets the groups this package belongs to.</p>
+</div><h4 id='method.depends' class='method'><span id='depends.v' class='invisible'><code>fn <a href='#method.depends' class='fnname'>depends</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets the packages this package depends on.</p>
+</div><h4 id='method.optionally_depends' class='method'><span id='optionally_depends.v' class='invisible'><code>fn <a href='#method.optionally_depends' class='fnname'>optionally_depends</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets the packages this package optionally depends on.</p>
+</div><h4 id='method.check_depends' class='method'><span id='check_depends.v' class='invisible'><code>fn <a href='#method.check_depends' class='fnname'>check_depends</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets the packages required to check this package.</p>
+</div><h4 id='method.make_depends' class='method'><span id='make_depends.v' class='invisible'><code>fn <a href='#method.make_depends' class='fnname'>make_depends</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets the packages required to make (build) this package.</p>
+</div><h4 id='method.conflicts' class='method'><span id='conflicts.v' class='invisible'><code>fn <a href='#method.conflicts' class='fnname'>conflicts</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets the packages this package conflicts with.</p>
+</div><h4 id='method.provides' class='method'><span id='provides.v' class='invisible'><code>fn <a href='#method.provides' class='fnname'>provides</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets the packages provided by this package.</p>
+</div><h4 id='method.deltas' class='method'><span id='deltas.v' class='invisible'><code>fn <a href='#method.deltas' class='fnname'>deltas</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></span></h4>
+<div class='docblock'><p>Gets the available deltas for this package.</p>
+</div><h4 id='method.replaces' class='method'><span id='replaces.v' class='invisible'><code>fn <a href='#method.replaces' class='fnname'>replaces</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets a list of packages to be replaced by this package.</p>
+</div><h4 id='method.files' class='method'><span id='files.v' class='invisible'><code>fn <a href='#method.files' class='fnname'>files</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets a list of files installed by this package.</p>
+</div><h4 id='method.backup' class='method'><span id='backup.v' class='invisible'><code>fn <a href='#method.backup' class='fnname'>backup</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets a list of files backed up when installing this package.</p>
+</div><h4 id='method.db' class='method'><span id='db.v' class='invisible'><code>fn <a href='#method.db' class='fnname'>db</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets the database this package is from</p>
+
+<p>This is currently unimplemented as it is not clear if there are times when it would be
+useful to get the underlying database.</p>
+</div><h4 id='method.base64_signature' class='method'><span id='base64_signature.v' class='invisible'><code>fn <a href='#method.base64_signature' class='fnname'>base64_signature</a>(&amp;self) -&gt; &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></span></h4>
+<div class='docblock'><p>Get thie base64 encoded package signature.</p>
+</div><h4 id='method.validation' class='method'><span id='validation.v' class='invisible'><code>fn <a href='#method.validation' class='fnname'>validation</a>(&amp;self) -&gt; <a class='enum' href='../libalpm/enum.Validation.html' title='enum libalpm::Validation'>Validation</a></code></span></h4>
+<div class='docblock'><p>Gets the method used to validate a package during install</p>
+</div><h4 id='method.changelog' class='method'><span id='changelog.v' class='invisible'><code>fn <a href='#method.changelog' class='fnname'>changelog</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Opens the changelog for reading</p>
+</div><h4 id='method.mtree' class='method'><span id='mtree.v' class='invisible'><code>fn <a href='#method.mtree' class='fnname'>mtree</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Gets the package&#39;s mtree.</p>
+</div><h4 id='method.has_scriptlet' class='method'><span id='has_scriptlet.v' class='invisible'><code>fn <a href='#method.has_scriptlet' class='fnname'>has_scriptlet</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>Returns true if the package has an install scriptlet, false if not.</p>
+</div><h4 id='method.download_size' class='method'><span id='download_size.v' class='invisible'><code>fn <a href='#method.download_size' class='fnname'>download_size</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></span></h4>
+<div class='docblock'><p>Gets the size of the download required to install this package, or to upgrade this package
+to the version of <code>self</code>.</p>
+</div><h4 id='method.unused_deltas' class='method'><span id='unused_deltas.v' class='invisible'><code>fn <a href='#method.unused_deltas' class='fnname'>unused_deltas</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></span></h4>
+<div class='docblock'><p>Dont know what this is for</p>
+
+<p>TODO I&#39;m guessing the return type as it&#39;s not in the alpm.h docs. I&#39;m setting it to match
+<code>deltas</code>. check for segfaults.</p>
+</div><h4 id='method.set_reason' class='method'><span id='set_reason.v' class='invisible'><code>fn <a href='#method.set_reason' class='fnname'>set_reason</a>(&amp;self, r: <a class='enum' href='../libalpm/enum.Reason.html' title='enum libalpm::Reason'>Reason</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>Sets the reason for a package in the local database. Returns true if reason was
+successfully changed, false otherwise.</p>
+
+<p>Use <code>Alpm.error</code> to get an error on failure.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='trait core::fmt::Debug'>Debug</a> for <a class='enum' href='../libalpm/enum.PackageRef.html' title='enum libalpm::PackageRef'>PackageRef</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/package.rs.html#70-74' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='struct core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='type core::fmt::Result'>Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "libalpm";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

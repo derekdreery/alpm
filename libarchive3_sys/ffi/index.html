@@ -1,0 +1,2960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ffi` mod in crate `libarchive3_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ffi">
+
+    <title>libarchive3_sys::ffi - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>libarchive3_sys</a></p><script>window.sidebarCurrent = {name: 'ffi', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>libarchive3_sys</a>::<wbr><a class='mod' href=''>ffi</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/libarchive3_sys/ffi.rs.html#1-871' title='goto source code'>[src]</a></span></h1>
+<h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+<table><tr><td><code>pub use <a class='mod' href='../../libc/index.html' title='mod libc'>libc</a>::*;</code></td></tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Struct_archive.html'
+                                  title='enum libarchive3_sys::ffi::Struct_archive'>Struct_archive</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Struct_archive_acl.html'
+                                  title='enum libarchive3_sys::ffi::Struct_archive_acl'>Struct_archive_acl</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Struct_archive_entry.html'
+                                  title='enum libarchive3_sys::ffi::Struct_archive_entry'>Struct_archive_entry</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Struct_archive_entry_linkresolver.html'
+                                  title='enum libarchive3_sys::ffi::Struct_archive_entry_linkresolver'>Struct_archive_entry_linkresolver</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.AE_IFBLK.html'
+                                  title='constant libarchive3_sys::ffi::AE_IFBLK'>AE_IFBLK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.AE_IFCHR.html'
+                                  title='constant libarchive3_sys::ffi::AE_IFCHR'>AE_IFCHR</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.AE_IFDIR.html'
+                                  title='constant libarchive3_sys::ffi::AE_IFDIR'>AE_IFDIR</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.AE_IFIFO.html'
+                                  title='constant libarchive3_sys::ffi::AE_IFIFO'>AE_IFIFO</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.AE_IFLNK.html'
+                                  title='constant libarchive3_sys::ffi::AE_IFLNK'>AE_IFLNK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.AE_IFMT.html'
+                                  title='constant libarchive3_sys::ffi::AE_IFMT'>AE_IFMT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.AE_IFREG.html'
+                                  title='constant libarchive3_sys::ffi::AE_IFREG'>AE_IFREG</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.AE_IFSOCK.html'
+                                  title='constant libarchive3_sys::ffi::AE_IFSOCK'>AE_IFSOCK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EOF.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EOF'>ARCHIVE_EOF</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_ACL.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_ACL'>ARCHIVE_EXTRACT_ACL</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_CLEAR_NOCHANGE_FFLAGS.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_CLEAR_NOCHANGE_FFLAGS'>ARCHIVE_EXTRACT_CLEAR_NOCHANGE_FFLAGS</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_FFLAGS.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_FFLAGS'>ARCHIVE_EXTRACT_FFLAGS</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_HFS_COMPRESSION_FORCED.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_HFS_COMPRESSION_FORCED'>ARCHIVE_EXTRACT_HFS_COMPRESSION_FORCED</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_MAC_METADATA.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_MAC_METADATA'>ARCHIVE_EXTRACT_MAC_METADATA</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_NO_AUTODIR.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_NO_AUTODIR'>ARCHIVE_EXTRACT_NO_AUTODIR</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_NO_HFS_COMPRESSION.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_NO_HFS_COMPRESSION'>ARCHIVE_EXTRACT_NO_HFS_COMPRESSION</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_NO_OVERWRITE.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_NO_OVERWRITE'>ARCHIVE_EXTRACT_NO_OVERWRITE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_NO_OVERWRITE_NEWER.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_NO_OVERWRITE_NEWER'>ARCHIVE_EXTRACT_NO_OVERWRITE_NEWER</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_OWNER.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_OWNER'>ARCHIVE_EXTRACT_OWNER</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_PERM.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_PERM'>ARCHIVE_EXTRACT_PERM</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_SECURE_NOABSOLUTEPATHS.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_SECURE_NOABSOLUTEPATHS'>ARCHIVE_EXTRACT_SECURE_NOABSOLUTEPATHS</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_SECURE_NODOTDOT.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_SECURE_NODOTDOT'>ARCHIVE_EXTRACT_SECURE_NODOTDOT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_SECURE_SYMLINKS.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_SECURE_SYMLINKS'>ARCHIVE_EXTRACT_SECURE_SYMLINKS</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_SPARSE.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_SPARSE'>ARCHIVE_EXTRACT_SPARSE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_TIME.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_TIME'>ARCHIVE_EXTRACT_TIME</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_UNLINK.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_UNLINK'>ARCHIVE_EXTRACT_UNLINK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_EXTRACT_XATTR.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_EXTRACT_XATTR'>ARCHIVE_EXTRACT_XATTR</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_FAILED.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_FAILED'>ARCHIVE_FAILED</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_FATAL.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_FATAL'>ARCHIVE_FATAL</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_OK.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_OK'>ARCHIVE_OK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_RETRY.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_RETRY'>ARCHIVE_RETRY</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARCHIVE_WARN.html'
+                                  title='constant libarchive3_sys::ffi::ARCHIVE_WARN'>ARCHIVE_WARN</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_clear_error.html'
+                                  title='fn libarchive3_sys::ffi::archive_clear_error'>archive_clear_error</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_compression.html'
+                                  title='fn libarchive3_sys::ffi::archive_compression'>archive_compression</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_compression_name.html'
+                                  title='fn libarchive3_sys::ffi::archive_compression_name'>archive_compression_name</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_copy_error.html'
+                                  title='fn libarchive3_sys::ffi::archive_copy_error'>archive_copy_error</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_acl.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_acl'>archive_entry_acl</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_acl_add_entry.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_acl_add_entry'>archive_entry_acl_add_entry</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_acl_add_entry_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_acl_add_entry_w'>archive_entry_acl_add_entry_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_acl_clear.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_acl_clear'>archive_entry_acl_clear</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_acl_count.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_acl_count'>archive_entry_acl_count</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_acl_next.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_acl_next'>archive_entry_acl_next</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_acl_next_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_acl_next_w'>archive_entry_acl_next_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_acl_reset.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_acl_reset'>archive_entry_acl_reset</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_acl_text.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_acl_text'>archive_entry_acl_text</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_acl_text_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_acl_text_w'>archive_entry_acl_text_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_atime.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_atime'>archive_entry_atime</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_atime_is_set.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_atime_is_set'>archive_entry_atime_is_set</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_atime_nsec.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_atime_nsec'>archive_entry_atime_nsec</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_birthtime.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_birthtime'>archive_entry_birthtime</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_birthtime_is_set.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_birthtime_is_set'>archive_entry_birthtime_is_set</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_birthtime_nsec.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_birthtime_nsec'>archive_entry_birthtime_nsec</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_clear.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_clear'>archive_entry_clear</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_clone.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_clone'>archive_entry_clone</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_fflags_text.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_fflags_text'>archive_entry_copy_fflags_text</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_fflags_text_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_fflags_text_w'>archive_entry_copy_fflags_text_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_gname.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_gname'>archive_entry_copy_gname</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_gname_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_gname_w'>archive_entry_copy_gname_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_hardlink.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_hardlink'>archive_entry_copy_hardlink</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_hardlink_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_hardlink_w'>archive_entry_copy_hardlink_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_link.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_link'>archive_entry_copy_link</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_link_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_link_w'>archive_entry_copy_link_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_mac_metadata.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_mac_metadata'>archive_entry_copy_mac_metadata</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_pathname.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_pathname'>archive_entry_copy_pathname</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_pathname_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_pathname_w'>archive_entry_copy_pathname_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_sourcepath.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_sourcepath'>archive_entry_copy_sourcepath</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_sourcepath_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_sourcepath_w'>archive_entry_copy_sourcepath_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_symlink.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_symlink'>archive_entry_copy_symlink</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_symlink_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_symlink_w'>archive_entry_copy_symlink_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_uname.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_uname'>archive_entry_copy_uname</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_copy_uname_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_copy_uname_w'>archive_entry_copy_uname_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_ctime.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_ctime'>archive_entry_ctime</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_ctime_is_set.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_ctime_is_set'>archive_entry_ctime_is_set</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_ctime_nsec.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_ctime_nsec'>archive_entry_ctime_nsec</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_dev.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_dev'>archive_entry_dev</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_dev_is_set.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_dev_is_set'>archive_entry_dev_is_set</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_devmajor.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_devmajor'>archive_entry_devmajor</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_devminor.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_devminor'>archive_entry_devminor</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_fflags.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_fflags'>archive_entry_fflags</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_fflags_text.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_fflags_text'>archive_entry_fflags_text</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_filetype.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_filetype'>archive_entry_filetype</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_free.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_free'>archive_entry_free</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_gid.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_gid'>archive_entry_gid</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_gname.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_gname'>archive_entry_gname</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_gname_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_gname_w'>archive_entry_gname_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_hardlink.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_hardlink'>archive_entry_hardlink</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_hardlink_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_hardlink_w'>archive_entry_hardlink_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_ino.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_ino'>archive_entry_ino</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_ino64.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_ino64'>archive_entry_ino64</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_ino_is_set.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_ino_is_set'>archive_entry_ino_is_set</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_linkify.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_linkify'>archive_entry_linkify</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_linkresolver_free.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_linkresolver_free'>archive_entry_linkresolver_free</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_linkresolver_new.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_linkresolver_new'>archive_entry_linkresolver_new</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_linkresolver_set_strategy.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_linkresolver_set_strategy'>archive_entry_linkresolver_set_strategy</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_mac_metadata.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_mac_metadata'>archive_entry_mac_metadata</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_mode.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_mode'>archive_entry_mode</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_mtime.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_mtime'>archive_entry_mtime</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_mtime_is_set.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_mtime_is_set'>archive_entry_mtime_is_set</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_mtime_nsec.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_mtime_nsec'>archive_entry_mtime_nsec</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_new.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_new'>archive_entry_new</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_new2.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_new2'>archive_entry_new2</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_nlink.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_nlink'>archive_entry_nlink</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_partial_links.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_partial_links'>archive_entry_partial_links</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_pathname.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_pathname'>archive_entry_pathname</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_pathname_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_pathname_w'>archive_entry_pathname_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_perm.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_perm'>archive_entry_perm</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_rdev.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_rdev'>archive_entry_rdev</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_rdevmajor.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_rdevmajor'>archive_entry_rdevmajor</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_rdevminor.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_rdevminor'>archive_entry_rdevminor</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_atime.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_atime'>archive_entry_set_atime</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_birthtime.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_birthtime'>archive_entry_set_birthtime</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_ctime.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_ctime'>archive_entry_set_ctime</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_dev.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_dev'>archive_entry_set_dev</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_devmajor.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_devmajor'>archive_entry_set_devmajor</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_devminor.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_devminor'>archive_entry_set_devminor</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_fflags.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_fflags'>archive_entry_set_fflags</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_filetype.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_filetype'>archive_entry_set_filetype</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_gid.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_gid'>archive_entry_set_gid</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_gname.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_gname'>archive_entry_set_gname</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_hardlink.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_hardlink'>archive_entry_set_hardlink</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_ino.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_ino'>archive_entry_set_ino</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_ino64.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_ino64'>archive_entry_set_ino64</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_link.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_link'>archive_entry_set_link</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_mode.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_mode'>archive_entry_set_mode</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_mtime.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_mtime'>archive_entry_set_mtime</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_nlink.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_nlink'>archive_entry_set_nlink</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_pathname.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_pathname'>archive_entry_set_pathname</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_perm.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_perm'>archive_entry_set_perm</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_rdev.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_rdev'>archive_entry_set_rdev</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_rdevmajor.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_rdevmajor'>archive_entry_set_rdevmajor</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_rdevminor.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_rdevminor'>archive_entry_set_rdevminor</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_size.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_size'>archive_entry_set_size</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_symlink.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_symlink'>archive_entry_set_symlink</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_uid.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_uid'>archive_entry_set_uid</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_set_uname.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_set_uname'>archive_entry_set_uname</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_size.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_size'>archive_entry_size</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_size_is_set.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_size_is_set'>archive_entry_size_is_set</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_sourcepath.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_sourcepath'>archive_entry_sourcepath</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_sourcepath_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_sourcepath_w'>archive_entry_sourcepath_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_sparse_add_entry.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_sparse_add_entry'>archive_entry_sparse_add_entry</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_sparse_clear.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_sparse_clear'>archive_entry_sparse_clear</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_sparse_count.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_sparse_count'>archive_entry_sparse_count</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_sparse_next.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_sparse_next'>archive_entry_sparse_next</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_sparse_reset.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_sparse_reset'>archive_entry_sparse_reset</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_strmode.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_strmode'>archive_entry_strmode</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_symlink.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_symlink'>archive_entry_symlink</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_symlink_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_symlink_w'>archive_entry_symlink_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_uid.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_uid'>archive_entry_uid</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_uname.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_uname'>archive_entry_uname</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_uname_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_uname_w'>archive_entry_uname_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_unset_atime.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_unset_atime'>archive_entry_unset_atime</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_unset_birthtime.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_unset_birthtime'>archive_entry_unset_birthtime</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_unset_ctime.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_unset_ctime'>archive_entry_unset_ctime</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_unset_mtime.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_unset_mtime'>archive_entry_unset_mtime</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_unset_size.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_unset_size'>archive_entry_unset_size</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_update_gname_utf8.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_update_gname_utf8'>archive_entry_update_gname_utf8</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_update_hardlink_utf8.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_update_hardlink_utf8'>archive_entry_update_hardlink_utf8</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_update_link_utf8.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_update_link_utf8'>archive_entry_update_link_utf8</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_update_pathname_utf8.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_update_pathname_utf8'>archive_entry_update_pathname_utf8</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_update_symlink_utf8.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_update_symlink_utf8'>archive_entry_update_symlink_utf8</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_update_uname_utf8.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_update_uname_utf8'>archive_entry_update_uname_utf8</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_xattr_add_entry.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_xattr_add_entry'>archive_entry_xattr_add_entry</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_xattr_clear.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_xattr_clear'>archive_entry_xattr_clear</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_xattr_count.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_xattr_count'>archive_entry_xattr_count</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_xattr_next.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_xattr_next'>archive_entry_xattr_next</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_entry_xattr_reset.html'
+                                  title='fn libarchive3_sys::ffi::archive_entry_xattr_reset'>archive_entry_xattr_reset</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_errno.html'
+                                  title='fn libarchive3_sys::ffi::archive_errno'>archive_errno</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_error_string.html'
+                                  title='fn libarchive3_sys::ffi::archive_error_string'>archive_error_string</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_file_count.html'
+                                  title='fn libarchive3_sys::ffi::archive_file_count'>archive_file_count</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_filter_bytes.html'
+                                  title='fn libarchive3_sys::ffi::archive_filter_bytes'>archive_filter_bytes</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_filter_code.html'
+                                  title='fn libarchive3_sys::ffi::archive_filter_code'>archive_filter_code</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_filter_count.html'
+                                  title='fn libarchive3_sys::ffi::archive_filter_count'>archive_filter_count</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_filter_name.html'
+                                  title='fn libarchive3_sys::ffi::archive_filter_name'>archive_filter_name</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_format.html'
+                                  title='fn libarchive3_sys::ffi::archive_format'>archive_format</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_format_name.html'
+                                  title='fn libarchive3_sys::ffi::archive_format_name'>archive_format_name</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_exclude_entry.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_exclude_entry'>archive_match_exclude_entry</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_exclude_pattern.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_exclude_pattern'>archive_match_exclude_pattern</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_exclude_pattern_from_file.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_exclude_pattern_from_file'>archive_match_exclude_pattern_from_file</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_exclude_pattern_from_file_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_exclude_pattern_from_file_w'>archive_match_exclude_pattern_from_file_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_exclude_pattern_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_exclude_pattern_w'>archive_match_exclude_pattern_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_excluded.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_excluded'>archive_match_excluded</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_free.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_free'>archive_match_free</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_include_date.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_include_date'>archive_match_include_date</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_include_date_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_include_date_w'>archive_match_include_date_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_include_file_time.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_include_file_time'>archive_match_include_file_time</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_include_file_time_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_include_file_time_w'>archive_match_include_file_time_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_include_gid.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_include_gid'>archive_match_include_gid</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_include_gname.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_include_gname'>archive_match_include_gname</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_include_gname_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_include_gname_w'>archive_match_include_gname_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_include_pattern.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_include_pattern'>archive_match_include_pattern</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_include_pattern_from_file.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_include_pattern_from_file'>archive_match_include_pattern_from_file</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_include_pattern_from_file_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_include_pattern_from_file_w'>archive_match_include_pattern_from_file_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_include_pattern_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_include_pattern_w'>archive_match_include_pattern_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_include_time.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_include_time'>archive_match_include_time</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_include_uid.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_include_uid'>archive_match_include_uid</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_include_uname.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_include_uname'>archive_match_include_uname</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_include_uname_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_include_uname_w'>archive_match_include_uname_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_new.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_new'>archive_match_new</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_owner_excluded.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_owner_excluded'>archive_match_owner_excluded</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_path_excluded.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_path_excluded'>archive_match_path_excluded</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_path_unmatched_inclusions.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_path_unmatched_inclusions'>archive_match_path_unmatched_inclusions</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_path_unmatched_inclusions_next.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_path_unmatched_inclusions_next'>archive_match_path_unmatched_inclusions_next</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_path_unmatched_inclusions_next_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_path_unmatched_inclusions_next_w'>archive_match_path_unmatched_inclusions_next_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_match_time_excluded.html'
+                                  title='fn libarchive3_sys::ffi::archive_match_time_excluded'>archive_match_time_excluded</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_position_compressed.html'
+                                  title='fn libarchive3_sys::ffi::archive_position_compressed'>archive_position_compressed</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_position_uncompressed.html'
+                                  title='fn libarchive3_sys::ffi::archive_position_uncompressed'>archive_position_uncompressed</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_add_callback_data.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_add_callback_data'>archive_read_add_callback_data</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_append_callback_data.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_append_callback_data'>archive_read_append_callback_data</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_append_filter.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_append_filter'>archive_read_append_filter</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_append_filter_program.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_append_filter_program'>archive_read_append_filter_program</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_append_filter_program_signature.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_append_filter_program_signature'>archive_read_append_filter_program_signature</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_close.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_close'>archive_read_close</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_data.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_data'>archive_read_data</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_data_block.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_data_block'>archive_read_data_block</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_data_into_fd.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_data_into_fd'>archive_read_data_into_fd</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_data_skip.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_data_skip'>archive_read_data_skip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_can_descend.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_can_descend'>archive_read_disk_can_descend</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_current_filesystem.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_current_filesystem'>archive_read_disk_current_filesystem</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_current_filesystem_is_remote.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_current_filesystem_is_remote'>archive_read_disk_current_filesystem_is_remote</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_current_filesystem_is_synthetic.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_current_filesystem_is_synthetic'>archive_read_disk_current_filesystem_is_synthetic</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_descend.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_descend'>archive_read_disk_descend</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_gname.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_gname'>archive_read_disk_gname</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_new.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_new'>archive_read_disk_new</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_open.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_open'>archive_read_disk_open</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_open_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_open_w'>archive_read_disk_open_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_set_atime_restored.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_set_atime_restored'>archive_read_disk_set_atime_restored</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_set_behavior.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_set_behavior'>archive_read_disk_set_behavior</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_set_gname_lookup.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_set_gname_lookup'>archive_read_disk_set_gname_lookup</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_set_matching.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_set_matching'>archive_read_disk_set_matching</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_set_metadata_filter_callback.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_set_metadata_filter_callback'>archive_read_disk_set_metadata_filter_callback</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_set_standard_lookup.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_set_standard_lookup'>archive_read_disk_set_standard_lookup</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_set_symlink_hybrid.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_set_symlink_hybrid'>archive_read_disk_set_symlink_hybrid</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_set_symlink_logical.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_set_symlink_logical'>archive_read_disk_set_symlink_logical</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_set_symlink_physical.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_set_symlink_physical'>archive_read_disk_set_symlink_physical</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_set_uname_lookup.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_set_uname_lookup'>archive_read_disk_set_uname_lookup</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_disk_uname.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_disk_uname'>archive_read_disk_uname</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_extract.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_extract'>archive_read_extract</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_extract2.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_extract2'>archive_read_extract2</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_extract_set_progress_callback.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_extract_set_progress_callback'>archive_read_extract_set_progress_callback</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_extract_set_skip_file.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_extract_set_skip_file'>archive_read_extract_set_skip_file</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_finish.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_finish'>archive_read_finish</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_free.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_free'>archive_read_free</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_header_position.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_header_position'>archive_read_header_position</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_new.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_new'>archive_read_new</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_next_header.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_next_header'>archive_read_next_header</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_next_header2.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_next_header2'>archive_read_next_header2</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_open.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_open'>archive_read_open</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_open1.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_open1'>archive_read_open1</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_open2.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_open2'>archive_read_open2</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_open_FILE.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_open_FILE'>archive_read_open_FILE</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_open_fd.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_open_fd'>archive_read_open_fd</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_open_file.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_open_file'>archive_read_open_file</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_open_filename.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_open_filename'>archive_read_open_filename</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_open_filename_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_open_filename_w'>archive_read_open_filename_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_open_filenames.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_open_filenames'>archive_read_open_filenames</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_open_memory.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_open_memory'>archive_read_open_memory</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_open_memory2.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_open_memory2'>archive_read_open_memory2</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_prepend_callback_data.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_prepend_callback_data'>archive_read_prepend_callback_data</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_set_callback_data.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_set_callback_data'>archive_read_set_callback_data</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_set_callback_data2.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_set_callback_data2'>archive_read_set_callback_data2</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_set_close_callback.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_set_close_callback'>archive_read_set_close_callback</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_set_filter_option.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_set_filter_option'>archive_read_set_filter_option</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_set_format.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_set_format'>archive_read_set_format</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_set_format_option.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_set_format_option'>archive_read_set_format_option</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_set_open_callback.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_set_open_callback'>archive_read_set_open_callback</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_set_option.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_set_option'>archive_read_set_option</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_set_options.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_set_options'>archive_read_set_options</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_set_read_callback.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_set_read_callback'>archive_read_set_read_callback</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_set_seek_callback.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_set_seek_callback'>archive_read_set_seek_callback</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_set_skip_callback.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_set_skip_callback'>archive_read_set_skip_callback</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_set_switch_callback.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_set_switch_callback'>archive_read_set_switch_callback</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_compression_all.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_compression_all'>archive_read_support_compression_all</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_compression_bzip2.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_compression_bzip2'>archive_read_support_compression_bzip2</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_compression_compress.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_compression_compress'>archive_read_support_compression_compress</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_compression_gzip.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_compression_gzip'>archive_read_support_compression_gzip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_compression_lzip.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_compression_lzip'>archive_read_support_compression_lzip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_compression_lzma.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_compression_lzma'>archive_read_support_compression_lzma</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_compression_none.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_compression_none'>archive_read_support_compression_none</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_compression_program.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_compression_program'>archive_read_support_compression_program</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_compression_program_signature.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_compression_program_signature'>archive_read_support_compression_program_signature</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_compression_rpm.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_compression_rpm'>archive_read_support_compression_rpm</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_compression_uu.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_compression_uu'>archive_read_support_compression_uu</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_compression_xz.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_compression_xz'>archive_read_support_compression_xz</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_filter_all.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_filter_all'>archive_read_support_filter_all</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_filter_bzip2.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_filter_bzip2'>archive_read_support_filter_bzip2</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_filter_compress.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_filter_compress'>archive_read_support_filter_compress</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_filter_grzip.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_filter_grzip'>archive_read_support_filter_grzip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_filter_gzip.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_filter_gzip'>archive_read_support_filter_gzip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_filter_lrzip.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_filter_lrzip'>archive_read_support_filter_lrzip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_filter_lzip.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_filter_lzip'>archive_read_support_filter_lzip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_filter_lzma.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_filter_lzma'>archive_read_support_filter_lzma</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_filter_lzop.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_filter_lzop'>archive_read_support_filter_lzop</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_filter_none.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_filter_none'>archive_read_support_filter_none</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_filter_program.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_filter_program'>archive_read_support_filter_program</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_filter_program_signature.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_filter_program_signature'>archive_read_support_filter_program_signature</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_filter_rpm.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_filter_rpm'>archive_read_support_filter_rpm</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_filter_uu.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_filter_uu'>archive_read_support_filter_uu</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_filter_xz.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_filter_xz'>archive_read_support_filter_xz</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_format_7zip.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_format_7zip'>archive_read_support_format_7zip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_format_all.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_format_all'>archive_read_support_format_all</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_format_ar.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_format_ar'>archive_read_support_format_ar</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_format_by_code.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_format_by_code'>archive_read_support_format_by_code</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_format_cab.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_format_cab'>archive_read_support_format_cab</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_format_cpio.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_format_cpio'>archive_read_support_format_cpio</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_format_empty.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_format_empty'>archive_read_support_format_empty</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_format_gnutar.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_format_gnutar'>archive_read_support_format_gnutar</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_format_iso9660.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_format_iso9660'>archive_read_support_format_iso9660</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_format_lha.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_format_lha'>archive_read_support_format_lha</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_format_mtree.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_format_mtree'>archive_read_support_format_mtree</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_format_rar.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_format_rar'>archive_read_support_format_rar</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_format_raw.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_format_raw'>archive_read_support_format_raw</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_format_tar.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_format_tar'>archive_read_support_format_tar</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_format_xar.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_format_xar'>archive_read_support_format_xar</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_read_support_format_zip.html'
+                                  title='fn libarchive3_sys::ffi::archive_read_support_format_zip'>archive_read_support_format_zip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_seek_data.html'
+                                  title='fn libarchive3_sys::ffi::archive_seek_data'>archive_seek_data</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_set_error.html'
+                                  title='fn libarchive3_sys::ffi::archive_set_error'>archive_set_error</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_version_number.html'
+                                  title='fn libarchive3_sys::ffi::archive_version_number'>archive_version_number</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_version_string.html'
+                                  title='fn libarchive3_sys::ffi::archive_version_string'>archive_version_string</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_add_filter.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_add_filter'>archive_write_add_filter</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_add_filter_b64encode.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_add_filter_b64encode'>archive_write_add_filter_b64encode</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_add_filter_by_name.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_add_filter_by_name'>archive_write_add_filter_by_name</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_add_filter_bzip2.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_add_filter_bzip2'>archive_write_add_filter_bzip2</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_add_filter_compress.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_add_filter_compress'>archive_write_add_filter_compress</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_add_filter_grzip.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_add_filter_grzip'>archive_write_add_filter_grzip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_add_filter_gzip.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_add_filter_gzip'>archive_write_add_filter_gzip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_add_filter_lrzip.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_add_filter_lrzip'>archive_write_add_filter_lrzip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_add_filter_lzip.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_add_filter_lzip'>archive_write_add_filter_lzip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_add_filter_lzma.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_add_filter_lzma'>archive_write_add_filter_lzma</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_add_filter_lzop.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_add_filter_lzop'>archive_write_add_filter_lzop</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_add_filter_none.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_add_filter_none'>archive_write_add_filter_none</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_add_filter_program.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_add_filter_program'>archive_write_add_filter_program</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_add_filter_uuencode.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_add_filter_uuencode'>archive_write_add_filter_uuencode</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_add_filter_xz.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_add_filter_xz'>archive_write_add_filter_xz</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_close.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_close'>archive_write_close</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_data.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_data'>archive_write_data</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_data_block.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_data_block'>archive_write_data_block</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_disk_gid.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_disk_gid'>archive_write_disk_gid</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_disk_new.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_disk_new'>archive_write_disk_new</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_disk_set_group_lookup.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_disk_set_group_lookup'>archive_write_disk_set_group_lookup</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_disk_set_options.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_disk_set_options'>archive_write_disk_set_options</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_disk_set_skip_file.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_disk_set_skip_file'>archive_write_disk_set_skip_file</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_disk_set_standard_lookup.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_disk_set_standard_lookup'>archive_write_disk_set_standard_lookup</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_disk_set_user_lookup.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_disk_set_user_lookup'>archive_write_disk_set_user_lookup</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_disk_uid.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_disk_uid'>archive_write_disk_uid</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_fail.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_fail'>archive_write_fail</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_finish.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_finish'>archive_write_finish</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_finish_entry.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_finish_entry'>archive_write_finish_entry</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_free.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_free'>archive_write_free</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_get_bytes_in_last_block.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_get_bytes_in_last_block'>archive_write_get_bytes_in_last_block</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_get_bytes_per_block.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_get_bytes_per_block'>archive_write_get_bytes_per_block</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_header.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_header'>archive_write_header</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_new.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_new'>archive_write_new</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_open.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_open'>archive_write_open</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_open_FILE.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_open_FILE'>archive_write_open_FILE</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_open_fd.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_open_fd'>archive_write_open_fd</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_open_file.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_open_file'>archive_write_open_file</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_open_filename.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_open_filename'>archive_write_open_filename</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_open_filename_w.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_open_filename_w'>archive_write_open_filename_w</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_open_memory.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_open_memory'>archive_write_open_memory</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_bytes_in_last_block.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_bytes_in_last_block'>archive_write_set_bytes_in_last_block</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_bytes_per_block.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_bytes_per_block'>archive_write_set_bytes_per_block</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_compression_bzip2.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_compression_bzip2'>archive_write_set_compression_bzip2</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_compression_compress.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_compression_compress'>archive_write_set_compression_compress</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_compression_gzip.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_compression_gzip'>archive_write_set_compression_gzip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_compression_lzip.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_compression_lzip'>archive_write_set_compression_lzip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_compression_lzma.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_compression_lzma'>archive_write_set_compression_lzma</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_compression_none.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_compression_none'>archive_write_set_compression_none</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_compression_program.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_compression_program'>archive_write_set_compression_program</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_compression_xz.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_compression_xz'>archive_write_set_compression_xz</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_filter_option.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_filter_option'>archive_write_set_filter_option</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format'>archive_write_set_format</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_7zip.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_7zip'>archive_write_set_format_7zip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_ar_bsd.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_ar_bsd'>archive_write_set_format_ar_bsd</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_ar_svr4.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_ar_svr4'>archive_write_set_format_ar_svr4</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_by_name.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_by_name'>archive_write_set_format_by_name</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_cpio.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_cpio'>archive_write_set_format_cpio</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_cpio_newc.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_cpio_newc'>archive_write_set_format_cpio_newc</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_gnutar.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_gnutar'>archive_write_set_format_gnutar</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_iso9660.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_iso9660'>archive_write_set_format_iso9660</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_mtree.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_mtree'>archive_write_set_format_mtree</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_mtree_classic.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_mtree_classic'>archive_write_set_format_mtree_classic</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_option.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_option'>archive_write_set_format_option</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_pax.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_pax'>archive_write_set_format_pax</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_pax_restricted.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_pax_restricted'>archive_write_set_format_pax_restricted</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_shar.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_shar'>archive_write_set_format_shar</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_shar_dump.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_shar_dump'>archive_write_set_format_shar_dump</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_ustar.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_ustar'>archive_write_set_format_ustar</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_v7tar.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_v7tar'>archive_write_set_format_v7tar</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_xar.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_xar'>archive_write_set_format_xar</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_format_zip.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_format_zip'>archive_write_set_format_zip</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_option.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_option'>archive_write_set_option</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_options.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_options'>archive_write_set_options</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_set_skip_file.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_set_skip_file'>archive_write_set_skip_file</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_zip_set_compression_deflate.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_zip_set_compression_deflate'>archive_write_zip_set_compression_deflate</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.archive_write_zip_set_compression_store.html'
+                                  title='fn libarchive3_sys::ffi::archive_write_zip_set_compression_store'>archive_write_zip_set_compression_store</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.archive_close_callback.html'
+                                  title='type libarchive3_sys::ffi::archive_close_callback'>archive_close_callback</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.archive_open_callback.html'
+                                  title='type libarchive3_sys::ffi::archive_open_callback'>archive_open_callback</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.archive_read_callback.html'
+                                  title='type libarchive3_sys::ffi::archive_read_callback'>archive_read_callback</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.archive_seek_callback.html'
+                                  title='type libarchive3_sys::ffi::archive_seek_callback'>archive_seek_callback</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.archive_skip_callback.html'
+                                  title='type libarchive3_sys::ffi::archive_skip_callback'>archive_skip_callback</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.archive_switch_callback.html'
+                                  title='type libarchive3_sys::ffi::archive_switch_callback'>archive_switch_callback</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.archive_write_callback.html'
+                                  title='type libarchive3_sys::ffi::archive_write_callback'>archive_write_callback</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "libarchive3_sys";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>
