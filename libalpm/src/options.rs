@@ -1,3 +1,4 @@
+use std::path::Path;
 
 const MIRROR: &'static str = "http://archlinux.polymorf.fr/$repo/os/$arch";
 
@@ -27,6 +28,16 @@ pub struct Options {
     //pub remote_files_sig_level: TODO,
     pub repositories: Vec<RepoOptions>,
 }
+
+impl Options {
+    /// Reads a pacman-style ini file and returns an Options instance to match
+    ///
+    /// TODO will only be implemented after I've finished the rest of the lib
+    pub fn from_ini(loc: &Path) -> Option<Options> {
+        unimplemented!()
+    }
+}
+
 
 impl Default for Options {
     fn default() -> Options {

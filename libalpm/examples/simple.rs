@@ -26,6 +26,7 @@ fn download(filename: &str, transferred: u64, total: u64) {
 }
 
 fn main() {
+    let arch = libalpm::util::uname().machine().to_owned();
     let alpm = libalpm::Alpm::new("/", "/var/lib/pacman").unwrap();
 
     // write a log function that colors output based on level
@@ -34,5 +35,5 @@ fn main() {
     println!("Root: {}", alpm.root());
     println!("Database path: {}", alpm.db_path());
     println!("Lockfile: {}", alpm.lockfile());
-    println!("{:?}", alpm.fetch_pkg("https://google.com/".parse().unwrap()).unwrap());
+    println!("{:?}", libalpm::util::get_servers("/etc/pacman.d/mirrorlist", "core", &arch));
 }

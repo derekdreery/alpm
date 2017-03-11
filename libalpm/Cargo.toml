@@ -2,6 +2,14 @@
 name = "libalpm"
 version = "0.1.0"
 authors = ["Richard Dodd <richard.o.dodd@gmail.com>"]
+license = "MIT/Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/derekdreery/alpm"
+homepage = "https://github.com/derekdreery/alpm/tree/master/libalpm"
+documentation = "https://docs.rs/derekdreery/libalpm"
+description = """
+An aspirationally safe wrapper around libalpm (the Arch Linux Package Manager).
+"""
 
 [dependencies]
 alpm-sys = "*"
@@ -9,7 +17,7 @@ printf = "*"
 libc = "*"
 url = "*"
 lazy_static = "*"
-uname = "*"
+chrono = "*"
 
 [dev-dependencies]
 term = "*"

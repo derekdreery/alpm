@@ -678,8 +678,8 @@ extern "C" {
                                               -> c_int;
     pub fn alpm_option_get_arch(handle: *const Struct_alpm_handle) -> *const c_char;
     pub fn alpm_option_set_arch(handle: *const Struct_alpm_handle, arch: *const c_char) -> c_int;
-    pub fn alpm_option_get_deltaratio(handle: *const Struct_alpm_handle) -> f64;
-    pub fn alpm_option_set_deltaratio(handle: *const Struct_alpm_handle, ratio: f64) -> c_int;
+    pub fn alpm_option_get_deltaratio(handle: *const Struct_alpm_handle) -> c_double;
+    pub fn alpm_option_set_deltaratio(handle: *const Struct_alpm_handle, ratio: c_double) -> c_int;
     pub fn alpm_option_get_checkspace(handle: *const Struct_alpm_handle) -> c_int;
     pub fn alpm_option_set_checkspace(handle: *const Struct_alpm_handle, checkspace: c_int) -> c_int;
     pub fn alpm_option_get_dbext(handle: *const Struct_alpm_handle) -> *const c_char;

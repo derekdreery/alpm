@@ -5,9 +5,9 @@ extern crate alpm_sys;
 extern crate url;
 extern crate libc;
 extern crate printf;
+extern crate chrono;
 #[macro_use] extern crate lazy_static;
 
-mod list;
 mod error;
 mod event;
 mod package;
@@ -16,27 +16,28 @@ mod pgp;
 mod log;
 mod callbacks;
 mod options;
-mod util;
+mod types;
+pub mod util;
 
 use std::ffi::{CString, CStr};
 use std::ops::Drop;
 use std::path::{PathBuf};
 use std::sync::Mutex;
+use std::borrow::Borrow;
 use std::mem;
-use std::collections::LinkedList;
 
 use alpm_sys::*;
-use libc::{c_void};
+use libc::{c_char, c_void};
 
 pub use options::{Options, RepoOptions};
 pub use error::{Error, AlpmResult};
 pub use log::{LogLevel, LogLevels};
 pub use event::Event;
-pub use package::{Package, PackageRef};
+pub use package::{Package, PackageRef, Group, PackageVersion, PackageFrom, Reason, Validation};
 pub use db::Db;
 pub use pgp::SigLevel;
+pub use types::{Caps, DownloadResult};
 use callbacks::{alpm_cb_log, alpm_cb_download, alpm_cb_totaldl, alpm_cb_fetch, alpm_cb_event};
-use list::alpm_list_to_vec;
 
 // callbacks
 lazy_static! {
@@ -60,20 +61,6 @@ pub struct Alpm {
     handle: *const Struct_alpm_handle,
 }
 
-/// This version of libalpm's capabilities
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub struct Caps {
-    pub nls: bool,
-    pub downloader: bool,
-    pub signatures: bool,
-}
-
-pub enum DownloadResult {
-    Ok,
-    NotNeeded,
-    Err
-}
-
 impl Alpm {
     /// Get a handle on the alpm instance defined by the given root/db_path
     pub fn new(root: &str, db_path: &str) -> AlpmResult<Alpm> {
@@ -94,6 +81,13 @@ impl Alpm {
         }
     }
 
+    /// Creates an alpm instance with the given options.
+    ///
+    /// TODO will only be implemented after the rest of the library is finished.
+    pub fn with_options(options: &Options) -> AlpmResult<Alpm> {
+        unimplemented!()
+    }
+
     /// Gets the current (last) error status. Most functions use this internally to get the
     /// error type to return, so there isn't much need to use this externally.
     pub fn error(&self) -> Option<Error> {
@@ -105,7 +99,35 @@ impl Alpm {
         }
     }
 
-    /// Set the callback called when a log message is received
+    /// Logs a message using alpm's built in logging functionality.
+    pub fn log_action<T, U>(&self, prefix: &str, msg: &str) -> AlpmResult<()> {
+        let prefix = CString::new(prefix)?;
+        let msg = CString::new(msg.replace("%", "%%"))?;
+        let res = unsafe {alpm_logaction(self.handle, prefix.as_ptr(), msg.as_ptr()) };
+        if res == 0 {
+            Ok(())
+        } else {
+            Err(self.error().unwrap_or(Error::__Unknown))
+        }
+    }
+
+    /// Fetch a remote pkg from the given URL and return its path.
+    pub fn fetch_pkgurl(&self, url: url::Url) -> AlpmResult<PathBuf> {
+        unsafe {
+            let url = CString::new(url.into_string())?;
+            let path = alpm_fetch_pkgurl(self.handle, url.as_ptr());
+            if path.is_null() {
+                Err(Error::__Unknown)
+            } else {
+                // copy path into rust alloc'd data struct
+                let path_rust = PathBuf::from(CStr::from_ptr(path).to_str()?);
+                libc::free(path as *mut c_void);
+                Ok(path_rust)
+            }
+        }
+    }
+
+    /// Set the callback called when a log message is received.
     pub fn log_function<F>(&self, func: F)
         where F: FnMut(LogLevels, String) + Send + 'static
     {
@@ -114,14 +136,14 @@ impl Alpm {
         unsafe { alpm_option_set_logcb(self.handle, Some(alpm_cb_log)); }
     }
 
-    /// Clears the log callback
+    /// Clears the log callback.
     pub fn clear_log_function(&self) {
         let mut cb = LOG_CB.lock().unwrap();
         (*cb) = None;
         unsafe { alpm_option_set_logcb(self.handle, None); }
     }
 
-    /// Set the callback called to report progress on downloading a file
+    /// Set the callback called to report progress on downloading a file.
     pub fn file_download_progress_function<F>(&self, func: F)
         where F: FnMut(&str, u64, u64) + Send + 'static
     {
@@ -130,7 +152,7 @@ impl Alpm {
         unsafe { alpm_option_set_dlcb(self.handle, Some(alpm_cb_download)); }
     }
 
-    /// Clears the file download progress callback
+    /// Clears the file download progress callback.
     pub fn clear_file_download_progress_function(&self) {
         let mut cb = DOWNLOAD_CB.lock().unwrap();
         (*cb) = None;
@@ -146,7 +168,7 @@ impl Alpm {
         unsafe { alpm_option_set_totaldlcb(self.handle, Some(alpm_cb_totaldl)); }
     }
 
-    /// Clears the total download progress callback
+    /// Clears the total download progress callback.
     pub fn clear_total_download_progress_function(&self) {
         let mut cb = DLTOTAL_CB.lock().unwrap();
         (*cb) = None;
@@ -156,7 +178,7 @@ impl Alpm {
     /// Set the callback called to download a file.
     ///
     /// Providing this function is optional and it is recommended that you don't set it (and use
-    /// the built in-fetch fn). This could be useful e.g. if you are behind a complicated proxy or
+    /// the built-in fetch fn). This could be useful e.g. if you are behind a complicated proxy or
     /// want to use something other than http to fetch.
     ///
     /// # Safety
@@ -198,6 +220,30 @@ impl Alpm {
         unsafe { alpm_option_set_eventcb(self.handle, None); }
     }
 
+    /// Sets the function called when a question needs answering (todo i think)
+    pub fn question_function<F>(&self, func: F)
+        where F: FnMut() + Send + 'static
+    {
+        unimplemented!()
+    }
+
+    /// Clears the function called when a question needs answering (todo i think)
+    pub fn clear_question_function(&self) {
+        unimplemented!()
+    }
+
+    /// Sets the function called to show operation progress
+    pub fn progress_function<F>(&self, func: F)
+        where F: FnMut() + Send + 'static
+    {
+        unimplemented!()
+    }
+
+    /// Clears the function called to show operation progress
+    pub fn clear_progress_function(&self) {
+        unimplemented!()
+    }
+
     /// Get the root path used in this instance of alpm
     ///
     /// The api doesn't make clear the lifetime of the result, so I am conservative (same goes for
@@ -219,31 +265,277 @@ impl Alpm {
         lockfile.to_str().ok().expect("instance lockfile path is not utf8")
     }
 
-    /// Get the set architecture
-    pub fn arch(&self) -> AlpmResult<&str> {
+    /// Gets a list of the cache directories in use by this instance of alpm
+    pub fn cache_dirs(&self) -> Vec<&str> {
+        unsafe {
+            let cachedirs = alpm_option_get_cachedirs(self.handle);
+            util::alpm_list_to_vec(cachedirs, |char_ptr| {
+                CStr::from_ptr(char_ptr as *const c_char).to_str().unwrap()
+            })
+        }
+    }
+
+    /// Sets a list of the cache directories in use by this instance of alpm
+    pub fn set_cache_dirs(&self) {
+        unimplemented!()
+    }
+
+    /// Adds a cache directory for use by this instance of alpm
+    pub fn add_cache_dir(&self) {
+        unimplemented!()
+    }
+
+    /// Removes a cache directory in use by this instance of alpm
+    pub fn remove_cache_dir(&self) {
+        unimplemented!()
+    }
+
+    /// Gets a list of the hook directories in use by this instance of alpm
+    pub fn hook_dirs(&self) {
+        unimplemented!()
+    }
+
+    /// Sets a list of the hook directories in use by this instance of alpm
+    pub fn set_hook_dirs(&self) {
+        unimplemented!()
+    }
+
+    /// Adds a hook directory for use by this instance of alpm
+    pub fn add_hook_dir(&self) {
+        unimplemented!()
+    }
+
+    /// Removes a hook directory in use by this instance of alpm
+    pub fn remove_hook_dir(&self) {
+        unimplemented!()
+    }
+
+    /// Gets the log file location used by this instance of alpm.
+    pub fn log_file(&self) {
+        unimplemented!()
+    }
+
+    /// Sets the log file location used by this instance of alpm.
+    pub fn set_log_file(&self) {
+        unimplemented!()
+    }
+
+    /// Gets the path to alpm's GnuPG home directory
+    pub fn gpg_dir(&self) {
+        unimplemented!()
+    }
+
+    /// Sets the path to alpm's GnuPG home directory
+    pub fn set_gpg_dir(&self) {
+        unimplemented!()
+    }
+
+    /// Gets whether this instance of alpm should log events to syslog
+    pub fn use_syslog(&self) {
+        unimplemented!()
+    }
+
+    /// Sets whether this instance of alpm should log events to syslog
+    pub fn set_use_syslog(&self) {
+        unimplemented!()
+    }
+
+    /// Gets a list of the packages that should not be upgraded.
+    pub fn no_upgrades(&self) {
+        unimplemented!()
+    }
+
+    /// Sets a list of the packages that should not be upgraded.
+    pub fn set_no_upgrades(&self) {
+        unimplemented!()
+    }
+
+    /// Adds a package to the list that should not be upgraded.
+    pub fn add_no_upgrade(&self) {
+        unimplemented!()
+    }
+
+    /// Removes a package from the list that should not be upgraded.
+    pub fn remove_no_upgrade(&self) {
+        unimplemented!()
+    }
+
+    /// Gets a list of the packages that should be ignored.
+    pub fn ignore_pkgs(&self) {
+        unimplemented!()
+    }
+
+    /// Sets a list of the packages that should be ignored.
+    pub fn set_ignore_pkgs(&self) {
+        unimplemented!()
+    }
+
+    /// Adds a package to the list that should be ignored.
+    pub fn add_ignore_pkg(&self) {
+        unimplemented!()
+    }
+
+    /// Removes a package from the list that should be ignored.
+    pub fn remove_ignore_pkg(&self) {
+        unimplemented!()
+    }
+
+    /// Gets a list of the groups that should be ignored.
+    pub fn ignore_groups(&self) {
+        unimplemented!()
+    }
+
+    /// Sets a list of the groups that should be ignored.
+    pub fn set_ignore_groups(&self) {
+        unimplemented!()
+    }
+
+    /// Adds a group to the list that should be ignored.
+    pub fn add_ignore_group(&self) {
+        unimplemented!()
+    }
+
+    /// Removes a group from the list that should be ignored.
+    pub fn remove_ignore_group(&self) {
+        unimplemented!()
+    }
+
+    /// Gets a list of the dependencies that should be ignored by a sys-upgrade.
+    pub fn assume_installed(&self) {
+        unimplemented!()
+    }
+
+    /// Sets a list of the dependencies that should be ignored by a sys-upgrade.
+    pub fn set_assume_installed(&self) {
+        unimplemented!()
+    }
+
+    /// Adds a package to the list of dependencies that should be ignored by a sys-upgrade.
+    pub fn add_assume_installed(&self) {
+        unimplemented!()
+    }
+
+    /// Removes a package from the list of dependencies that should be ignored by a sys-upgrade.
+    pub fn remove_assume_installed(&self) {
+        unimplemented!()
+    }
+
+    /// Gets the targeted architecture.
+    pub fn arch(&self) -> Option<&str> {
         unsafe {
             let arch = alpm_option_get_arch(self.handle);
             if arch.is_null() {
-                Err(Error::StrNull)
+                None
             } else {
-                CStr::from_ptr(arch).to_str().map_err(|e| e.into())
+                Some(CStr::from_ptr(arch).to_str().ok()
+                    .expect("targeted arch is not utf8"))
             }
         }
     }
 
-    /// Fetch a remote pkg from the given URL and return its path.
-    pub fn fetch_pkg(&self, url: url::Url) -> AlpmResult<PathBuf> {
+    /// Sets the targeted architecture.
+    pub fn set_arch(&self, arch: &str) -> AlpmResult<()> {
+        let arch = CString::new(arch)?;
+        let res = unsafe { alpm_option_set_arch(self.handle, arch.as_ptr()) };
+        if res == 0 {
+            Ok(())
+        } else {
+            Err(self.error().unwrap_or(Error::__Unknown))
+        }
+    }
+
+    /// Gets the delta ratio
+    pub fn delta_ratio(&self) -> f64 {
+        unsafe { alpm_option_get_deltaratio(self.handle) }
+    }
+
+    /// Sets the targeted architecture
+    pub fn set_delta_ratio(&self, r: f64) -> AlpmResult<()> {
+        let res = unsafe { alpm_option_set_deltaratio(self.handle, r) };
+        if res == 0 {
+            Ok(())
+        } else {
+            Err(self.error().unwrap_or(Error::__Unknown))
+        }
+    }
+
+    /// Gets whether alpm will check disk space before operations
+    pub fn check_space(&self) -> bool {
+        unsafe { alpm_option_get_checkspace(self.handle) != 0 }
+    }
+
+    /// Sets the targeted architecture
+    pub fn set_check_space(&self, check: bool) -> AlpmResult<()> {
+        let res = unsafe { alpm_option_set_checkspace(self.handle, if check { 1 } else { 0 }) };
+        if res == 0 {
+            Ok(())
+        } else {
+            Err(self.error().unwrap_or(Error::__Unknown))
+        }
+    }
+
+    /// Gets the registered database extension used on the filesystem
+    pub fn db_extension(&self) -> &str {
         unsafe {
-            let url = CString::new(url.into_string())?;
-            let path = alpm_fetch_pkgurl(self.handle, url.as_ptr());
-            if path.is_null() {
-                Err(Error::__Unknown)
-            } else {
-                // copy path into rust alloc'd data struct
-                let path_rust = PathBuf::from(CStr::from_ptr(path).to_str()?);
-                libc::free(path as *mut c_void);
-                Ok(path_rust)
-            }
+            let ext = alpm_option_get_dbext(self.handle);
+            assert!(!ext.is_null(), "Database extension should never be null");
+            CStr::from_ptr(ext).to_str().ok().expect("Database extensions not valid utf8")
+        }
+    }
+
+    /// Sets the targeted architecture
+    pub fn set_db_extension(&self, ext: &str) -> AlpmResult<()> {
+        let cstr = CString::new(ext)?;
+        let res = unsafe { alpm_option_set_dbext(self.handle, cstr.as_ptr()) };
+        if res == 0 {
+            Ok(())
+        } else {
+            Err(self.error().unwrap_or(Error::__Unknown))
+        }
+    }
+
+    /// Gets the default signing level
+    pub fn default_sign_level(&self) -> SigLevel {
+        unsafe { alpm_option_get_default_siglevel(self.handle).into() }
+    }
+
+    /// Sets the default signing level
+    pub fn set_default_sign_level(&self, s: SigLevel) -> AlpmResult<()> {
+        let res = unsafe { alpm_option_set_default_siglevel(self.handle, s.into()) };
+        if res == 0 {
+            Ok(())
+        } else {
+            Err(self.error().unwrap_or(Error::__Unknown))
+        }
+    }
+
+    /// Gets the default signing level
+    pub fn local_file_sign_level(&self) -> SigLevel {
+        unsafe { alpm_option_get_local_file_siglevel(self.handle).into() }
+    }
+
+    /// Sets the default signing level
+    pub fn set_local_file_sign_level(&self, s: SigLevel) -> AlpmResult<()> {
+        let res = unsafe { alpm_option_set_local_file_siglevel(self.handle, s.into()) };
+        if res == 0 {
+            Ok(())
+        } else {
+            Err(self.error().unwrap_or(Error::__Unknown))
+        }
+    }
+
+    /// Gets the default signing level
+    pub fn remote_file_sign_level(&self) -> SigLevel {
+        unsafe { alpm_option_get_remote_file_siglevel(self.handle).into() }
+    }
+
+    /// Sets the default signing level
+    pub fn set_remote_file_sign_level(&self, s: SigLevel) -> AlpmResult<()> {
+        let res = unsafe { alpm_option_set_remote_file_siglevel(self.handle, s.into()) };
+        if res == 0 {
+            Ok(())
+        } else {
+            Err(self.error().unwrap_or(Error::__Unknown))
         }
     }
 
@@ -259,7 +551,7 @@ impl Alpm {
             let raw_list = alpm_get_syncdbs(self.handle);
             //println!("{:?}", raw_list);
             //println!("error: {:?}", self.error().unwrap().description());
-            alpm_list_to_vec(raw_list, |ptr| {
+            util::alpm_list_to_vec(raw_list, |ptr| {
                 Db::new(ptr as *const Struct_alpm_db, &self)
             })
         }
@@ -297,11 +589,5 @@ pub fn version() -> &'static str {
 
 /// Get the capabilities of the attached libalpm
 pub fn capabilities() -> Caps {
-    // could do this faster if used bitfields for Caps (no branch)
-    let caps = unsafe { alpm_capabilities() };
-    Caps {
-        nls: caps & ALPM_CAPABILITY_NLS != 0,
-        downloader: caps & ALPM_CAPABILITY_DOWNLOADER != 0,
-        signatures: caps & ALPM_CAPABILITY_SIGNATURES != 0,
-    }
+    unsafe { alpm_capabilities().into() }
 }
