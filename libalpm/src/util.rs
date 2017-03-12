@@ -1,7 +1,7 @@
 use libc;
 use std::mem;
 use std::ptr;
-use std::ffi::CStr;
+use std::ffi::{CStr, CString};
 use alpm_sys::*;
 
 
@@ -118,6 +118,36 @@ pub(crate) unsafe fn vec_to_alpm_list<T, F>(v: Vec<T>, f: F) -> *const alpm_list
     list
 }
 
+/// Borrow a rust_vec as an alpm_list_t. This list must be freed by the user using `alpm_list_free`.
+///
+/// Borrowed vec must live longer than the c library needs it for (this can't be checked)
+pub(crate) unsafe fn vec_as_alpm_list<T, F>(v: &Vec<T>, f: F) -> *const alpm_list_t
+    where F: Fn(&T) -> *const libc::c_void
+{
+    if v.len() == 0 {
+        return ptr::null();
+    }
+
+    // init everything to null
+    let list = libc::calloc(1, mem::size_of::<alpm_list_t>()) as *const alpm_list_t;
+    let mut list_prev = list as *mut alpm_list_t;
+    // convert first element and put it in
+    (*list_prev).data = f(&v[0]);
+    // for each remaining element
+    for el in v.iter().skip(1) {
+        // create null alpm_list_t
+        let mut list_inner = libc::calloc(1, mem::size_of::<alpm_list_t>()) as *mut alpm_list_t;
+        // add in value
+        (*list_inner).data = f(el);
+        // hook up to prev alpm_list_t
+        (*list_inner).prev = list_prev;
+        (*list_prev).next = list_inner;
+
+        list_prev = list_inner;
+    }
+    list
+}
+
 /// Convert a str to unowned raw mem allocated with libc::malloc
 pub(crate) unsafe fn str_to_unowned_char_array(s: *const &str) -> *const libc::c_void {
     let len = (*s).len();
@@ -125,6 +155,11 @@ pub(crate) unsafe fn str_to_unowned_char_array(s: *const &str) -> *const libc::c
     let mut p = libc::calloc(len + 1, mem::size_of::<libc::c_char>()) as *mut libc::c_char;
     ptr::copy::<libc::c_char>((*s).as_ptr() as *const i8, p, len);
     p as *const libc::c_void
+}
+
+/// Convert a str to owned raw mem allocated (and deallocated) in rust
+pub(crate) fn cstring_to_owned_char_array(s: &CString) -> *const libc::c_void {
+    s.as_ptr() as *const libc::c_void
 }
 
 /// A TEMPORARY helper function to extract server urls from a pacman conf file (until I've

@@ -33,7 +33,8 @@ pub use options::{Options, RepoOptions};
 pub use error::{Error, AlpmResult};
 pub use log::{LogLevel, LogLevels};
 pub use event::Event;
-pub use package::{Package, PackageRef, Group, PackageVersion, PackageFrom, Reason, Validation};
+pub use package::{Package, PackageRef, Group, PackageVersion, PackageFrom, Reason, Validation,
+    ValidationMethod, Dependency, FileList, File, Backup, VersionConstraintType};
 pub use db::Db;
 pub use pgp::SigLevel;
 pub use types::{Caps, DownloadResult};
@@ -100,6 +101,8 @@ impl Alpm {
     }
 
     /// Logs a message using alpm's built in logging functionality.
+    ///
+    /// TODO test if all prefixes are allowed, or just DEBUG etc., & test generally
     pub fn log_action<T, U>(&self, prefix: &str, msg: &str) -> AlpmResult<()> {
         let prefix = CString::new(prefix)?;
         let msg = CString::new(msg.replace("%", "%%"))?;
@@ -112,9 +115,9 @@ impl Alpm {
     }
 
     /// Fetch a remote pkg from the given URL and return its path.
-    pub fn fetch_pkgurl(&self, url: url::Url) -> AlpmResult<PathBuf> {
+    pub fn fetch_pkgurl(&self, url: &str) -> AlpmResult<PathBuf> {
         unsafe {
-            let url = CString::new(url.into_string())?;
+            let url = CString::new(url)?;
             let path = alpm_fetch_pkgurl(self.handle, url.as_ptr());
             if path.is_null() {
                 Err(Error::__Unknown)

@@ -216,7 +216,6 @@ pub enum Struct_alpm_db { }
 pub enum Struct_alpm_pkg { }
 pub enum Struct_va_list { }
 
-pub type mode_t = c_uint;
 pub type alpm_time_t = c_long;
 
 // const'd enums
@@ -240,7 +239,7 @@ pub type alpm_transflag_t = u32;
 pub type alpm_caps = u32;
 
 // callbacks
-pub type alpm_list_fn_free = Option<unsafe extern "C" fn(arg1: *const c_void)>;
+pub type alpm_list_fn_free = Option<unsafe extern "C" fn(arg1: *mut c_void)>;
 pub type alpm_list_fn_cmp = Option<unsafe extern "C" fn(arg1: *const c_void,
                                                         arg2: *const c_void)
                                                         -> c_int>;
@@ -331,6 +330,12 @@ pub struct alpm_file_t {
 pub struct alpm_filelist_t {
     pub count: usize,
     pub files: *const alpm_file_t,
+}
+
+#[repr(C)]
+pub struct alpm_backup_t {
+    pub name: *const c_char,
+    pub hash: *const c_char,
 }
 
 #[repr(C)]
@@ -751,6 +756,8 @@ extern "C" {
     pub fn alpm_pkg_get_groups(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
     pub fn alpm_pkg_get_depends(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
     pub fn alpm_pkg_get_optdepends(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
+    pub fn alpm_pkg_get_checkdepends(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
+    pub fn alpm_pkg_get_makedepends(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
     pub fn alpm_pkg_get_conflicts(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
     pub fn alpm_pkg_get_provides(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;
     pub fn alpm_pkg_get_deltas(pkg: *const Struct_alpm_pkg) -> *const alpm_list_t;

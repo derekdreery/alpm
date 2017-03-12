@@ -1,6 +1,6 @@
 
 use alpm_sys::*;
-use libc::c_char;
+use libc::{self, c_char, c_ulong};
 use chrono::{NaiveDateTime, NaiveDate};
 
 use util;
@@ -85,18 +85,28 @@ impl PackageRef {
     }
 
     /// Gets a list of all packages that require this package.
-    pub fn compute_required_by(&self) -> Vec<&PackageRef> {
+    pub fn compute_required_by(&self) -> Vec<String> {
         unsafe {
-            let pkgs = alpm_pkg_compute_requiredby(self as *const _ as _);
-            util::alpm_list_to_vec(pkgs, |pkg_ptr| &*(pkg_ptr as *mut PackageRef))
+            let pkg_list = alpm_pkg_compute_requiredby(self as *const _ as _);
+            let pkgs = util::alpm_list_to_vec(pkg_list, |char_ptr| {
+                CStr::from_ptr(char_ptr as *const c_char).to_str().unwrap().to_owned()
+            });
+            alpm_list_free_inner(pkg_list, Some(libc::free));
+            alpm_list_free(pkg_list);
+            pkgs
         }
     }
 
     /// Gets a list of all packages optionally require this package.
-    pub fn compute_optional_for(&self) -> Vec<&PackageRef> {
+    pub fn compute_optional_for(&self) -> Vec<String> {
         unsafe {
-            let pkgs = alpm_pkg_compute_optionalfor(self as *const _ as _);
-            util::alpm_list_to_vec(pkgs, |pkg_ptr| &*(pkg_ptr as *mut PackageRef))
+            let pkg_list = alpm_pkg_compute_optionalfor(self as *const _ as _);
+            let pkgs = util::alpm_list_to_vec(pkg_list, |char_ptr| {
+                CStr::from_ptr(char_ptr as *const c_char).to_str().unwrap().to_owned()
+            });
+            alpm_list_free_inner(pkg_list, Some(libc::free));
+            alpm_list_free(pkg_list);
+            pkgs
         }
     }
 
@@ -267,33 +277,65 @@ impl PackageRef {
     }
 
     /// Gets the packages this package depends on.
-    pub fn depends(&self) {
-        unimplemented!()
+    pub fn depends<'a>(&'a self) -> Vec<Dependency<'a>> {
+        unsafe {
+            let deps = alpm_pkg_get_depends(self as *const _ as _);
+            util::alpm_list_to_vec(deps, |dep| {
+                Dependency::new(dep as *const alpm_depend_t)
+            })
+        }
     }
 
     /// Gets the packages this package optionally depends on.
-    pub fn optionally_depends(&self) {
-        unimplemented!()
+    pub fn optionally_depends<'a>(&'a self) -> Vec<Dependency<'a>> {
+        unsafe {
+            let deps = alpm_pkg_get_optdepends(self as *const _ as _);
+            util::alpm_list_to_vec(deps, |dep| {
+                Dependency::new(dep as *const alpm_depend_t)
+            })
+        }
     }
 
+    /*
     /// Gets the packages required to check this package.
-    pub fn check_depends(&self) {
-        unimplemented!()
+    pub fn check_depends<'a>(&'a self) -> Vec<Dependency<'a>> {
+        unsafe {
+            let deps = alpm_pkg_get_checkdepends(self as *const _ as _);
+            util::alpm_list_to_vec(deps, |dep| {
+                Dependency::new(dep as *const alpm_depend_t)
+            })
+        }
     }
 
     /// Gets the packages required to make (build) this package.
-    pub fn make_depends(&self) {
-        unimplemented!()
+    pub fn make_depends<'a>(&'a self) -> Vec<Dependency<'a>> {
+        unsafe {
+            let deps = alpm_pkg_get_makedepends(self as *const _ as _);
+            util::alpm_list_to_vec(deps, |dep| {
+                Dependency::new(dep as *const alpm_depend_t)
+            })
+        }
     }
+    */
 
     /// Gets the packages this package conflicts with.
-    pub fn conflicts(&self) {
-        unimplemented!()
+    pub fn conflicts<'a>(&'a self) -> Vec<Dependency<'a>> {
+        unsafe {
+            let deps = alpm_pkg_get_conflicts(self as *const _ as _);
+            util::alpm_list_to_vec(deps, |dep| {
+                Dependency::new(dep as *const alpm_depend_t)
+            })
+        }
     }
 
     /// Gets the packages provided by this package.
-    pub fn provides(&self) {
-        unimplemented!()
+    pub fn provides<'a>(&'a self) -> Vec<Dependency<'a>> {
+        unsafe {
+            let deps = alpm_pkg_get_provides(self as *const _ as _);
+            util::alpm_list_to_vec(deps, |dep| {
+                Dependency::new(dep as *const alpm_depend_t)
+            })
+        }
     }
 
     /// Gets the available deltas for this package.
@@ -307,20 +349,32 @@ impl PackageRef {
     }
 
     /// Gets a list of packages to be replaced by this package.
-    pub fn replaces(&self) {
-        unimplemented!()
+    pub fn replaces<'a>(&'a self) -> Vec<Dependency<'a>> {
+        unsafe {
+            let deps = alpm_pkg_get_replaces(self as *const _ as _);
+            util::alpm_list_to_vec(deps, |dep| {
+                Dependency::new(dep as *const alpm_depend_t)
+            })
+        }
     }
 
     /// Gets a list of files installed by this package.
-    pub fn files(&self) {
-        unimplemented!()
+    pub fn files<'a>(&'a self) -> FileList<'a> {
+        unsafe { FileList::from_raw(alpm_pkg_get_files(self as *const _ as _)) }
     }
 
     /// Gets a list of files backed up when installing this package.
-    pub fn backup(&self) {
-        unimplemented!()
+    pub fn backup<'a>(&self) -> Vec<Backup<'a>> {
+        unsafe {
+            let backups = alpm_pkg_get_backup(self as *const _ as _);
+            util::alpm_list_to_vec(backups, |bkup| Backup {
+                name: CStr::from_ptr((*(bkup as *const alpm_backup_t)).name).to_str().unwrap(),
+                hash: CStr::from_ptr((*(bkup as *const alpm_backup_t)).hash).to_str().unwrap(),
+            })
+        }
     }
 
+    /*
     /// Gets the database this package is from
     ///
     /// This is currently unimplemented as it is not clear if there are times when it would be
@@ -328,6 +382,7 @@ impl PackageRef {
     pub fn db(&self) {
         unimplemented!()
     }
+    */
 
     /// Get thie base64 encoded package signature.
     pub fn base64_signature(&self) -> &str {
@@ -445,6 +500,12 @@ impl<'a> PackageOperation<'a> {
 pub struct Group<'a> {
     pub name: &'a str,
     pub packages: Vec<&'a PackageRef>,
+}
+
+impl<'a> fmt::Debug for Group<'a> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Group(\"{}\")", self.name)
+    }
 }
 
 impl<'a> Group<'a> {
@@ -680,4 +741,120 @@ impl From<u32> for Validation {
     }
 }
 
+/// A package's dependency
+pub struct Dependency<'a> {
+    name: *const c_char,
+    version: PackageVersion<'a>,
+    description: *const c_char,
+    name_hash: c_ulong,
+    version_constraint_type: VersionConstraintType
+}
 
+impl<'a> fmt::Debug for Dependency<'a> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Dependency(\"{}\")", self.name())
+    }
+}
+
+impl<'a> Dependency<'a> {
+    unsafe fn new<'b>(raw: *const alpm_depend_t) -> Dependency<'b> {
+        Dependency {
+            name: (*raw).name,
+            version: PackageVersion::new((*raw).version),
+            description: (*raw).desc,
+            name_hash: (*raw).name_hash,
+            version_constraint_type: (*raw).mod_.into()
+        }
+    }
+
+    /// Gets the name of the dependency
+    pub fn name(&self) -> &str {
+        unsafe { CStr::from_ptr(self.name).to_str().unwrap() }
+    }
+
+    /// Gets the version of the dependency
+    pub fn version(&self) -> &PackageVersion<'a> {
+        &self.version
+    }
+
+    /// Gets a description of the dependency
+    pub fn description(&self) -> &str {
+        unsafe { CStr::from_ptr(self.description).to_str().unwrap() }
+    }
+
+    /// Gets a hash of the dependency's name
+    pub fn hash(&self) -> u64 {
+        self.name_hash as u64
+    }
+
+    /// Gets the version restriction type
+    pub fn version_constraint_type(&self) -> VersionConstraintType {
+        self.version_constraint_type
+    }
+}
+
+/// Types of version constraint to be applied to a package's dependency.
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub enum VersionConstraintType {
+    Any,
+    Equal,
+    GreaterOrEqual,
+    LessOrEqual,
+    Greater,
+    Less,
+}
+
+impl From<u32> for VersionConstraintType {
+    fn from(f: u32) -> VersionConstraintType {
+        match f {
+            ALPM_DEP_MOD_ANY => VersionConstraintType::Any,
+            ALPM_DEP_MOD_EQ => VersionConstraintType::Equal,
+            ALPM_DEP_MOD_GE => VersionConstraintType::GreaterOrEqual,
+            ALPM_DEP_MOD_LE => VersionConstraintType::LessOrEqual,
+            ALPM_DEP_MOD_GT => VersionConstraintType::Greater,
+            ALPM_DEP_MOD_LT => VersionConstraintType::Less,
+            _ => unreachable!()
+        }
+    }
+}
+
+/// A list of files in a package
+#[derive(Debug, PartialEq, Eq)]
+pub struct FileList<'a> {
+    pub list: Vec<File<'a>>
+}
+
+impl<'a> FileList<'a> {
+    pub(crate) unsafe fn from_raw<'b>(raw: *const alpm_filelist_t) -> FileList<'b> {
+        let count = (*raw).count;
+        let mut file_ptr = (*raw).files;
+        let mut files: Vec<File<'b>> = Vec::new();
+        for i in 0..count {
+            files.push(File {
+                name: CStr::from_ptr((*file_ptr).name).to_str().unwrap(),
+                size: (*file_ptr).size as u64,
+                mode: (*file_ptr).mode,
+            });
+            file_ptr = file_ptr.offset(1);
+        }
+        FileList { list: files }
+    }
+}
+
+/// A file in a package
+#[derive(Debug, PartialEq, Eq)]
+pub struct File<'a> {
+    /// The filename.
+    pub name: &'a str,
+    /// The size of the file in bytes.
+    pub size: u64,
+    /// The file mode.
+    pub mode: u32,
+}
+
+/// A backup
+#[derive(Debug, PartialEq, Eq)]
+pub struct Backup<'a> {
+    pub name: &'a str,
+    pub hash: &'a str,
+}

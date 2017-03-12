@@ -7,7 +7,8 @@ use pgp::SigLevel;
 use libc::{self, c_char};
 
 use {Alpm, AlpmResult, Error, PackageRef, Group};
-use util::{alpm_list_to_vec, vec_to_alpm_list, str_to_unowned_char_array};
+use util::{self, alpm_list_to_vec, vec_to_alpm_list, str_to_unowned_char_array,
+    cstring_to_owned_char_array};
 
 /// A database of packages. This is only ever available as a reference
 #[derive(Debug)]
@@ -76,8 +77,7 @@ impl<'a> Db<'a> {
 
     /// Adds a server to the list of servers used by the database.
     pub fn add_server(&self, url: &str) -> AlpmResult<()> {
-        let url = CString::new(url.replacen("$arch", "", 1).replacen("$repo", "", 1))?;
-        println!("{:?}", url);
+        let url = CString::new(url)?;
         if unsafe { alpm_db_add_server(self.inner, url.as_ptr()) } == 0 {
             Ok(())
         } else {
@@ -136,29 +136,63 @@ impl<'a> Db<'a> {
     }
 
     /// Gets a package group from the database by name.
-    pub fn group(&self, name: &str) -> AlpmResult<Group> {
-        unimplemented!()
+    pub fn group(&self, name: &str) -> AlpmResult<Group<'a>> {
+        unsafe {
+            let name = CString::new(name).unwrap();
+            let group_ptr = alpm_db_get_group(self.inner, name.as_ptr());
+            if group_ptr.is_null() {
+                Err(self.handle.error().unwrap_or(Error::__Unknown))
+            } else {
+                let group_ptr = group_ptr as *const alpm_group_t;
+                Ok(Group {
+                    name: CStr::from_ptr((*group_ptr).name).to_str().unwrap(),
+                    packages: alpm_list_to_vec((*group_ptr).packages, |pkg_ptr| {
+                        &*(pkg_ptr as *const PackageRef)
+                    }),
+                })
+            }
+        }
     }
 
     /// Gets the package group cache of the database.
-    pub fn group_cache(&self) -> Vec<Group> {
-        unimplemented!()
+    pub fn group_cache(&self) -> AlpmResult<Vec<Group<'a>>> {
+        unsafe {
+            let group_cache = alpm_db_get_groupcache(self.inner);
+            if group_cache.is_null() {
+                Err(self.handle.error().unwrap_or(Error::__Unknown))
+            } else {
+                Ok(alpm_list_to_vec(group_cache, |group_ptr| {
+                    let group_ptr = group_ptr as *const alpm_group_t;
+                    Group {
+                        name: CStr::from_ptr((*group_ptr).name).to_str().unwrap(),
+                        packages: alpm_list_to_vec((*group_ptr).packages, |pkg_ptr| {
+                            &*(pkg_ptr as *const PackageRef)
+                        }),
+                    }
+                }))
+            }
+        }
     }
 
     /// Searches the database for packages matching the needles.
+    ///
+    /// This function has a memory leak, but I'm 99% sure it's internal to libalpm. Needs more
+    /// testing.
     pub fn search(&self, needles: Vec<&str>) -> AlpmResult<Vec<&PackageRef>> {
+        let needles_outer: Vec<CString> = needles.iter()
+            .map(|s| CString::new(*s).unwrap())
+            .collect();
+        println!("{:?}", needles_outer);
         unsafe {
-            let needles = vec_to_alpm_list(needles, |s| unsafe {
-                str_to_unowned_char_array(&s.as_ref())
-            });
+            let needles = util::vec_as_alpm_list(&needles_outer, cstring_to_owned_char_array);
             let pkgs = alpm_db_search(self.inner, needles);
+            alpm_list_free(needles);
             if ! pkgs.is_null() {
                 Ok(alpm_list_to_vec(pkgs, |pkg_ptr| &*(pkg_ptr as *mut PackageRef )))
             } else {
                 Err(self.handle.error().unwrap_or(Error::__Unknown))
             }
         }
-        //unimplemented!()
     }
 
     /// Sets what this database is to be used for.
