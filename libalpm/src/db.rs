@@ -175,6 +175,9 @@ impl<'a> Db<'a> {
     }
 
     /// Searches the database for packages matching the needles.
+    ///
+    /// This function has a memory leak, but I'm 99% sure it's internal to libalpm. Needs more
+    /// testing.
     pub fn search(&self, needles: Vec<&str>) -> AlpmResult<Vec<&PackageRef>> {
         let needles_outer: Vec<CString> = needles.iter()
             .map(|s| CString::new(*s).unwrap())

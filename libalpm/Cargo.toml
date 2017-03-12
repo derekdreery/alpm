@@ -1,6 +1,6 @@
 [package]
 name = "libalpm"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Richard Dodd <richard.o.dodd@gmail.com>"]
 license = "MIT/Apache-2.0"
 readme = "README.md"
