@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,88 +43,93 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>libalpm</a>::<wbr><a class='struct' href=''>Options</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>libalpm</a>::<wbr><a class="struct" href=''>Options</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/libalpm/options.rs.html#5-30' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/libalpm/options.rs.html#6-36' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Options {
-    pub root_dir: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>,
-    pub db_path: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>,
-    pub cache_dir: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>,
-    pub log_file: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>,
-    pub gpg_dir: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>,
-    pub hook_dir: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>,
-    pub hold_pkg: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>&gt;,
-    pub ignore_pkg: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>&gt;,
-    pub ignore_group: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>&gt;,
-    pub no_upgrade: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>&gt;,
-    pub no_extract: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>&gt;,
-    pub use_syslog: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>,
-    pub color: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>,
-    pub total_download: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>,
-    pub check_space: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>,
-    pub verbose_pkg_lists: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>,
-    pub repositories: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../libalpm/struct.RepoOptions.html' title='struct libalpm::RepoOptions'>RepoOptions</a>&gt;,
-}</pre><h2 class='fields'>Fields</h2><span id='structfield.root_dir' class='structfield'>
+    pub root_dir: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>,
+    pub db_path: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>,
+    pub cache_dir: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>,
+    pub log_file: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>,
+    pub gpg_dir: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>,
+    pub hook_dir: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>,
+    pub hold_pkg: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;,
+    pub ignore_pkg: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;,
+    pub ignore_group: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;,
+    pub no_upgrade: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;,
+    pub no_extract: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;,
+    pub use_syslog: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
+    pub color: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
+    pub total_download: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
+    pub check_space: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
+    pub verbose_pkg_lists: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
+    pub repositories: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="../libalpm/struct.RepoOptions.html" title="struct libalpm::RepoOptions">RepoOptions</a>&gt;,
+}</pre><div class='docblock'><p>The options that can be set in the pacman conf file.</p>
+</div><h2 class='fields'>Fields</h2><span id='structfield.root_dir' class="structfield">
                            <span id='root_dir.v' class='invisible'>
-                           <code>root_dir: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a></code>
-                           </span></span><span id='structfield.db_path' class='structfield'>
+                           <code>root_dir: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></code>
+                           </span></span><div class='docblock'><p>The root directory of the instance. Packages are installed relative to here.</p>
+</div><span id='structfield.db_path' class="structfield">
                            <span id='db_path.v' class='invisible'>
-                           <code>db_path: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a></code>
-                           </span></span><span id='structfield.cache_dir' class='structfield'>
+                           <code>db_path: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></code>
+                           </span></span><div class='docblock'><p>The location of the synced databases.</p>
+</div><span id='structfield.cache_dir' class="structfield">
                            <span id='cache_dir.v' class='invisible'>
-                           <code>cache_dir: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a></code>
-                           </span></span><span id='structfield.log_file' class='structfield'>
+                           <code>cache_dir: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></code>
+                           </span></span><div class='docblock'><p>The location of the cache directory.</p>
+</div><span id='structfield.log_file' class="structfield">
                            <span id='log_file.v' class='invisible'>
-                           <code>log_file: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a></code>
-                           </span></span><span id='structfield.gpg_dir' class='structfield'>
+                           <code>log_file: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></code>
+                           </span></span><div class='docblock'><p>The location of the log file.</p>
+</div><span id='structfield.gpg_dir' class="structfield">
                            <span id='gpg_dir.v' class='invisible'>
-                           <code>gpg_dir: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a></code>
-                           </span></span><span id='structfield.hook_dir' class='structfield'>
+                           <code>gpg_dir: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></code>
+                           </span></span><div class='docblock'><p>The location of the gpg directory.</p>
+</div><span id='structfield.hook_dir' class="structfield">
                            <span id='hook_dir.v' class='invisible'>
-                           <code>hook_dir: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a></code>
-                           </span></span><span id='structfield.hold_pkg' class='structfield'>
+                           <code>hook_dir: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></code>
+                           </span></span><span id='structfield.hold_pkg' class="structfield">
                            <span id='hold_pkg.v' class='invisible'>
-                           <code>hold_pkg: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>&gt;</code>
-                           </span></span><span id='structfield.ignore_pkg' class='structfield'>
+                           <code>hold_pkg: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code>
+                           </span></span><span id='structfield.ignore_pkg' class="structfield">
                            <span id='ignore_pkg.v' class='invisible'>
-                           <code>ignore_pkg: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>&gt;</code>
-                           </span></span><span id='structfield.ignore_group' class='structfield'>
+                           <code>ignore_pkg: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code>
+                           </span></span><span id='structfield.ignore_group' class="structfield">
                            <span id='ignore_group.v' class='invisible'>
-                           <code>ignore_group: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>&gt;</code>
-                           </span></span><span id='structfield.no_upgrade' class='structfield'>
+                           <code>ignore_group: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code>
+                           </span></span><span id='structfield.no_upgrade' class="structfield">
                            <span id='no_upgrade.v' class='invisible'>
-                           <code>no_upgrade: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>&gt;</code>
-                           </span></span><span id='structfield.no_extract' class='structfield'>
+                           <code>no_upgrade: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code>
+                           </span></span><span id='structfield.no_extract' class="structfield">
                            <span id='no_extract.v' class='invisible'>
-                           <code>no_extract: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a>&gt;</code>
-                           </span></span><span id='structfield.use_syslog' class='structfield'>
+                           <code>no_extract: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code>
+                           </span></span><span id='structfield.use_syslog' class="structfield">
                            <span id='use_syslog.v' class='invisible'>
-                           <code>use_syslog: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code>
-                           </span></span><span id='structfield.color' class='structfield'>
+                           <code>use_syslog: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code>
+                           </span></span><span id='structfield.color' class="structfield">
                            <span id='color.v' class='invisible'>
-                           <code>color: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code>
-                           </span></span><span id='structfield.total_download' class='structfield'>
+                           <code>color: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code>
+                           </span></span><span id='structfield.total_download' class="structfield">
                            <span id='total_download.v' class='invisible'>
-                           <code>total_download: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code>
-                           </span></span><span id='structfield.check_space' class='structfield'>
+                           <code>total_download: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code>
+                           </span></span><span id='structfield.check_space' class="structfield">
                            <span id='check_space.v' class='invisible'>
-                           <code>check_space: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code>
-                           </span></span><span id='structfield.verbose_pkg_lists' class='structfield'>
+                           <code>check_space: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code>
+                           </span></span><span id='structfield.verbose_pkg_lists' class="structfield">
                            <span id='verbose_pkg_lists.v' class='invisible'>
-                           <code>verbose_pkg_lists: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code>
-                           </span></span><span id='structfield.repositories' class='structfield'>
+                           <code>verbose_pkg_lists: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code>
+                           </span></span><span id='structfield.repositories' class="structfield">
                            <span id='repositories.v' class='invisible'>
-                           <code>repositories: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='struct collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../libalpm/struct.RepoOptions.html' title='struct libalpm::RepoOptions'>RepoOptions</a>&gt;</code>
-                           </span></span><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../libalpm/struct.Options.html' title='struct libalpm::Options'>Options</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/options.rs.html#32-39' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.from_ini' class='method'><span id='from_ini.v' class='invisible'><code>fn <a href='#method.from_ini' class='fnname'>from_ini</a>(loc: &amp;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='struct std::path::Path'>Path</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='enum core::option::Option'>Option</a>&lt;<a class='struct' href='../libalpm/struct.Options.html' title='struct libalpm::Options'>Options</a>&gt;</code></span></h4>
+                           <code>repositories: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="../libalpm/struct.RepoOptions.html" title="struct libalpm::RepoOptions">RepoOptions</a>&gt;</code>
+                           </span></span><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../libalpm/struct.Options.html" title="struct libalpm::Options">Options</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/options.rs.html#38-45' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from_ini' class="method"><span id='from_ini.v' class='invisible'><code>fn <a href='#method.from_ini' class='fnname'>from_ini</a>(loc: &amp;<a class="struct" href="https://doc.rust-lang.org/nightly/std/path/struct.Path.html" title="struct std::path::Path">Path</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../libalpm/struct.Options.html" title="struct libalpm::Options">Options</a>&gt;</code></span></h4>
 <div class='docblock'><p>Reads a pacman-style ini file and returns an Options instance to match</p>
-
-<p>TODO will only be implemented after I&#39;ve finished the rest of the lib</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='trait core::default::Default'>Default</a> for <a class='struct' href='../libalpm/struct.Options.html' title='struct libalpm::Options'>Options</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/options.rs.html#42-77' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.default' class='method'><span id='default.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../libalpm/struct.Options.html' title='struct libalpm::Options'>Options</a></code></span></h4>
+<p>TODO will only be implemented after I've finished the rest of the lib</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html" title="trait core::default::Default">Default</a> for <a class="struct" href="../libalpm/struct.Options.html" title="struct libalpm::Options">Options</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/options.rs.html#48-83' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.default' class="method"><span id='default.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; <a class="struct" href="../libalpm/struct.Options.html" title="struct libalpm::Options">Options</a></code></span></h4>
 <div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

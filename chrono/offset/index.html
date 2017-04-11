@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,23 +43,20 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>chrono</a>::<wbr><a class='mod' href=''>offset</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>chrono</a>::<wbr><a class="mod" href=''>offset</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/chrono/offset/mod.rs.html#4-378' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>The time zone, which calculates offsets from the local time to UTC.</p>
-
 <p>There are four operations provided by the <code>TimeZone</code> trait:</p>
-
 <ol>
 <li>Converting the local <code>NaiveDateTime</code> to <code>DateTime&lt;Tz&gt;</code></li>
 <li>Converting the UTC <code>NaiveDateTime</code> to <code>DateTime&lt;Tz&gt;</code></li>
 <li>Converting <code>DateTime&lt;Tz&gt;</code> to the local <code>NaiveDateTime</code></li>
 <li>Constructing <code>DateTime&lt;Tz&gt;</code> objects from various offsets</li>
 </ol>
-
 <p>1 is used for constructors. 2 is used for the <code>with_timezone</code> method of date and time types.
 3 is used for other methods, e.g. <code>year()</code> or <code>format()</code>, and provided by an associated type
 which implements <code>Offset</code> (which then passed to <code>TimeZone</code> for actual implementations).
@@ -70,47 +67,53 @@ An <code>TimeZone</code> instance can be reconstructed from the corresponding <c
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='mod' href='fixed/index.html'
+                           <td><a class="mod" href="fixed/index.html"
                                   title='mod chrono::offset::fixed'>fixed</a></td>
                            <td class='docblock-short'>
                                 <p>The time zone which has a fixed offset from UTC.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='mod' href='local/index.html'
+                           <td><a class="mod" href="local/index.html"
                                   title='mod chrono::offset::local'>local</a></td>
                            <td class='docblock-short'>
                                 <p>The local (system) time zone.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='mod' href='utc/index.html'
+                           <td><a class="mod" href="utc/index.html"
                                   title='mod chrono::offset::utc'>utc</a></td>
                            <td class='docblock-short'>
                                 <p>The UTC (Coordinated Universal Time) time zone.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.LocalResult.html'
+                           <td><a class="enum" href="enum.LocalResult.html"
                                   title='enum chrono::offset::LocalResult'>LocalResult</a></td>
                            <td class='docblock-short'>
                                 <p>The conversion result from the local time to the timezone-aware datetime types.</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='trait' href='trait.Offset.html'
+                           <td><a class="trait" href="trait.Offset.html"
                                   title='trait chrono::offset::Offset'>Offset</a></td>
                            <td class='docblock-short'>
                                 <p>The offset from the local time to UTC.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='trait' href='trait.TimeZone.html'
+                           <td><a class="trait" href="trait.TimeZone.html"
                                   title='trait chrono::offset::TimeZone'>TimeZone</a></td>
                            <td class='docblock-short'>
                                 <p>The time zone.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>

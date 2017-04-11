@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Transaction` struct in crate `libalpm`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Transaction">
+
+    <title>libalpm::Transaction - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>libalpm</a></p><script>window.sidebarCurrent = {name: 'Transaction', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>libalpm</a>::<wbr><a class="struct" href=''>Transaction</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/libalpm/lib.rs.html#631' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Transaction(_);</pre><div class='docblock'><p>A transaction of package operations</p>
+<p>Consumes an Alpm instance as only 1 transaction can be performed at a time. Use <code>commit</code> or
+<code>rollback</code> to recover the Alpm instance.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../libalpm/struct.Transaction.html" title="struct libalpm::Transaction">Transaction</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libalpm/lib.rs.html#633-704' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.flags' class="method"><span id='flags.v' class='invisible'><code>fn <a href='#method.flags' class='fnname'>flags</a>(&amp;self) -&gt; <a class="struct" href="../libalpm/struct.TransactionFlags.html" title="struct libalpm::TransactionFlags">TransactionFlags</a></code></span></h4>
+<div class='docblock'><p>Returns the flags for the current transaction.</p>
+</div><h4 id='method.added_packages' class="method"><span id='added_packages.v' class='invisible'><code>fn <a href='#method.added_packages' class='fnname'>added_packages</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;&amp;'a <a class="enum" href="../libalpm/enum.PackageRef.html" title="enum libalpm::PackageRef">PackageRef</a>&gt;</code></span></h4>
+<div class='docblock'><p>Gets packages added by the current transaction.</p>
+</div><h4 id='method.removed_packages' class="method"><span id='removed_packages.v' class='invisible'><code>fn <a href='#method.removed_packages' class='fnname'>removed_packages</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;&amp;'a <a class="enum" href="../libalpm/enum.PackageRef.html" title="enum libalpm::PackageRef">PackageRef</a>&gt;</code></span></h4>
+<div class='docblock'><p>Gets packages removed by the current transaction.</p>
+</div><h4 id='method.prepare' class="method"><span id='prepare.v' class='invisible'><code>fn <a href='#method.prepare' class='fnname'>prepare</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class="type" href="../libalpm/type.AlpmResult.html" title="type libalpm::AlpmResult">AlpmResult</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Prepares a transaction for committing.</p>
+</div><h4 id='method.commit' class="method"><span id='commit.v' class='invisible'><code>fn <a href='#method.commit' class='fnname'>commit</a>(self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../libalpm/struct.Alpm.html" title="struct libalpm::Alpm">Alpm</a>, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="enum" href="../libalpm/enum.Error.html" title="enum libalpm::Error">Error</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;, <a class="struct" href="../libalpm/struct.Transaction.html" title="struct libalpm::Transaction">Transaction</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>&gt;</code></span></h4>
+<div class='docblock'><p>Commits the transaction and returns the alpm instance. TODO conflict type</p>
+</div><h4 id='method.release' class="method"><span id='release.v' class='invisible'><code>fn <a href='#method.release' class='fnname'>release</a>(self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../libalpm/struct.Alpm.html" title="struct libalpm::Alpm">Alpm</a>, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="enum" href="../libalpm/enum.Error.html" title="enum libalpm::Error">Error</a>, <a class="struct" href="../libalpm/struct.Alpm.html" title="struct libalpm::Alpm">Alpm</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>&gt;</code></span></h4>
+<div class='docblock'><p>Releases (discards) the transaction and returns the alpm instance.</p>
+</div><h4 id='method.sys_upgrade' class="method"><span id='sys_upgrade.v' class='invisible'><code>fn <a href='#method.sys_upgrade' class='fnname'>sys_upgrade</a>(&amp;self, enable_downgrade: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="type" href="../libalpm/type.AlpmResult.html" title="type libalpm::AlpmResult">AlpmResult</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Adds a system upgrade to this transaction.</p>
+</div><h4 id='method.add_package' class="method"><span id='add_package.v' class='invisible'><code>fn <a href='#method.add_package' class='fnname'>add_package</a>(&amp;self, pkg: &amp;<a class="enum" href="../libalpm/enum.PackageRef.html" title="enum libalpm::PackageRef">PackageRef</a>) -&gt; <a class="type" href="../libalpm/type.AlpmResult.html" title="type libalpm::AlpmResult">AlpmResult</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Adds a new package to system in this transaction.</p>
+</div><h4 id='method.remove_package' class="method"><span id='remove_package.v' class='invisible'><code>fn <a href='#method.remove_package' class='fnname'>remove_package</a>(&amp;self, pkg: &amp;<a class="enum" href="../libalpm/enum.PackageRef.html" title="enum libalpm::PackageRef">PackageRef</a>) -&gt; <a class="type" href="../libalpm/type.AlpmResult.html" title="type libalpm::AlpmResult">AlpmResult</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Removes a package from the system in this transaction.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "libalpm";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

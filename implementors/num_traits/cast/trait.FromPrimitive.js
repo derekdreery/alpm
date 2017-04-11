@@ -1,6 +1,6 @@
 (function() {var implementors = {};
-implementors["chrono"] = ["impl <a class='trait' href='num_traits/cast/trait.FromPrimitive.html' title='trait num_traits::cast::FromPrimitive'>FromPrimitive</a> for <a class='enum' href='chrono/enum.Weekday.html' title='enum chrono::Weekday'>Weekday</a>",];
-implementors["libalpm"] = ["impl <a class='trait' href='num_traits/cast/trait.FromPrimitive.html' title='trait num_traits::cast::FromPrimitive'>FromPrimitive</a> for <a class='enum' href='chrono/enum.Weekday.html' title='enum chrono::Weekday'>Weekday</a>",];
+implementors["chrono"] = ["impl <a class=\"trait\" href=\"num_traits/cast/trait.FromPrimitive.html\" title=\"trait num_traits::cast::FromPrimitive\">FromPrimitive</a> for <a class=\"enum\" href=\"chrono/enum.Weekday.html\" title=\"enum chrono::Weekday\">Weekday</a>",];
+implementors["libalpm"] = ["impl <a class=\"trait\" href=\"num_traits/cast/trait.FromPrimitive.html\" title=\"trait num_traits::cast::FromPrimitive\">FromPrimitive</a> for <a class=\"enum\" href=\"chrono/enum.Weekday.html\" title=\"enum chrono::Weekday\">Weekday</a>",];
 implementors["num_traits"] = [];
 
             if (window.register_implementors) {

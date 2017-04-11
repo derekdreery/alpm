@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc fn">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,17 +43,15 @@
         </form>
     </nav>
 
-    <section id='main' class="content fn">
-<h1 class='fqn'><span class='in-band'>Function <a href='index.html'>printf</a>::<wbr><a class='fn' href=''>printf</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Function <a href='index.html'>printf</a>::<wbr><a class="fn" href=''>printf</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/printf/lib.rs.html#19-25' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub unsafe fn printf(format: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*const </a><a class='type' href='../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html' title='type libc::unix::notbsd::linux::other::b64::x86_64::c_char'>c_char</a>, args: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*mut </a><a class='enum' href='../libc/enum.c_void.html' title='enum libc::c_void'>c_void</a>) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='struct collections::string::String'>String</a></pre><div class='docblock'><p>Take a printf c-string and variadic array, and write equiv. out to the formatter</p>
-
-<h1 id='safety' class='section-header'><a href='#safety'>Safety</a></h1>
-<p>This function is UB if the va_list doesn&#39;t match the format (c printf syntax)</p>
-
+<pre class='rust fn'>pub unsafe fn printf(format: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>, args: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="enum" href="../libc/enum.c_void.html" title="enum libc::c_void">c_void</a>) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></pre><div class='docblock'><p>Take a printf c-string and variadic array, and write equiv. out to the formatter</p>
+<h1 id="safety" class="section-header"><a href="#safety">Safety</a></h1>
+<p>This function is UB if the va_list doesn't match the format (c printf syntax)</p>
 <p>There must be no panics in this function, so quite often errors are deliberately ignored</p>
 </div></section>
     <section id='search' class="content hidden"></section>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -203,165 +203,249 @@
 <span id="158">158</span>
 <span id="159">159</span>
 <span id="160">160</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>libc</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ptr</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ffi</span>::<span class='ident'>CStr</span>;
-<span class='kw'>use</span> <span class='ident'>alpm_sys</span>::<span class='kw-2'>*</span>;
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Some helper functions not directly related to the API</span>
 
+<span class="kw">use</span> <span class="ident">libc</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::{<span class="ident">CStr</span>, <span class="ident">CString</span>};
+<span class="kw">use</span> <span class="ident">alpm_sys</span>::<span class="kw-2">*</span>;
 
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>UtsName</span>(<span class='ident'>libc</span>::<span class='ident'>utsname</span>);
+<span class="doccomment">/// A wrapper around a libc::utsname struct, holding information on the current computer and os.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UtsName</span>(<span class="ident">libc</span>::<span class="ident">utsname</span>);
 
-<span class='kw'>impl</span> <span class='ident'>UtsName</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sysname</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>sysname</span>.<span class='ident'>as_ptr</span>())
-                .<span class='ident'>to_str</span>().<span class='ident'>expect</span>(<span class='string'>&quot;sysname not valid utf8 (should never happen)&quot;</span>)
+<span class="kw">impl</span> <span class="ident">UtsName</span> {
+    <span class="doccomment">/// The system name</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sysname</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">unsafe</span> {
+            <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">sysname</span>.<span class="ident">as_ptr</span>())
+                .<span class="ident">to_str</span>().<span class="ident">expect</span>(<span class="string">&quot;sysname not valid utf8 (should never happen)&quot;</span>)
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>nodename</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>nodename</span>.<span class='ident'>as_ptr</span>())
-                .<span class='ident'>to_str</span>().<span class='ident'>expect</span>(<span class='string'>&quot;nodename not valid utf8 (should never happen)&quot;</span>)
+    <span class="doccomment">/// The node name</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">nodename</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">unsafe</span> {
+            <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">nodename</span>.<span class="ident">as_ptr</span>())
+                .<span class="ident">to_str</span>().<span class="ident">expect</span>(<span class="string">&quot;nodename not valid utf8 (should never happen)&quot;</span>)
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>release</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>release</span>.<span class='ident'>as_ptr</span>())
-                .<span class='ident'>to_str</span>().<span class='ident'>expect</span>(<span class='string'>&quot;release not valid utf8 (should never happen)&quot;</span>)
+    <span class="doccomment">/// The release</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">release</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">unsafe</span> {
+            <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">release</span>.<span class="ident">as_ptr</span>())
+                .<span class="ident">to_str</span>().<span class="ident">expect</span>(<span class="string">&quot;release not valid utf8 (should never happen)&quot;</span>)
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>version</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>version</span>.<span class='ident'>as_ptr</span>())
-                .<span class='ident'>to_str</span>().<span class='ident'>expect</span>(<span class='string'>&quot;version not valid utf8 (should never happen)&quot;</span>)
+    <span class="doccomment">/// The version</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">unsafe</span> {
+            <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">version</span>.<span class="ident">as_ptr</span>())
+                .<span class="ident">to_str</span>().<span class="ident">expect</span>(<span class="string">&quot;version not valid utf8 (should never happen)&quot;</span>)
         }
     }
 
-    <span class='doccomment'>/// Useful as value for &quot;arch&quot;</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>machine</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>machine</span>.<span class='ident'>as_ptr</span>())
-                .<span class='ident'>to_str</span>().<span class='ident'>expect</span>(<span class='string'>&quot;machine not valid utf8 (should never happen)&quot;</span>)
+    <span class="doccomment">/// Useful as value for &quot;arch&quot;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">machine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">unsafe</span> {
+            <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">machine</span>.<span class="ident">as_ptr</span>())
+                .<span class="ident">to_str</span>().<span class="ident">expect</span>(<span class="string">&quot;machine not valid utf8 (should never happen)&quot;</span>)
         }
     }
 }
 
-<span class='doccomment'>/// A simple safe wrapper round libc::uname.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>uname</span>() <span class='op'>-&gt;</span> <span class='ident'>UtsName</span> {
-    <span class='kw'>unsafe</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>raw</span>: <span class='ident'>libc</span>::<span class='ident'>utsname</span> <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>zeroed</span>();
-        <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>libc</span>::<span class='ident'>uname</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>raw</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>libc</span>::<span class='ident'>utsname</span>);
-        <span class='kw'>if</span> <span class='ident'>res</span> <span class='op'>==</span> <span class='number'>0</span> { <span class='comment'>// success</span>
-            <span class='ident'>UtsName</span>(<span class='ident'>raw</span>)
-        } <span class='kw'>else</span> {
-            <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;uname function errored (this shouldn&#39;t happen)&quot;</span>)
+<span class="doccomment">/// A simple safe wrapper round libc::uname.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">uname</span>() <span class="op">-&gt;</span> <span class="ident">UtsName</span> {
+    <span class="kw">unsafe</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">raw</span>: <span class="ident">libc</span>::<span class="ident">utsname</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">zeroed</span>();
+        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">uname</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">raw</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">libc</span>::<span class="ident">utsname</span>);
+        <span class="kw">if</span> <span class="ident">res</span> <span class="op">==</span> <span class="number">0</span> { <span class="comment">// success</span>
+            <span class="ident">UtsName</span>(<span class="ident">raw</span>)
+        } <span class="kw">else</span> {
+            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;uname function errored (this shouldn&#39;t happen)&quot;</span>)
         }
     }
 }
 
-<span class='comment'>// NOTE the linked list in alpm_list_t is actually a doubly linked list, where you can&#39;t rely on</span>
-<span class='comment'>// the first item-&gt;prev = null</span>
+<span class="comment">// NOTE the linked list in alpm_list_t is actually a doubly linked list, where you can&#39;t rely on</span>
+<span class="comment">// the first item-&gt;prev = null</span>
 
-<span class='doccomment'>/// Convert an alpm_list_t to a rust Vec.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// It&#39;s important not to take ownership of the data pointer (raw-&gt;data). It should be cleared</span>
-<span class='doccomment'>/// using the original data structure. If you do this you can let the vec go out of scope and not</span>
-<span class='doccomment'>/// touch the original data. The vec must not outlive the underlying struct, this bound can be</span>
-<span class='doccomment'>/// enforced by the type T having a lifetime parameter.</span>
-<span class='kw'>pub</span>(<span class='kw'>crate</span>) <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>alpm_list_to_vec</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>F</span><span class='op'>&gt;</span>(<span class='ident'>raw</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>alpm_list_t</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>libc</span>::<span class='ident'>c_void</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span>
+<span class="doccomment">/// Convert an alpm_list_t to a rust Vec.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// It&#39;s important not to take ownership of the data pointer (raw-&gt;data). It should be cleared</span>
+<span class="doccomment">/// using the original data structure. If you do this you can let the vec go out of scope and not</span>
+<span class="doccomment">/// touch the original data. The vec must not outlive the underlying struct, this bound can be</span>
+<span class="doccomment">/// enforced by the type T having a lifetime parameter.</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">alpm_list_to_vec</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">raw</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_list_t</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">T</span>
 {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>vec</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
-    <span class='kw'>if</span> <span class='ident'>raw</span>.<span class='ident'>is_null</span>() {
-        <span class='kw'>return</span> <span class='ident'>vec</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">vec</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+    <span class="kw">if</span> <span class="ident">raw</span>.<span class="ident">is_null</span>() {
+        <span class="kw">return</span> <span class="ident">vec</span>;
     }
-    <span class='comment'>// get first node</span>
-    <span class='kw'>let</span> <span class='ident'>first</span> <span class='op'>=</span> <span class='ident'>raw</span>;
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='ident'>raw</span>;
+    <span class="comment">// get first node</span>
+    <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">raw</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">raw</span> <span class="op">=</span> <span class="ident">raw</span>;
 
-    <span class='comment'>// copy list (not data)</span>
-    <span class='ident'>vec</span>.<span class='ident'>push</span>(<span class='ident'>f</span>((<span class='kw-2'>*</span><span class='ident'>raw</span>).<span class='ident'>data</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>libc</span>::<span class='ident'>c_void</span>));
-    <span class='kw'>while</span> <span class='op'>!</span> (<span class='kw-2'>*</span><span class='ident'>raw</span>).<span class='ident'>next</span>.<span class='ident'>is_null</span>() {
-        <span class='ident'>raw</span> <span class='op'>=</span> (<span class='kw-2'>*</span><span class='ident'>raw</span>).<span class='ident'>next</span>;
-        <span class='ident'>vec</span>.<span class='ident'>push</span>(<span class='ident'>f</span>((<span class='kw-2'>*</span><span class='ident'>raw</span>).<span class='ident'>data</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>libc</span>::<span class='ident'>c_void</span>));
+    <span class="comment">// copy list (not data)</span>
+    <span class="ident">vec</span>.<span class="ident">push</span>(<span class="ident">f</span>((<span class="kw-2">*</span><span class="ident">raw</span>).<span class="ident">data</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">c_void</span>));
+    <span class="kw">while</span> <span class="op">!</span> (<span class="kw-2">*</span><span class="ident">raw</span>).<span class="ident">next</span>.<span class="ident">is_null</span>() {
+        <span class="ident">raw</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">raw</span>).<span class="ident">next</span>;
+        <span class="ident">vec</span>.<span class="ident">push</span>(<span class="ident">f</span>((<span class="kw-2">*</span><span class="ident">raw</span>).<span class="ident">data</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">c_void</span>));
     }
-    <span class='ident'>vec</span>
+    <span class="ident">vec</span>
 }
 
-<span class='doccomment'>/// Convert a rust_vec to an alpm_list_t.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This function passes ownership of the contained data to alpm - so it must be allocated with</span>
-<span class='doccomment'>/// libc::malloc and friends</span>
-<span class='kw'>pub</span>(<span class='kw'>crate</span>) <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>vec_to_alpm_list</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>F</span><span class='op'>&gt;</span>(<span class='ident'>v</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>alpm_list_t</span>
-    <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>libc</span>::<span class='ident'>c_void</span>
+<span class="doccomment">/// Convert a rust_vec to an alpm_list_t.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This function passes ownership of the contained data to alpm - so it must be allocated with</span>
+<span class="doccomment">/// libc::malloc and friends</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">vec_to_alpm_list</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_list_t</span>
+    <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">c_void</span>
 {
-    <span class='kw'>if</span> <span class='ident'>v</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
-        <span class='kw'>return</span> <span class='ident'>ptr</span>::<span class='ident'>null</span>();
+    <span class="kw">if</span> <span class="ident">v</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span> {
+        <span class="kw">return</span> <span class="ident">ptr</span>::<span class="ident">null</span>();
     }
 
-    <span class='comment'>// init everything to null</span>
-    <span class='kw'>let</span> <span class='ident'>list</span> <span class='op'>=</span> <span class='ident'>libc</span>::<span class='ident'>calloc</span>(<span class='number'>1</span>, <span class='ident'>mem</span>::<span class='ident'>size_of</span>::<span class='op'>&lt;</span><span class='ident'>alpm_list_t</span><span class='op'>&gt;</span>()) <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>alpm_list_t</span>;
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>list_prev</span> <span class='op'>=</span> <span class='ident'>list</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>alpm_list_t</span>;
-    <span class='comment'>// convert first element and put it in</span>
-    (<span class='kw-2'>*</span><span class='ident'>list_prev</span>).<span class='ident'>data</span> <span class='op'>=</span> <span class='ident'>f</span>(<span class='kw-2'>&amp;</span><span class='ident'>v</span>[<span class='number'>0</span>]);
-    <span class='comment'>// for each remaining element</span>
-    <span class='kw'>for</span> <span class='ident'>el</span> <span class='kw'>in</span> <span class='ident'>v</span>.<span class='ident'>iter</span>().<span class='ident'>skip</span>(<span class='number'>1</span>) {
-        <span class='comment'>// create null alpm_list_t</span>
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>list_inner</span> <span class='op'>=</span> <span class='ident'>libc</span>::<span class='ident'>calloc</span>(<span class='number'>1</span>, <span class='ident'>mem</span>::<span class='ident'>size_of</span>::<span class='op'>&lt;</span><span class='ident'>alpm_list_t</span><span class='op'>&gt;</span>()) <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>alpm_list_t</span>;
-        <span class='comment'>// add in value</span>
-        (<span class='kw-2'>*</span><span class='ident'>list_inner</span>).<span class='ident'>data</span> <span class='op'>=</span> <span class='ident'>f</span>(<span class='ident'>el</span>);
-        <span class='comment'>// hook up to prev alpm_list_t</span>
-        (<span class='kw-2'>*</span><span class='ident'>list_inner</span>).<span class='ident'>prev</span> <span class='op'>=</span> <span class='ident'>list_prev</span>;
-        (<span class='kw-2'>*</span><span class='ident'>list_prev</span>).<span class='ident'>next</span> <span class='op'>=</span> <span class='ident'>list_inner</span>;
+    <span class="comment">// init everything to null</span>
+    <span class="kw">let</span> <span class="ident">list</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">calloc</span>(<span class="number">1</span>, <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">alpm_list_t</span><span class="op">&gt;</span>()) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_list_t</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">list_prev</span> <span class="op">=</span> <span class="ident">list</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">alpm_list_t</span>;
+    <span class="comment">// convert first element and put it in</span>
+    (<span class="kw-2">*</span><span class="ident">list_prev</span>).<span class="ident">data</span> <span class="op">=</span> <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>[<span class="number">0</span>]);
+    <span class="comment">// for each remaining element</span>
+    <span class="kw">for</span> <span class="ident">el</span> <span class="kw">in</span> <span class="ident">v</span>.<span class="ident">iter</span>().<span class="ident">skip</span>(<span class="number">1</span>) {
+        <span class="comment">// create null alpm_list_t</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">list_inner</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">calloc</span>(<span class="number">1</span>, <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">alpm_list_t</span><span class="op">&gt;</span>()) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">alpm_list_t</span>;
+        <span class="comment">// add in value</span>
+        (<span class="kw-2">*</span><span class="ident">list_inner</span>).<span class="ident">data</span> <span class="op">=</span> <span class="ident">f</span>(<span class="ident">el</span>);
+        <span class="comment">// hook up to prev alpm_list_t</span>
+        (<span class="kw-2">*</span><span class="ident">list_inner</span>).<span class="ident">prev</span> <span class="op">=</span> <span class="ident">list_prev</span>;
+        (<span class="kw-2">*</span><span class="ident">list_prev</span>).<span class="ident">next</span> <span class="op">=</span> <span class="ident">list_inner</span>;
 
-        <span class='ident'>list_prev</span> <span class='op'>=</span> <span class='ident'>list_inner</span>;
+        <span class="ident">list_prev</span> <span class="op">=</span> <span class="ident">list_inner</span>;
     }
-    <span class='ident'>list</span>
+    <span class="ident">list</span>
 }
 
-<span class='doccomment'>/// Convert a str to unowned raw mem allocated with libc::malloc</span>
-<span class='kw'>pub</span>(<span class='kw'>crate</span>) <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>str_to_unowned_char_array</span>(<span class='ident'>s</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>libc</span>::<span class='ident'>c_void</span> {
-    <span class='kw'>let</span> <span class='ident'>len</span> <span class='op'>=</span> (<span class='kw-2'>*</span><span class='ident'>s</span>).<span class='ident'>len</span>();
-    <span class='comment'>// remember extra byte for &#39;\0&#39; (will be zero since calloc)</span>
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>libc</span>::<span class='ident'>calloc</span>(<span class='ident'>len</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='ident'>mem</span>::<span class='ident'>size_of</span>::<span class='op'>&lt;</span><span class='ident'>libc</span>::<span class='ident'>c_char</span><span class='op'>&gt;</span>()) <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>libc</span>::<span class='ident'>c_char</span>;
-    <span class='ident'>ptr</span>::<span class='ident'>copy</span>::<span class='op'>&lt;</span><span class='ident'>libc</span>::<span class='ident'>c_char</span><span class='op'>&gt;</span>((<span class='kw-2'>*</span><span class='ident'>s</span>).<span class='ident'>as_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>i8</span>, <span class='ident'>p</span>, <span class='ident'>len</span>);
-    <span class='ident'>p</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>libc</span>::<span class='ident'>c_void</span>
+<span class="doccomment">/// Borrow a rust_vec as an alpm_list_t. This list must be freed by the user using `alpm_list_free`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Borrowed vec must live longer than the c library needs it for (this can&#39;t be checked)</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">vec_as_alpm_list</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_list_t</span>
+    <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">c_void</span>
+{
+    <span class="kw">if</span> <span class="ident">v</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span> {
+        <span class="kw">return</span> <span class="ident">ptr</span>::<span class="ident">null</span>();
+    }
+
+    <span class="comment">// init everything to null</span>
+    <span class="kw">let</span> <span class="ident">list</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">calloc</span>(<span class="number">1</span>, <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">alpm_list_t</span><span class="op">&gt;</span>()) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_list_t</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">list_prev</span> <span class="op">=</span> <span class="ident">list</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">alpm_list_t</span>;
+    <span class="comment">// convert first element and put it in</span>
+    (<span class="kw-2">*</span><span class="ident">list_prev</span>).<span class="ident">data</span> <span class="op">=</span> <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>[<span class="number">0</span>]);
+    <span class="comment">// for each remaining element</span>
+    <span class="kw">for</span> <span class="ident">el</span> <span class="kw">in</span> <span class="ident">v</span>.<span class="ident">iter</span>().<span class="ident">skip</span>(<span class="number">1</span>) {
+        <span class="comment">// create null alpm_list_t</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">list_inner</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">calloc</span>(<span class="number">1</span>, <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">alpm_list_t</span><span class="op">&gt;</span>()) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">alpm_list_t</span>;
+        <span class="comment">// add in value</span>
+        (<span class="kw-2">*</span><span class="ident">list_inner</span>).<span class="ident">data</span> <span class="op">=</span> <span class="ident">f</span>(<span class="ident">el</span>);
+        <span class="comment">// hook up to prev alpm_list_t</span>
+        (<span class="kw-2">*</span><span class="ident">list_inner</span>).<span class="ident">prev</span> <span class="op">=</span> <span class="ident">list_prev</span>;
+        (<span class="kw-2">*</span><span class="ident">list_prev</span>).<span class="ident">next</span> <span class="op">=</span> <span class="ident">list_inner</span>;
+
+        <span class="ident">list_prev</span> <span class="op">=</span> <span class="ident">list_inner</span>;
+    }
+    <span class="ident">list</span>
 }
 
-<span class='doccomment'>/// A TEMPORARY helper function to extract server urls from a pacman conf file (until I&#39;ve</span>
-<span class='doccomment'>/// implemented `Options::from_ini`).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get_servers</span>(<span class='ident'>path</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>repo</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>arch</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
-    <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fs</span>::<span class='ident'>File</span>;
-    <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='ident'>BufRead</span>, <span class='ident'>BufReader</span>};
+<span class="doccomment">/// Convert a str to unowned raw mem allocated with libc::malloc</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">str_to_unowned_char_array</span>(<span class="ident">s</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">c_void</span> {
+    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">s</span>).<span class="ident">len</span>();
+    <span class="comment">// remember extra byte for &#39;\0&#39; (will be zero since calloc)</span>
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">calloc</span>(<span class="ident">len</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">libc</span>::<span class="ident">c_char</span><span class="op">&gt;</span>()) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">libc</span>::<span class="ident">c_char</span>;
+    <span class="ident">ptr</span>::<span class="ident">copy</span>::<span class="op">&lt;</span><span class="ident">libc</span>::<span class="ident">c_char</span><span class="op">&gt;</span>((<span class="kw-2">*</span><span class="ident">s</span>).<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">i8</span>, <span class="ident">p</span>, <span class="ident">len</span>);
+    <span class="ident">p</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">c_void</span>
+}
 
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>servers</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
-    <span class='kw'>let</span> <span class='ident'>file</span> <span class='op'>=</span> <span class='ident'>BufReader</span>::<span class='ident'>new</span>(<span class='ident'>File</span>::<span class='ident'>open</span>(<span class='ident'>path</span>).<span class='ident'>unwrap</span>());
-    <span class='kw'>for</span> <span class='ident'>line</span> <span class='kw'>in</span> <span class='ident'>file</span>.<span class='ident'>lines</span>() {
-        <span class='kw'>let</span> <span class='ident'>line</span> <span class='op'>=</span> <span class='ident'>line</span>.<span class='ident'>unwrap</span>();
-        <span class='kw'>if</span> <span class='ident'>line</span>.<span class='ident'>starts_with</span>(<span class='string'>&quot;Server = &quot;</span>) {
-            <span class='kw'>let</span> <span class='ident'>server</span> <span class='op'>=</span> <span class='ident'>line</span>
-                .<span class='ident'>replace</span>(<span class='string'>&quot;$repo&quot;</span>, <span class='ident'>repo</span>)
-                .<span class='ident'>replace</span>(<span class='string'>&quot;$arch&quot;</span>, <span class='ident'>arch</span>)
-                .<span class='ident'>replace</span>(<span class='string'>&quot;Server = &quot;</span>, <span class='string'>&quot;&quot;</span>);
-            <span class='ident'>servers</span>.<span class='ident'>push</span>(<span class='ident'>server</span>);
+<span class="doccomment">/// Convert a str to owned raw mem allocated (and deallocated) in rust</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">cstring_to_owned_char_array</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">CString</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">c_void</span> {
+    <span class="ident">s</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">c_void</span>
+}
+
+<span class="doccomment">/// A TEMPORARY helper function to extract server urls from a pacman conf file (until I&#39;ve</span>
+<span class="doccomment">/// implemented `Options::from_ini`).</span>
+<span class="attribute">#[<span class="ident">deprecated</span>]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_servers</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">repo</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">arch</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="ident">BufRead</span>, <span class="ident">BufReader</span>};
+
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">servers</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+    <span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">BufReader</span>::<span class="ident">new</span>(<span class="ident">File</span>::<span class="ident">open</span>(<span class="ident">path</span>).<span class="ident">unwrap</span>());
+    <span class="kw">for</span> <span class="ident">line</span> <span class="kw">in</span> <span class="ident">file</span>.<span class="ident">lines</span>() {
+        <span class="kw">let</span> <span class="ident">line</span> <span class="op">=</span> <span class="ident">line</span>.<span class="ident">unwrap</span>();
+        <span class="kw">if</span> <span class="ident">line</span>.<span class="ident">starts_with</span>(<span class="string">&quot;Server = &quot;</span>) {
+            <span class="kw">let</span> <span class="ident">server</span> <span class="op">=</span> <span class="ident">line</span>
+                .<span class="ident">replace</span>(<span class="string">&quot;$repo&quot;</span>, <span class="ident">repo</span>)
+                .<span class="ident">replace</span>(<span class="string">&quot;$arch&quot;</span>, <span class="ident">arch</span>)
+                .<span class="ident">replace</span>(<span class="string">&quot;Server = &quot;</span>, <span class="string">&quot;&quot;</span>);
+            <span class="ident">servers</span>.<span class="ident">push</span>(<span class="ident">server</span>);
         }
     }
-    <span class='ident'>servers</span>
+    <span class="ident">servers</span>
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
-<span class='kw'>mod</span> <span class='ident'>tests</span> {
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">mod</span> <span class="ident">tests</span> {
 
-    <span class='kw'>use</span> <span class='kw'>super</span>::<span class='kw-2'>*</span>;
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>test_uname</span>() {
-        <span class='kw'>let</span> <span class='ident'>info</span> <span class='op'>=</span> <span class='ident'>uname</span>();
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>info</span>.<span class='ident'>sysname</span>(), <span class='string'>&quot;Linux&quot;</span>);
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_uname</span>() {
+        <span class="kw">let</span> <span class="ident">info</span> <span class="op">=</span> <span class="ident">uname</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">info</span>.<span class="ident">sysname</span>(), <span class="string">&quot;Linux&quot;</span>);
     }
 }
 </pre>

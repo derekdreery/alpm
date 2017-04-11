@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc fn">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,19 +43,17 @@
         </form>
     </nav>
 
-    <section id='main' class="content fn">
-<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>url</a>::<wbr><a href='index.html'>percent_encoding</a>::<wbr><a class='fn' href=''>percent_encode</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>url</a>::<wbr><a href='index.html'>percent_encoding</a>::<wbr><a class="fn" href=''>percent_encode</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/url/percent_encoding.rs.html#150-155' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn percent_encode&lt;E:&nbsp;<a class='trait' href='../../url/percent_encoding/trait.EncodeSet.html' title='trait url::percent_encoding::EncodeSet'>EncodeSet</a>&gt;(input: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; encode_set: E)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='struct' href='../../url/percent_encoding/struct.PercentEncode.html' title='struct url::percent_encoding::PercentEncode'>PercentEncode</a>&lt;E&gt;</pre><div class='docblock'><p>Percent-encode the given bytes with the given encode set.</p>
-
+<pre class='rust fn'>pub fn percent_encode&lt;E:&nbsp;<a class="trait" href="../../url/percent_encoding/trait.EncodeSet.html" title="trait url::percent_encoding::EncodeSet">EncodeSet</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;input: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;encode_set: E<br>) -&gt; <a class="struct" href="../../url/percent_encoding/struct.PercentEncode.html" title="struct url::percent_encoding::PercentEncode">PercentEncode</a>&lt;E&gt;</pre><div class='docblock'><p>Percent-encode the given bytes with the given encode set.</p>
 <p>The encode set define which bytes (in addition to non-ASCII and controls)
 need to be percent-encoded.
 The choice of this set depends on context.
 For example, <code>?</code> needs to be encoded in an URL path but not in a query string.</p>
-
 <p>The return value is an iterator of <code>&amp;str</code> slices (so it has a <code>.collect::&lt;String&gt;()</code> method)
 that also implements <code>Display</code> and <code>Into&lt;Cow&lt;str&gt;&gt;</code>.
 The latter returns <code>Cow::Borrowed</code> when none of the bytes in <code>input</code>

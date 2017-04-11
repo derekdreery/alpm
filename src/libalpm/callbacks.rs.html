@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -136,99 +136,99 @@
 <span id="91">91</span>
 <span id="92">92</span>
 <span id="93">93</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>panic</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ffi</span>::<span class='ident'>CStr</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">panic</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">CStr</span>;
 
-<span class='kw'>use</span> <span class='ident'>printf</span>::<span class='ident'>printf</span>;
-<span class='kw'>use</span> <span class='ident'>alpm_sys</span>::<span class='kw-2'>*</span>;
-<span class='kw'>use</span> <span class='ident'>libc</span>::{<span class='ident'>c_int</span>, <span class='ident'>c_char</span>, <span class='ident'>c_void</span>, <span class='ident'>off_t</span>};
+<span class="kw">use</span> <span class="ident">printf</span>::<span class="ident">printf</span>;
+<span class="kw">use</span> <span class="ident">alpm_sys</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">libc</span>::{<span class="ident">c_int</span>, <span class="ident">c_char</span>, <span class="ident">c_void</span>, <span class="ident">off_t</span>};
 
-<span class='kw'>use</span> {<span class='ident'>LOG_CB</span>, <span class='ident'>DOWNLOAD_CB</span>, <span class='ident'>DLTOTAL_CB</span>, <span class='ident'>FETCH_CB</span>, <span class='ident'>EVENT_CB</span>, <span class='ident'>DownloadResult</span>};
-<span class='kw'>use</span> <span class='ident'>event</span>::<span class='ident'>Event</span>;
+<span class="kw">use</span> {<span class="ident">LOG_CB</span>, <span class="ident">DOWNLOAD_CB</span>, <span class="ident">DLTOTAL_CB</span>, <span class="ident">FETCH_CB</span>, <span class="ident">EVENT_CB</span>, <span class="ident">DownloadResult</span>};
+<span class="kw">use</span> <span class="ident">event</span>::<span class="ident">Event</span>;
 
-<span class='doccomment'>/// Function with C calling convention and required type signature to wrap our callback</span>
-<span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span> <span class='ident'>alpm_cb_log</span>(<span class='ident'>level</span>: <span class='ident'>alpm_loglevel_t</span>,
-                                 <span class='ident'>fmt</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>,
-                                 <span class='ident'>args</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>Struct_va_list</span>) {
-    <span class='kw'>let</span> <span class='ident'>out</span> <span class='op'>=</span> <span class='ident'>printf</span>(<span class='ident'>fmt</span>, <span class='ident'>args</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>);
-    <span class='ident'>panic</span>::<span class='ident'>catch_unwind</span>(<span class='op'>||</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>cb</span> <span class='op'>=</span> <span class='ident'>LOG_CB</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>();
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>cb</span>) <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>cb</span> {
-            <span class='ident'>cb</span>(<span class='ident'>level</span>.<span class='ident'>into</span>(), <span class='ident'>out</span>);
+<span class="doccomment">/// Function with C calling convention and required type signature to wrap our callback</span>
+<span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">alpm_cb_log</span>(<span class="ident">level</span>: <span class="ident">alpm_loglevel_t</span>,
+                                 <span class="ident">fmt</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
+                                 <span class="ident">args</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Struct_va_list</span>) {
+    <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">printf</span>(<span class="ident">fmt</span>, <span class="ident">args</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>);
+    <span class="ident">panic</span>::<span class="ident">catch_unwind</span>(<span class="op">||</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cb</span> <span class="op">=</span> <span class="ident">LOG_CB</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">cb</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="ident">cb</span> {
+            <span class="ident">cb</span>(<span class="ident">level</span>.<span class="ident">into</span>(), <span class="ident">out</span>);
         }
-    }).<span class='ident'>unwrap_or</span>(()) <span class='comment'>// ignore all errors since we are about to cross ffi boundary</span>
+    }).<span class="ident">unwrap_or</span>(()) <span class="comment">// ignore all errors since we are about to cross ffi boundary</span>
 }
 
-<span class='doccomment'>/** Type of download progress callbacks.
+<span class="doccomment">/** Type of download progress callbacks.
  * @param filename the name of the file being downloaded
  * @param xfered the number of transferred bytes
  * @param total the total number of bytes to transfer
  */</span>
-<span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span> <span class='ident'>alpm_cb_download</span>(<span class='ident'>filename</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>, <span class='ident'>xfered</span>: <span class='ident'>off_t</span>, <span class='ident'>total</span>: <span class='ident'>off_t</span>) {
-    <span class='kw'>let</span> <span class='ident'>filename</span> <span class='op'>=</span> <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>filename</span>).<span class='ident'>to_string_lossy</span>();
-    <span class='kw'>let</span> <span class='ident'>xfered</span> <span class='op'>=</span> <span class='ident'>xfered</span> <span class='kw'>as</span> <span class='ident'>u64</span>;
-    <span class='kw'>let</span> <span class='ident'>total</span> <span class='op'>=</span> <span class='ident'>total</span> <span class='kw'>as</span> <span class='ident'>u64</span>;
-    <span class='ident'>panic</span>::<span class='ident'>catch_unwind</span>(<span class='op'>||</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>cb</span> <span class='op'>=</span> <span class='ident'>DOWNLOAD_CB</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>();
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>cb</span>) <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>cb</span> {
-            <span class='ident'>cb</span>(<span class='ident'>filename</span>.<span class='ident'>as_ref</span>(), <span class='ident'>xfered</span>, <span class='ident'>total</span>);
+<span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">alpm_cb_download</span>(<span class="ident">filename</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">xfered</span>: <span class="ident">off_t</span>, <span class="ident">total</span>: <span class="ident">off_t</span>) {
+    <span class="kw">let</span> <span class="ident">filename</span> <span class="op">=</span> <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">filename</span>).<span class="ident">to_string_lossy</span>();
+    <span class="kw">let</span> <span class="ident">xfered</span> <span class="op">=</span> <span class="ident">xfered</span> <span class="kw">as</span> <span class="ident">u64</span>;
+    <span class="kw">let</span> <span class="ident">total</span> <span class="op">=</span> <span class="ident">total</span> <span class="kw">as</span> <span class="ident">u64</span>;
+    <span class="ident">panic</span>::<span class="ident">catch_unwind</span>(<span class="op">||</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cb</span> <span class="op">=</span> <span class="ident">DOWNLOAD_CB</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">cb</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="ident">cb</span> {
+            <span class="ident">cb</span>(<span class="ident">filename</span>.<span class="ident">as_ref</span>(), <span class="ident">xfered</span>, <span class="ident">total</span>);
         }
-    }).<span class='ident'>unwrap_or</span>(()) <span class='comment'>// ignore all errors since we are about to cross ffi boundary</span>
+    }).<span class="ident">unwrap_or</span>(()) <span class="comment">// ignore all errors since we are about to cross ffi boundary</span>
 }
 
-<span class='doccomment'>/** Type of download progress callbacks.
+<span class="doccomment">/** Type of download progress callbacks.
  * @param filename the name of the file being downloaded
  * @param xfered the number of transferred bytes
  * @param total the total number of bytes to transfer
  */</span>
-<span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span> <span class='ident'>alpm_cb_totaldl</span>(<span class='ident'>total</span>: <span class='ident'>off_t</span>) {
-    <span class='kw'>let</span> <span class='ident'>total</span> <span class='op'>=</span> <span class='ident'>total</span> <span class='kw'>as</span> <span class='ident'>u64</span>;
-    <span class='ident'>panic</span>::<span class='ident'>catch_unwind</span>(<span class='op'>||</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>cb</span> <span class='op'>=</span> <span class='ident'>DLTOTAL_CB</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>();
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>cb</span>) <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>cb</span> {
-            <span class='ident'>cb</span>(<span class='ident'>total</span>);
+<span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">alpm_cb_totaldl</span>(<span class="ident">total</span>: <span class="ident">off_t</span>) {
+    <span class="kw">let</span> <span class="ident">total</span> <span class="op">=</span> <span class="ident">total</span> <span class="kw">as</span> <span class="ident">u64</span>;
+    <span class="ident">panic</span>::<span class="ident">catch_unwind</span>(<span class="op">||</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cb</span> <span class="op">=</span> <span class="ident">DLTOTAL_CB</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">cb</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="ident">cb</span> {
+            <span class="ident">cb</span>(<span class="ident">total</span>);
         }
-    }).<span class='ident'>unwrap_or</span>(()) <span class='comment'>// ignore all errors since we are about to cross ffi boundary</span>
+    }).<span class="ident">unwrap_or</span>(()) <span class="comment">// ignore all errors since we are about to cross ffi boundary</span>
 }
 
-<span class='doccomment'>/** A callback for downloading files
+<span class="doccomment">/** A callback for downloading files
  * @param url the URL of the file to be downloaded
  * @param localpath the directory to which the file should be downloaded
  * @param force whether to force an update, even if the file is the same
  * @return 0 on success, 1 if the file exists and is identical, -1 on
  * error.
  */</span>
-<span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span> <span class='ident'>alpm_cb_fetch</span>(<span class='ident'>url</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>,
-                                       <span class='ident'>localpath</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>,
-                                       <span class='ident'>force</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>
+<span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">alpm_cb_fetch</span>(<span class="ident">url</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
+                                       <span class="ident">localpath</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
+                                       <span class="ident">force</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>
 {
-    <span class='kw'>let</span> <span class='ident'>url</span> <span class='op'>=</span> <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>url</span>).<span class='ident'>to_string_lossy</span>();
-    <span class='kw'>let</span> <span class='ident'>localpath</span> <span class='op'>=</span> <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>localpath</span>).<span class='ident'>to_string_lossy</span>();
-    <span class='kw'>let</span> <span class='ident'>force</span> <span class='op'>=</span> <span class='op'>!</span> <span class='ident'>force</span> <span class='op'>==</span> <span class='number'>0</span>;
-    <span class='ident'>panic</span>::<span class='ident'>catch_unwind</span>(<span class='op'>||</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>cb</span> <span class='op'>=</span> <span class='ident'>FETCH_CB</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>();
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>cb</span>) <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>cb</span> {
-            <span class='kw'>match</span> <span class='ident'>cb</span>(<span class='ident'>url</span>.<span class='ident'>as_ref</span>(), <span class='ident'>localpath</span>.<span class='ident'>as_ref</span>(), <span class='ident'>force</span>) {
-                <span class='ident'>DownloadResult</span>::<span class='prelude-val'>Ok</span> <span class='op'>=&gt;</span> <span class='number'>0</span>,
-                <span class='ident'>DownloadResult</span>::<span class='ident'>NotNeeded</span> <span class='op'>=&gt;</span> <span class='number'>1</span>,
-                <span class='ident'>DownloadResult</span>::<span class='prelude-val'>Err</span> <span class='op'>=&gt;</span> <span class='op'>-</span><span class='number'>1</span>,
+    <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">url</span>).<span class="ident">to_string_lossy</span>();
+    <span class="kw">let</span> <span class="ident">localpath</span> <span class="op">=</span> <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">localpath</span>).<span class="ident">to_string_lossy</span>();
+    <span class="kw">let</span> <span class="ident">force</span> <span class="op">=</span> <span class="op">!</span> <span class="ident">force</span> <span class="op">==</span> <span class="number">0</span>;
+    <span class="ident">panic</span>::<span class="ident">catch_unwind</span>(<span class="op">||</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cb</span> <span class="op">=</span> <span class="ident">FETCH_CB</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">cb</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="ident">cb</span> {
+            <span class="kw">match</span> <span class="ident">cb</span>(<span class="ident">url</span>.<span class="ident">as_ref</span>(), <span class="ident">localpath</span>.<span class="ident">as_ref</span>(), <span class="ident">force</span>) {
+                <span class="ident">DownloadResult</span>::<span class="prelude-val">Ok</span> <span class="op">=&gt;</span> <span class="number">0</span>,
+                <span class="ident">DownloadResult</span>::<span class="ident">NotNeeded</span> <span class="op">=&gt;</span> <span class="number">1</span>,
+                <span class="ident">DownloadResult</span>::<span class="prelude-val">Err</span> <span class="op">=&gt;</span> <span class="op">-</span><span class="number">1</span>,
             }
-        } <span class='kw'>else</span> {
-            <span class='op'>-</span><span class='number'>1</span>
+        } <span class="kw">else</span> {
+            <span class="op">-</span><span class="number">1</span>
         }
-    }).<span class='ident'>unwrap_or</span>(<span class='op'>-</span><span class='number'>1</span>) <span class='comment'>// set error code if we have panicked</span>
+    }).<span class="ident">unwrap_or</span>(<span class="op">-</span><span class="number">1</span>) <span class="comment">// set error code if we have panicked</span>
 }
 
-<span class='doccomment'>/** Event callback */</span>
-<span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span> <span class='ident'>alpm_cb_event</span>(<span class='ident'>evt</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>alpm_event_t</span>) {
-    <span class='kw'>let</span> <span class='ident'>evt</span> <span class='op'>=</span> <span class='ident'>Event</span>::<span class='ident'>new</span>(<span class='ident'>evt</span>);
-    <span class='ident'>panic</span>::<span class='ident'>catch_unwind</span>(<span class='op'>||</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>cb</span> <span class='op'>=</span> <span class='ident'>EVENT_CB</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>();
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>cb</span>) <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>cb</span> {
-            <span class='ident'>cb</span>(<span class='ident'>evt</span>);
+<span class="doccomment">/** Event callback */</span>
+<span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">alpm_cb_event</span>(<span class="ident">evt</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_event_t</span>) {
+    <span class="kw">let</span> <span class="ident">evt</span> <span class="op">=</span> <span class="ident">Event</span>::<span class="ident">new</span>(<span class="ident">evt</span>);
+    <span class="ident">panic</span>::<span class="ident">catch_unwind</span>(<span class="op">||</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cb</span> <span class="op">=</span> <span class="ident">EVENT_CB</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">cb</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="ident">cb</span> {
+            <span class="ident">cb</span>(<span class="ident">evt</span>);
         }
-    }).<span class='ident'>unwrap_or</span>(())
+    }).<span class="ident">unwrap_or</span>(())
 }
 </pre>
 </section>

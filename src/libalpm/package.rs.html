@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -726,690 +726,1128 @@
 <span id="681">681</span>
 <span id="682">682</span>
 <span id="683">683</span>
-</pre><pre class='rust '>
+<span id="684">684</span>
+<span id="685">685</span>
+<span id="686">686</span>
+<span id="687">687</span>
+<span id="688">688</span>
+<span id="689">689</span>
+<span id="690">690</span>
+<span id="691">691</span>
+<span id="692">692</span>
+<span id="693">693</span>
+<span id="694">694</span>
+<span id="695">695</span>
+<span id="696">696</span>
+<span id="697">697</span>
+<span id="698">698</span>
+<span id="699">699</span>
+<span id="700">700</span>
+<span id="701">701</span>
+<span id="702">702</span>
+<span id="703">703</span>
+<span id="704">704</span>
+<span id="705">705</span>
+<span id="706">706</span>
+<span id="707">707</span>
+<span id="708">708</span>
+<span id="709">709</span>
+<span id="710">710</span>
+<span id="711">711</span>
+<span id="712">712</span>
+<span id="713">713</span>
+<span id="714">714</span>
+<span id="715">715</span>
+<span id="716">716</span>
+<span id="717">717</span>
+<span id="718">718</span>
+<span id="719">719</span>
+<span id="720">720</span>
+<span id="721">721</span>
+<span id="722">722</span>
+<span id="723">723</span>
+<span id="724">724</span>
+<span id="725">725</span>
+<span id="726">726</span>
+<span id="727">727</span>
+<span id="728">728</span>
+<span id="729">729</span>
+<span id="730">730</span>
+<span id="731">731</span>
+<span id="732">732</span>
+<span id="733">733</span>
+<span id="734">734</span>
+<span id="735">735</span>
+<span id="736">736</span>
+<span id="737">737</span>
+<span id="738">738</span>
+<span id="739">739</span>
+<span id="740">740</span>
+<span id="741">741</span>
+<span id="742">742</span>
+<span id="743">743</span>
+<span id="744">744</span>
+<span id="745">745</span>
+<span id="746">746</span>
+<span id="747">747</span>
+<span id="748">748</span>
+<span id="749">749</span>
+<span id="750">750</span>
+<span id="751">751</span>
+<span id="752">752</span>
+<span id="753">753</span>
+<span id="754">754</span>
+<span id="755">755</span>
+<span id="756">756</span>
+<span id="757">757</span>
+<span id="758">758</span>
+<span id="759">759</span>
+<span id="760">760</span>
+<span id="761">761</span>
+<span id="762">762</span>
+<span id="763">763</span>
+<span id="764">764</span>
+<span id="765">765</span>
+<span id="766">766</span>
+<span id="767">767</span>
+<span id="768">768</span>
+<span id="769">769</span>
+<span id="770">770</span>
+<span id="771">771</span>
+<span id="772">772</span>
+<span id="773">773</span>
+<span id="774">774</span>
+<span id="775">775</span>
+<span id="776">776</span>
+<span id="777">777</span>
+<span id="778">778</span>
+<span id="779">779</span>
+<span id="780">780</span>
+<span id="781">781</span>
+<span id="782">782</span>
+<span id="783">783</span>
+<span id="784">784</span>
+<span id="785">785</span>
+<span id="786">786</span>
+<span id="787">787</span>
+<span id="788">788</span>
+<span id="789">789</span>
+<span id="790">790</span>
+<span id="791">791</span>
+<span id="792">792</span>
+<span id="793">793</span>
+<span id="794">794</span>
+<span id="795">795</span>
+<span id="796">796</span>
+<span id="797">797</span>
+<span id="798">798</span>
+<span id="799">799</span>
+<span id="800">800</span>
+<span id="801">801</span>
+<span id="802">802</span>
+<span id="803">803</span>
+<span id="804">804</span>
+<span id="805">805</span>
+<span id="806">806</span>
+<span id="807">807</span>
+<span id="808">808</span>
+<span id="809">809</span>
+<span id="810">810</span>
+<span id="811">811</span>
+<span id="812">812</span>
+<span id="813">813</span>
+<span id="814">814</span>
+<span id="815">815</span>
+<span id="816">816</span>
+<span id="817">817</span>
+<span id="818">818</span>
+<span id="819">819</span>
+<span id="820">820</span>
+<span id="821">821</span>
+<span id="822">822</span>
+<span id="823">823</span>
+<span id="824">824</span>
+<span id="825">825</span>
+<span id="826">826</span>
+<span id="827">827</span>
+<span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
+<span id="831">831</span>
+<span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
+<span id="835">835</span>
+<span id="836">836</span>
+<span id="837">837</span>
+<span id="838">838</span>
+<span id="839">839</span>
+<span id="840">840</span>
+<span id="841">841</span>
+<span id="842">842</span>
+<span id="843">843</span>
+<span id="844">844</span>
+<span id="845">845</span>
+<span id="846">846</span>
+<span id="847">847</span>
+<span id="848">848</span>
+<span id="849">849</span>
+<span id="850">850</span>
+<span id="851">851</span>
+<span id="852">852</span>
+<span id="853">853</span>
+<span id="854">854</span>
+<span id="855">855</span>
+<span id="856">856</span>
+<span id="857">857</span>
+<span id="858">858</span>
+<span id="859">859</span>
+<span id="860">860</span>
+<span id="861">861</span>
+<span id="862">862</span>
+<span id="863">863</span>
+<span id="864">864</span>
+<span id="865">865</span>
+<span id="866">866</span>
+<span id="867">867</span>
+<span id="868">868</span>
+<span id="869">869</span>
+<span id="870">870</span>
+<span id="871">871</span>
+<span id="872">872</span>
+<span id="873">873</span>
+<span id="874">874</span>
+<span id="875">875</span>
+<span id="876">876</span>
+<span id="877">877</span>
+<span id="878">878</span>
+<span id="879">879</span>
+<span id="880">880</span>
+<span id="881">881</span>
+<span id="882">882</span>
+<span id="883">883</span>
+<span id="884">884</span>
+<span id="885">885</span>
+<span id="886">886</span>
+<span id="887">887</span>
+<span id="888">888</span>
+<span id="889">889</span>
+<span id="890">890</span>
+<span id="891">891</span>
+<span id="892">892</span>
+<span id="893">893</span>
+<span id="894">894</span>
+<span id="895">895</span>
+<span id="896">896</span>
+<span id="897">897</span>
+<span id="898">898</span>
+<span id="899">899</span>
+<span id="900">900</span>
+<span id="901">901</span>
+<span id="902">902</span>
+</pre><pre class="rust ">
 
-<span class='kw'>use</span> <span class='ident'>alpm_sys</span>::<span class='kw-2'>*</span>;
-<span class='kw'>use</span> <span class='ident'>libc</span>::<span class='ident'>c_char</span>;
-<span class='kw'>use</span> <span class='ident'>chrono</span>::{<span class='ident'>NaiveDateTime</span>, <span class='ident'>NaiveDate</span>};
+<span class="kw">use</span> <span class="ident">alpm_sys</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">libc</span>::{<span class="self">self</span>, <span class="ident">c_char</span>, <span class="ident">c_ulong</span>};
+<span class="kw">use</span> <span class="ident">chrono</span>::{<span class="ident">NaiveDateTime</span>, <span class="ident">NaiveDate</span>};
 
-<span class='kw'>use</span> <span class='ident'>util</span>;
-<span class='kw'>use</span> {<span class='ident'>Alpm</span>, <span class='ident'>SigLevel</span>, <span class='ident'>AlpmResult</span>, <span class='ident'>Error</span>};
+<span class="kw">use</span> <span class="ident">util</span>;
+<span class="kw">use</span> {<span class="ident">Alpm</span>, <span class="ident">SigLevel</span>, <span class="ident">AlpmResult</span>, <span class="ident">Error</span>, <span class="ident">Db</span>};
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>Deref</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ffi</span>::{<span class='ident'>CStr</span>, <span class='ident'>CString</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ptr</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>marker</span>::<span class='ident'>PhantomData</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">Deref</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::{<span class="ident">CStr</span>, <span class="ident">CString</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 
-<span class='comment'>// https://github.com/jeremyletang/rust-sfml/blob/csfml-2.4/src/graphics/texture.rs#L44-L60 for</span>
-<span class='comment'>// pattern</span>
+<span class="comment">// https://github.com/jeremyletang/rust-sfml/blob/csfml-2.4/src/graphics/texture.rs#L44-L60 for</span>
+<span class="comment">// pattern</span>
 
-<span class='doccomment'>/// An owning version of Package</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Package</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>inner</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>Struct_alpm_pkg</span>,
-    <span class='ident'>handle</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Alpm</span>
+<span class="doccomment">/// An owning version of Package</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Package</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">inner</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Struct_alpm_pkg</span>,
+    <span class="ident">handle</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Alpm</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>Package</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span>(<span class='kw'>crate</span>) <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='ident'>raw</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>Struct_alpm_pkg</span>, <span class='ident'>handle</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Alpm</span>) <span class='op'>-&gt;</span> <span class='ident'>Package</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>Package</span> {
-            <span class='ident'>inner</span>: <span class='ident'>raw</span>,
-            <span class='ident'>handle</span>: <span class='ident'>handle</span>,
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> <span class="ident">Package</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">raw</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Struct_alpm_pkg</span>, <span class="ident">handle</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Alpm</span>) <span class="op">-&gt;</span> <span class="ident">Package</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">Package</span> {
+            <span class="ident">inner</span>: <span class="ident">raw</span>,
+            <span class="ident">handle</span>: <span class="ident">handle</span>,
         }
     }
 
-    <span class='doccomment'>/// Creates a package from a file</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>load</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='ident'>alpm</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Alpm</span>, <span class='ident'>filename</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>full</span>: <span class='ident'>bool</span>, <span class='ident'>level</span>: <span class='ident'>SigLevel</span>)
-        <span class='op'>-&gt;</span> <span class='ident'>AlpmResult</span><span class='op'>&lt;</span><span class='ident'>Package</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>
+    <span class="doccomment">/// Creates a package from a file</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">alpm</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Alpm</span>, <span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">full</span>: <span class="ident">bool</span>, <span class="ident">level</span>: <span class="ident">SigLevel</span>)
+        <span class="op">-&gt;</span> <span class="ident">AlpmResult</span><span class="op">&lt;</span><span class="ident">Package</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span>
     {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>pkg</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Struct_alpm_pkg</span> <span class='op'>=</span> <span class='ident'>ptr</span>::<span class='ident'>null_mut</span>();
-            <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_load</span>(<span class='ident'>alpm</span>.<span class='ident'>handle</span>,
-                                    <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>filename</span>).<span class='ident'>unwrap</span>().<span class='ident'>as_ptr</span>(),
-                                    <span class='kw'>if</span> <span class='ident'>full</span> { <span class='number'>1</span> } <span class='kw'>else</span> { <span class='number'>0</span> },
-                                    <span class='ident'>level</span>.<span class='ident'>into</span>(),
-                                    <span class='kw-2'>&amp;</span><span class='ident'>pkg</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Struct_alpm_pkg</span>);
-            <span class='kw'>if</span> <span class='ident'>res</span> <span class='op'>==</span> <span class='number'>0</span> {
-                <span class='prelude-val'>Ok</span>(<span class='ident'>Package</span>::<span class='ident'>new</span>(<span class='ident'>pkg</span>, <span class='ident'>alpm</span>))
-            } <span class='kw'>else</span> {
-                <span class='prelude-val'>Err</span>(<span class='ident'>alpm</span>.<span class='ident'>error</span>().<span class='ident'>unwrap_or</span>(<span class='ident'>Error</span>::<span class='ident'>__Unknown</span>))
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">pkg</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Struct_alpm_pkg</span> <span class="op">=</span> <span class="ident">ptr</span>::<span class="ident">null_mut</span>();
+            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">alpm_pkg_load</span>(<span class="ident">alpm</span>.<span class="ident">handle</span>,
+                                    <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">filename</span>).<span class="ident">unwrap</span>().<span class="ident">as_ptr</span>(),
+                                    <span class="kw">if</span> <span class="ident">full</span> { <span class="number">1</span> } <span class="kw">else</span> { <span class="number">0</span> },
+                                    <span class="ident">level</span>.<span class="ident">into</span>(),
+                                    <span class="kw-2">&amp;</span><span class="ident">pkg</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Struct_alpm_pkg</span>);
+            <span class="kw">if</span> <span class="ident">res</span> <span class="op">==</span> <span class="number">0</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">Package</span>::<span class="ident">new</span>(<span class="ident">pkg</span>, <span class="ident">alpm</span>))
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Err</span>(<span class="ident">alpm</span>.<span class="ident">error</span>().<span class="ident">unwrap_or</span>(<span class="ident">Error</span>::<span class="ident">__Unknown</span>))
             }
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>Package</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='kw'>unsafe</span> { <span class='ident'>alpm_pkg_free</span>(<span class='self'>self</span>.<span class='ident'>inner</span>); }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">Package</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw">unsafe</span> { <span class="ident">alpm_pkg_free</span>(<span class="self">self</span>.<span class="ident">inner</span>); }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Deref</span> <span class='kw'>for</span> <span class='ident'>Package</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Target</span> <span class='op'>=</span> <span class='ident'>PackageRef</span>;
-    <span class='kw'>fn</span> <span class='ident'>deref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>PackageRef</span> {
-        <span class='kw'>unsafe</span> { <span class='kw-2'>&amp;</span><span class='kw-2'>*</span>(<span class='self'>self</span>.<span class='ident'>inner</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>PackageRef</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>PackageRef</span>) }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">Package</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">PackageRef</span>;
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">PackageRef</span> {
+        <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="self">self</span>.<span class="ident">inner</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">PackageRef</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">PackageRef</span>) }
     }
 }
 
-<span class='comment'>// if this wasn&#39;t used in events it could contain a reference to alpm. Sadly this is not the case.</span>
-<span class='doccomment'>/// A package in libalpm that can only be held by reference.</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>PackageRef</span> {}
+<span class="comment">// if this wasn&#39;t used in events it could contain a reference to alpm. Sadly this is not the case.</span>
+<span class="doccomment">/// A package in libalpm that can only be held by reference.</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PackageRef</span> {}
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Debug</span> <span class='kw'>for</span> <span class='ident'>PackageRef</span> {
-    <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-        <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;Package(\&quot;{}\&quot;)&quot;</span>, <span class='self'>self</span>.<span class='ident'>name</span>())
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">PackageRef</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Package(\&quot;{}\&quot;)&quot;</span>, <span class="self">self</span>.<span class="ident">name</span>())
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>PackageRef</span> {
-    <span class='kw'>pub</span>(<span class='kw'>crate</span>) <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>(<span class='ident'>p</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>Struct_alpm_pkg</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='ident'>PackageRef</span> {
-        <span class='kw-2'>&amp;</span><span class='kw-2'>*</span>(<span class='ident'>p</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>PackageRef</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>PackageRef</span>)
+<span class="kw">impl</span> <span class="ident">PackageRef</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Struct_alpm_pkg</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="ident">PackageRef</span> {
+        <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">p</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">PackageRef</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">PackageRef</span>)
     }
 
-    <span class='doccomment'>/// Checks package integrity using md5. Returns true on success.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>check_md5</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='comment'>//unsafe { println!(&quot;{:?}, {:?}&quot;, self.0, alpm_pkg_checkmd5sum(self.0)); }</span>
-        <span class='kw'>unsafe</span> { <span class='ident'>alpm_pkg_checkmd5sum</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _) <span class='op'>==</span> <span class='number'>0</span> }
+    <span class="doccomment">/// Checks package integrity using md5. Returns true on success.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_md5</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="comment">//unsafe { println!(&quot;{:?}, {:?}&quot;, self.0, alpm_pkg_checkmd5sum(self.0)); }</span>
+        <span class="kw">unsafe</span> { <span class="ident">alpm_pkg_checkmd5sum</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _) <span class="op">==</span> <span class="number">0</span> }
     }
 
-    <span class='doccomment'>/// Gets a list of all packages that require this package.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>compute_required_by</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>PackageRef</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>pkgs</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_compute_requiredby</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='ident'>util</span>::<span class='ident'>alpm_list_to_vec</span>(<span class='ident'>pkgs</span>, <span class='op'>|</span><span class='ident'>pkg_ptr</span><span class='op'>|</span> <span class='kw-2'>&amp;</span><span class='kw-2'>*</span>(<span class='ident'>pkg_ptr</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>PackageRef</span>))
+    <span class="doccomment">/// Gets a list of all packages that require this package.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compute_required_by</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">pkg_list</span> <span class="op">=</span> <span class="ident">alpm_pkg_compute_requiredby</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="kw">let</span> <span class="ident">pkgs</span> <span class="op">=</span> <span class="ident">util</span>::<span class="ident">alpm_list_to_vec</span>(<span class="ident">pkg_list</span>, <span class="op">|</span><span class="ident">char_ptr</span><span class="op">|</span> {
+                <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">char_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>().<span class="ident">to_owned</span>()
+            });
+            <span class="ident">alpm_list_free_inner</span>(<span class="ident">pkg_list</span>, <span class="prelude-val">Some</span>(<span class="ident">libc</span>::<span class="ident">free</span>));
+            <span class="ident">alpm_list_free</span>(<span class="ident">pkg_list</span>);
+            <span class="ident">pkgs</span>
         }
     }
 
-    <span class='doccomment'>/// Gets a list of all packages optionally require this package.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>compute_optional_for</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>PackageRef</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>pkgs</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_compute_optionalfor</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='ident'>util</span>::<span class='ident'>alpm_list_to_vec</span>(<span class='ident'>pkgs</span>, <span class='op'>|</span><span class='ident'>pkg_ptr</span><span class='op'>|</span> <span class='kw-2'>&amp;</span><span class='kw-2'>*</span>(<span class='ident'>pkg_ptr</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>PackageRef</span>))
+    <span class="doccomment">/// Gets a list of all packages optionally require this package.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compute_optional_for</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">pkg_list</span> <span class="op">=</span> <span class="ident">alpm_pkg_compute_optionalfor</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="kw">let</span> <span class="ident">pkgs</span> <span class="op">=</span> <span class="ident">util</span>::<span class="ident">alpm_list_to_vec</span>(<span class="ident">pkg_list</span>, <span class="op">|</span><span class="ident">char_ptr</span><span class="op">|</span> {
+                <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">char_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>().<span class="ident">to_owned</span>()
+            });
+            <span class="ident">alpm_list_free_inner</span>(<span class="ident">pkg_list</span>, <span class="prelude-val">Some</span>(<span class="ident">libc</span>::<span class="ident">free</span>));
+            <span class="ident">alpm_list_free</span>(<span class="ident">pkg_list</span>);
+            <span class="ident">pkgs</span>
         }
     }
 
-    <span class='doccomment'>/// Should this package be ignored when upgrading (as set on the alpm handle).</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>should_ignore</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>alpm</span>: <span class='kw-2'>&amp;</span><span class='ident'>Alpm</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_should_ignore</span>(<span class='ident'>alpm</span>.<span class='ident'>handle</span>, <span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='ident'>res</span> <span class='op'>!=</span> <span class='number'>0</span>
+    <span class="doccomment">/// Should this package be ignored when upgrading (as set on the alpm handle).</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">should_ignore</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">alpm</span>: <span class="kw-2">&amp;</span><span class="ident">Alpm</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">alpm_pkg_should_ignore</span>(<span class="ident">alpm</span>.<span class="ident">handle</span>, <span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="ident">res</span> <span class="op">!=</span> <span class="number">0</span>
         }
     }
 
-    <span class='doccomment'>/// Get the name of the file containing this package.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>filename</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>fname</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_filename</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>fname</span>.<span class='ident'>is_null</span>());
-            <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>fname</span>).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>()
+    <span class="doccomment">/// Get the name of the file containing this package.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">filename</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">fname</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_filename</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">fname</span>.<span class="ident">is_null</span>());
+            <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">fname</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>()
         }
     }
 
-    <span class='doccomment'>/// Gets the package base name, if it has one.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>base</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>char_ptr</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_base</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='kw'>if</span> <span class='ident'>char_ptr</span>.<span class='ident'>is_null</span>() {
-                <span class='prelude-val'>None</span>
-            } <span class='kw'>else</span> {
-                <span class='prelude-val'>Some</span>(<span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>char_ptr</span>).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>())
+    <span class="doccomment">/// Gets the package base name, if it has one.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">base</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">char_ptr</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_base</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="kw">if</span> <span class="ident">char_ptr</span>.<span class="ident">is_null</span>() {
+                <span class="prelude-val">None</span>
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">char_ptr</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>())
             }
         }
     }
 
-    <span class='doccomment'>/// Gets the package name.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>name</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>char_ptr</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_name</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>char_ptr</span>.<span class='ident'>is_null</span>());
-            <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>char_ptr</span>).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>()
+    <span class="doccomment">/// Gets the package name.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">char_ptr</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_name</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">char_ptr</span>.<span class="ident">is_null</span>());
+            <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">char_ptr</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>()
         }
     }
 
-    <span class='doccomment'>/// Gets the package version.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>version</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>PackageVersion</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_version</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='ident'>PackageVersion</span>::<span class='ident'>new</span>(<span class='ident'>v</span>)
+    <span class="doccomment">/// Gets the package version.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">PackageVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_version</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="ident">PackageVersion</span>::<span class="ident">new</span>(<span class="ident">v</span>)
         }
     }
 
-    <span class='doccomment'>/// Gets the origin of the package.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>origin</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>PackageFrom</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>alpm_pkg_get_origin</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _).<span class='ident'>into</span>() }
+    <span class="doccomment">/// Gets the origin of the package.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">origin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">PackageFrom</span> {
+        <span class="kw">unsafe</span> { <span class="ident">alpm_pkg_get_origin</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _).<span class="ident">into</span>() }
     }
 
-    <span class='doccomment'>/// Gets the package description.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>description</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>char_ptr</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_desc</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>char_ptr</span>.<span class='ident'>is_null</span>());
-            <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>char_ptr</span>).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>()
+    <span class="doccomment">/// Gets the package description.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">char_ptr</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_desc</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">char_ptr</span>.<span class="ident">is_null</span>());
+            <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">char_ptr</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>()
         }
     }
 
-    <span class='doccomment'>/// Gets the package url.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>url</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>char_ptr</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_url</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>char_ptr</span>.<span class='ident'>is_null</span>());
-            <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>char_ptr</span>).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>()
+    <span class="doccomment">/// Gets the package url.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">char_ptr</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_url</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">char_ptr</span>.<span class="ident">is_null</span>());
+            <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">char_ptr</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>()
         }
     }
 
-    <span class='doccomment'>/// Gets the package build date.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>build_date</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>NaiveDate</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>time</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_builddate</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='ident'>NaiveDateTime</span>::<span class='ident'>from_timestamp</span>(<span class='ident'>time</span>, <span class='number'>0</span>).<span class='ident'>date</span>()
+    <span class="doccomment">/// Gets the package build date.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build_date</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">NaiveDate</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_builddate</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="ident">NaiveDateTime</span>::<span class="ident">from_timestamp</span>(<span class="ident">time</span>, <span class="number">0</span>).<span class="ident">date</span>()
         }
     }
 
-    <span class='doccomment'>/// Gets the install timestamp of this package.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>install_date</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>NaiveDate</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>time</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_installdate</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='kw'>if</span> <span class='ident'>time</span> <span class='op'>==</span> <span class='number'>0</span> {
-                <span class='prelude-val'>None</span>
-            } <span class='kw'>else</span> {
-                <span class='prelude-val'>Some</span>(<span class='ident'>NaiveDateTime</span>::<span class='ident'>from_timestamp</span>(<span class='ident'>time</span>, <span class='number'>0</span>).<span class='ident'>date</span>())
+    <span class="doccomment">/// Gets the install timestamp of this package.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">install_date</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">NaiveDate</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_installdate</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="kw">if</span> <span class="ident">time</span> <span class="op">==</span> <span class="number">0</span> {
+                <span class="prelude-val">None</span>
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">NaiveDateTime</span>::<span class="ident">from_timestamp</span>(<span class="ident">time</span>, <span class="number">0</span>).<span class="ident">date</span>())
             }
         }
     }
 
-    <span class='doccomment'>/// Gets the packager&#39;s name</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>packager</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>char_ptr</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_packager</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>char_ptr</span>.<span class='ident'>is_null</span>()); <span class='comment'>// safety first</span>
-            <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>char_ptr</span>).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>()
+    <span class="doccomment">/// Gets the packager&#39;s name</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">packager</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">char_ptr</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_packager</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">char_ptr</span>.<span class="ident">is_null</span>()); <span class="comment">// safety first</span>
+            <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">char_ptr</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>()
         }
     }
 
-    <span class='doccomment'>/// Gets the md5 checksum for this package.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>md5</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>str_ptr</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_md5sum</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='kw'>if</span> <span class='ident'>str_ptr</span>.<span class='ident'>is_null</span>() {
-                <span class='prelude-val'>None</span>
-            } <span class='kw'>else</span> {
-                <span class='prelude-val'>Some</span>(<span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>str_ptr</span>).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>()) <span class='comment'>// cannot fail</span>
+    <span class="doccomment">/// Gets the md5 checksum for this package.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">md5</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">str_ptr</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_md5sum</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="kw">if</span> <span class="ident">str_ptr</span>.<span class="ident">is_null</span>() {
+                <span class="prelude-val">None</span>
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">str_ptr</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>()) <span class="comment">// cannot fail</span>
             }
         }
     }
 
-    <span class='doccomment'>/// Gets the sha256 checksum for this package.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sha256</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>str_ptr</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_sha256sum</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='kw'>if</span> <span class='ident'>str_ptr</span>.<span class='ident'>is_null</span>() {
-                <span class='prelude-val'>None</span>
-            } <span class='kw'>else</span> {
-                <span class='prelude-val'>Some</span>(<span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>str_ptr</span>).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>()) <span class='comment'>// cannot fail</span>
+    <span class="doccomment">/// Gets the sha256 checksum for this package.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sha256</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">str_ptr</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_sha256sum</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="kw">if</span> <span class="ident">str_ptr</span>.<span class="ident">is_null</span>() {
+                <span class="prelude-val">None</span>
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">str_ptr</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>()) <span class="comment">// cannot fail</span>
             }
         }
     }
 
-    <span class='doccomment'>/// Gets the architecture for which this package was built.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>arch</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>char_ptr</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_arch</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>char_ptr</span>.<span class='ident'>is_null</span>()); <span class='comment'>// safety first</span>
-            <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>char_ptr</span>).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>()
+    <span class="doccomment">/// Gets the architecture for which this package was built.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">arch</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">char_ptr</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_arch</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">char_ptr</span>.<span class="ident">is_null</span>()); <span class="comment">// safety first</span>
+            <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">char_ptr</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>()
         }
     }
 
-    <span class='doccomment'>/// Gets the size of the package on a sync database.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>remote_size</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u64</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>alpm_pkg_get_size</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _) <span class='kw'>as</span> <span class='ident'>u64</span> }
+    <span class="doccomment">/// Gets the size of the package on a sync database.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remote_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
+        <span class="kw">unsafe</span> { <span class="ident">alpm_pkg_get_size</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _) <span class="kw">as</span> <span class="ident">u64</span> }
     }
 
-    <span class='doccomment'>/// Returns the size of the package when it is installed.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>local_size</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u64</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>alpm_pkg_get_isize</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _) <span class='kw'>as</span> <span class='ident'>u64</span> }
+    <span class="doccomment">/// Returns the size of the package when it is installed.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">local_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
+        <span class="kw">unsafe</span> { <span class="ident">alpm_pkg_get_isize</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _) <span class="kw">as</span> <span class="ident">u64</span> }
     }
 
-    <span class='doccomment'>/// Gets the reason this package was installed.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>reason</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Reason</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>alpm_pkg_get_reason</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _).<span class='ident'>into</span>() }
+    <span class="doccomment">/// Gets the reason this package was installed.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reason</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Reason</span> {
+        <span class="kw">unsafe</span> { <span class="ident">alpm_pkg_get_reason</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _).<span class="ident">into</span>() }
     }
 
-    <span class='doccomment'>/// Gets the licenses for this package</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>licenses</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>licenses</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_licenses</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='ident'>util</span>::<span class='ident'>alpm_list_to_vec</span>(<span class='ident'>licenses</span>, <span class='op'>|</span><span class='ident'>char_ptr</span><span class='op'>|</span> {
-                <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>char_ptr</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>()
+    <span class="doccomment">/// Gets the licenses for this package</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">licenses</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">licenses</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_licenses</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="ident">util</span>::<span class="ident">alpm_list_to_vec</span>(<span class="ident">licenses</span>, <span class="op">|</span><span class="ident">char_ptr</span><span class="op">|</span> {
+                <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">char_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>()
             })
         }
     }
 
-    <span class='doccomment'>/// Gets the groups this package belongs to.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>groups</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>groups</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_groups</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='ident'>util</span>::<span class='ident'>alpm_list_to_vec</span>(<span class='ident'>groups</span>, <span class='op'>|</span><span class='ident'>char_ptr</span><span class='op'>|</span> {
-                <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>char_ptr</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>()
+    <span class="doccomment">/// Gets the groups this package belongs to.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">groups</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">groups</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_groups</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="ident">util</span>::<span class="ident">alpm_list_to_vec</span>(<span class="ident">groups</span>, <span class="op">|</span><span class="ident">char_ptr</span><span class="op">|</span> {
+                <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">char_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>()
             })
         }
     }
 
-    <span class='doccomment'>/// Gets the packages this package depends on.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>depends</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='macro'>unimplemented</span><span class='macro'>!</span>()
-    }
-
-    <span class='doccomment'>/// Gets the packages this package optionally depends on.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>optionally_depends</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='macro'>unimplemented</span><span class='macro'>!</span>()
-    }
-
-    <span class='doccomment'>/// Gets the packages required to check this package.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>check_depends</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='macro'>unimplemented</span><span class='macro'>!</span>()
-    }
-
-    <span class='doccomment'>/// Gets the packages required to make (build) this package.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>make_depends</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='macro'>unimplemented</span><span class='macro'>!</span>()
-    }
-
-    <span class='doccomment'>/// Gets the packages this package conflicts with.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>conflicts</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='macro'>unimplemented</span><span class='macro'>!</span>()
-    }
-
-    <span class='doccomment'>/// Gets the packages provided by this package.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>provides</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='macro'>unimplemented</span><span class='macro'>!</span>()
-    }
-
-    <span class='doccomment'>/// Gets the available deltas for this package.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>deltas</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>deltas</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_deltas</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='ident'>util</span>::<span class='ident'>alpm_list_to_vec</span>(<span class='ident'>deltas</span>, <span class='op'>|</span><span class='ident'>char_ptr</span><span class='op'>|</span> {
-                <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>char_ptr</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>()
+    <span class="doccomment">/// Gets the packages this package depends on.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">depends</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Dependency</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">deps</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_depends</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="ident">util</span>::<span class="ident">alpm_list_to_vec</span>(<span class="ident">deps</span>, <span class="op">|</span><span class="ident">dep</span><span class="op">|</span> {
+                <span class="ident">Dependency</span>::<span class="ident">new</span>(<span class="ident">dep</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_depend_t</span>)
             })
         }
     }
 
-    <span class='doccomment'>/// Gets a list of packages to be replaced by this package.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>replaces</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='macro'>unimplemented</span><span class='macro'>!</span>()
-    }
-
-    <span class='doccomment'>/// Gets a list of files installed by this package.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>files</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='macro'>unimplemented</span><span class='macro'>!</span>()
-    }
-
-    <span class='doccomment'>/// Gets a list of files backed up when installing this package.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>backup</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='macro'>unimplemented</span><span class='macro'>!</span>()
-    }
-
-    <span class='doccomment'>/// Gets the database this package is from</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This is currently unimplemented as it is not clear if there are times when it would be</span>
-    <span class='doccomment'>/// useful to get the underlying database.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>db</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='macro'>unimplemented</span><span class='macro'>!</span>()
-    }
-
-    <span class='doccomment'>/// Get thie base64 encoded package signature.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>base64_signature</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>char_ptr</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_packager</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>char_ptr</span>.<span class='ident'>is_null</span>()); <span class='comment'>// safety first</span>
-            <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>char_ptr</span>).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>()
-        }
-    }
-
-    <span class='doccomment'>/// Gets the method used to validate a package during install</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>validation</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Validation</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>alpm_pkg_get_validation</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _).<span class='ident'>into</span>() }
-    }
-
-    <span class='doccomment'>/// Opens the changelog for reading</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>changelog</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='macro'>unimplemented</span><span class='macro'>!</span>()
-    }
-
-    <span class='comment'>// changelog_read and changelog_close belong on changelog struct</span>
-
-    <span class='doccomment'>/// Gets the package&#39;s mtree.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mtree</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='macro'>unimplemented</span><span class='macro'>!</span>()
-    }
-
-    <span class='doccomment'>/// Returns true if the package has an install scriptlet, false if not.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>has_scriptlet</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>alpm_pkg_has_scriptlet</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _) <span class='op'>!=</span> <span class='number'>0</span> }
-    }
-
-    <span class='doccomment'>/// Gets the size of the download required to install this package, or to upgrade this package</span>
-    <span class='doccomment'>/// to the version of `self`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>download_size</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u64</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>alpm_pkg_download_size</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _) <span class='kw'>as</span> <span class='ident'>u64</span> }
-    }
-
-    <span class='doccomment'>/// Dont know what this is for</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// TODO I&#39;m guessing the return type as it&#39;s not in the alpm.h docs. I&#39;m setting it to match</span>
-    <span class='doccomment'>/// `deltas`. check for segfaults.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unused_deltas</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>deltas</span> <span class='op'>=</span> <span class='ident'>alpm_pkg_get_licenses</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _);
-            <span class='ident'>util</span>::<span class='ident'>alpm_list_to_vec</span>(<span class='ident'>deltas</span>, <span class='op'>|</span><span class='ident'>char_ptr</span><span class='op'>|</span> {
-                <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>char_ptr</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>()
+    <span class="doccomment">/// Gets the packages this package optionally depends on.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">optionally_depends</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Dependency</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">deps</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_optdepends</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="ident">util</span>::<span class="ident">alpm_list_to_vec</span>(<span class="ident">deps</span>, <span class="op">|</span><span class="ident">dep</span><span class="op">|</span> {
+                <span class="ident">Dependency</span>::<span class="ident">new</span>(<span class="ident">dep</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_depend_t</span>)
             })
         }
     }
 
-    <span class='doccomment'>/// Sets the reason for a package in the local database. Returns true if reason was</span>
-    <span class='doccomment'>/// successfully changed, false otherwise.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Use `Alpm.error` to get an error on failure.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_reason</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>r</span>: <span class='ident'>Reason</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>alpm_pkg_set_reason</span>(<span class='self'>self</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> _, <span class='ident'>r</span>.<span class='ident'>into</span>()) <span class='op'>==</span> <span class='number'>0</span> }
+    <span class="comment">/*
+    /// Gets the packages required to check this package.
+    pub fn check_depends&lt;&#39;a&gt;(&amp;&#39;a self) -&gt; Vec&lt;Dependency&lt;&#39;a&gt;&gt; {
+        unsafe {
+            let deps = alpm_pkg_get_checkdepends(self as *const _ as _);
+            util::alpm_list_to_vec(deps, |dep| {
+                Dependency::new(dep as *const alpm_depend_t)
+            })
+        }
     }
-}
 
-<span class='doccomment'>/// An operation on packages in this database</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>PackageOperation</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Package (to be) installed. (No oldpkg)</span>
-    <span class='ident'>Install</span> {
-        <span class='ident'>new_pkg</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>PackageRef</span>,
-    },
-    <span class='doccomment'>/// Package (to be) upgraded</span>
-    <span class='ident'>Upgrade</span> {
-        <span class='ident'>old_pkg</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>PackageRef</span>,
-        <span class='ident'>new_pkg</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>PackageRef</span>,
-    },
-    <span class='doccomment'>/// Package (to be) re-installed.</span>
-    <span class='ident'>Reinstall</span> {
-        <span class='ident'>old_pkg</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>PackageRef</span>,
-        <span class='ident'>new_pkg</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>PackageRef</span>,
-    },
-    <span class='doccomment'>/// Package (to be) downgraded.</span>
-    <span class='ident'>Downgrade</span> {
-        <span class='ident'>old_pkg</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>PackageRef</span>,
-        <span class='ident'>new_pkg</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>PackageRef</span>,
-    },
-    <span class='doccomment'>/// Package (to be) removed. (No newpkg)</span>
-    <span class='ident'>Remove</span> {
-        <span class='ident'>old_pkg</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>PackageRef</span>,
-    },
-}
+    /// Gets the packages required to make (build) this package.
+    pub fn make_depends&lt;&#39;a&gt;(&amp;&#39;a self) -&gt; Vec&lt;Dependency&lt;&#39;a&gt;&gt; {
+        unsafe {
+            let deps = alpm_pkg_get_makedepends(self as *const _ as _);
+            util::alpm_list_to_vec(deps, |dep| {
+                Dependency::new(dep as *const alpm_depend_t)
+            })
+        }
+    }
+    */</span>
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>PackageOperation</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span>(<span class='kw'>crate</span>) <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>(<span class='ident'>op</span>: <span class='kw-2'>&amp;</span><span class='ident'>alpm_event_package_operation_t</span>) <span class='op'>-&gt;</span> <span class='ident'>PackageOperation</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='ident'>op</span>.<span class='ident'>operation</span> {
-            <span class='ident'>ALPM_PACKAGE_INSTALL</span> <span class='op'>=&gt;</span> <span class='ident'>PackageOperation</span>::<span class='ident'>Install</span> {
-                <span class='ident'>new_pkg</span>: <span class='ident'>PackageRef</span>::<span class='ident'>new</span>(<span class='ident'>op</span>.<span class='ident'>newpkg</span>),
-            },
-            <span class='ident'>ALPM_PACKAGE_UPGRADE</span> <span class='op'>=&gt;</span> <span class='ident'>PackageOperation</span>::<span class='ident'>Upgrade</span> {
-                <span class='ident'>new_pkg</span>: <span class='ident'>PackageRef</span>::<span class='ident'>new</span>(<span class='ident'>op</span>.<span class='ident'>newpkg</span>),
-                <span class='ident'>old_pkg</span>: <span class='ident'>PackageRef</span>::<span class='ident'>new</span>(<span class='ident'>op</span>.<span class='ident'>oldpkg</span>),
-            },
-            <span class='ident'>ALPM_PACKAGE_REINSTALL</span> <span class='op'>=&gt;</span> <span class='ident'>PackageOperation</span>::<span class='ident'>Reinstall</span> {
-                <span class='ident'>new_pkg</span>: <span class='ident'>PackageRef</span>::<span class='ident'>new</span>(<span class='ident'>op</span>.<span class='ident'>newpkg</span>),
-                <span class='ident'>old_pkg</span>: <span class='ident'>PackageRef</span>::<span class='ident'>new</span>(<span class='ident'>op</span>.<span class='ident'>oldpkg</span>),
-            },
-            <span class='ident'>ALPM_PACKAGE_DOWNGRADE</span> <span class='op'>=&gt;</span> <span class='ident'>PackageOperation</span>::<span class='ident'>Downgrade</span> {
-                <span class='ident'>new_pkg</span>: <span class='ident'>PackageRef</span>::<span class='ident'>new</span>(<span class='ident'>op</span>.<span class='ident'>newpkg</span>),
-                <span class='ident'>old_pkg</span>: <span class='ident'>PackageRef</span>::<span class='ident'>new</span>(<span class='ident'>op</span>.<span class='ident'>oldpkg</span>),
-            },
-            <span class='ident'>ALPM_PACKAGE_REMOVE</span> <span class='op'>=&gt;</span> <span class='ident'>PackageOperation</span>::<span class='ident'>Remove</span> {
-                <span class='ident'>old_pkg</span>: <span class='ident'>PackageRef</span>::<span class='ident'>new</span>(<span class='ident'>op</span>.<span class='ident'>oldpkg</span>),
-            },
-            _ <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Unrecognised package operation&quot;</span>),
+    <span class="doccomment">/// Gets the packages this package conflicts with.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">conflicts</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Dependency</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">deps</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_conflicts</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="ident">util</span>::<span class="ident">alpm_list_to_vec</span>(<span class="ident">deps</span>, <span class="op">|</span><span class="ident">dep</span><span class="op">|</span> {
+                <span class="ident">Dependency</span>::<span class="ident">new</span>(<span class="ident">dep</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_depend_t</span>)
+            })
+        }
+    }
+
+    <span class="doccomment">/// Gets the packages provided by this package.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">provides</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Dependency</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">deps</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_provides</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="ident">util</span>::<span class="ident">alpm_list_to_vec</span>(<span class="ident">deps</span>, <span class="op">|</span><span class="ident">dep</span><span class="op">|</span> {
+                <span class="ident">Dependency</span>::<span class="ident">new</span>(<span class="ident">dep</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_depend_t</span>)
+            })
+        }
+    }
+
+    <span class="doccomment">/// Gets the available deltas for this package.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deltas</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">deltas</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_deltas</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="ident">util</span>::<span class="ident">alpm_list_to_vec</span>(<span class="ident">deltas</span>, <span class="op">|</span><span class="ident">char_ptr</span><span class="op">|</span> {
+                <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">char_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>()
+            })
+        }
+    }
+
+    <span class="doccomment">/// Gets a list of packages to be replaced by this package.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">replaces</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Dependency</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">deps</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_replaces</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="ident">util</span>::<span class="ident">alpm_list_to_vec</span>(<span class="ident">deps</span>, <span class="op">|</span><span class="ident">dep</span><span class="op">|</span> {
+                <span class="ident">Dependency</span>::<span class="ident">new</span>(<span class="ident">dep</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_depend_t</span>)
+            })
+        }
+    }
+
+    <span class="doccomment">/// Gets a list of files installed by this package.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">files</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">FileList</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> { <span class="ident">FileList</span>::<span class="ident">from_raw</span>(<span class="ident">alpm_pkg_get_files</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _)) }
+    }
+
+    <span class="doccomment">/// Gets a list of files backed up when installing this package.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">backup</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Backup</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">backups</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_backup</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="ident">util</span>::<span class="ident">alpm_list_to_vec</span>(<span class="ident">backups</span>, <span class="op">|</span><span class="ident">bkup</span><span class="op">|</span> <span class="ident">Backup</span> {
+                <span class="ident">name</span>: <span class="ident">CStr</span>::<span class="ident">from_ptr</span>((<span class="kw-2">*</span>(<span class="ident">bkup</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_backup_t</span>)).<span class="ident">name</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>(),
+                <span class="ident">hash</span>: <span class="ident">CStr</span>::<span class="ident">from_ptr</span>((<span class="kw-2">*</span>(<span class="ident">bkup</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_backup_t</span>)).<span class="ident">hash</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>(),
+            })
+        }
+    }
+
+    <span class="comment">/*
+    /// Gets the database this package is from
+    ///
+    /// This is currently unimplemented as it is not clear if there are times when it would be
+    /// useful to get the underlying database.
+    pub fn db(&amp;self) {
+        unimplemented!()
+    }
+    */</span>
+
+    <span class="doccomment">/// Get thie base64 encoded package signature.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">base64_signature</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">char_ptr</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_packager</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">char_ptr</span>.<span class="ident">is_null</span>()); <span class="comment">// safety first</span>
+            <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">char_ptr</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>()
+        }
+    }
+
+    <span class="doccomment">/// Gets the method used to validate a package during install</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">validation</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Validation</span> {
+        <span class="kw">unsafe</span> { <span class="ident">alpm_pkg_get_validation</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _).<span class="ident">into</span>() }
+    }
+
+    <span class="doccomment">/// Opens the changelog for reading</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">changelog</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="macro">unimplemented</span><span class="macro">!</span>()
+    }
+
+    <span class="comment">// changelog_read and changelog_close belong on changelog struct</span>
+
+    <span class="doccomment">/// Gets the package&#39;s mtree.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mtree</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="macro">unimplemented</span><span class="macro">!</span>()
+    }
+
+    <span class="doccomment">/// Returns true if the package has an install scriptlet, false if not.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_scriptlet</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">alpm_pkg_has_scriptlet</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _) <span class="op">!=</span> <span class="number">0</span> }
+    }
+
+    <span class="doccomment">/// Gets the size of the download required to install this package, or to upgrade this package</span>
+    <span class="doccomment">/// to the version of `self`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">download_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
+        <span class="kw">unsafe</span> { <span class="ident">alpm_pkg_download_size</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _) <span class="kw">as</span> <span class="ident">u64</span> }
+    }
+
+    <span class="doccomment">/// Dont know what this is for</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// TODO I&#39;m guessing the return type as it&#39;s not in the alpm.h docs. I&#39;m setting it to match</span>
+    <span class="doccomment">/// `deltas`. check for segfaults.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unused_deltas</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">deltas</span> <span class="op">=</span> <span class="ident">alpm_pkg_get_licenses</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _);
+            <span class="ident">util</span>::<span class="ident">alpm_list_to_vec</span>(<span class="ident">deltas</span>, <span class="op">|</span><span class="ident">char_ptr</span><span class="op">|</span> {
+                <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">char_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>()
+            })
+        }
+    }
+
+    <span class="doccomment">/// Sets the reason for a package in the local database. Returns true if reason was</span>
+    <span class="doccomment">/// successfully changed, false otherwise.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Use `Alpm.error` to get an error on failure.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_reason</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">r</span>: <span class="ident">Reason</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">alpm_pkg_set_reason</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _, <span class="ident">r</span>.<span class="ident">into</span>()) <span class="op">==</span> <span class="number">0</span> }
+    }
+
+    <span class="doccomment">/// (As part of overall transaction) Checks for new version of this package in sync repos.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns the first newer version found</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sync_new_version</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">dbs</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Db</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">PackageRef</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">dbs</span> <span class="op">=</span> <span class="ident">util</span>::<span class="ident">vec_to_alpm_list</span>(<span class="ident">dbs</span>, <span class="op">|</span><span class="ident">db</span><span class="op">|</span> <span class="ident">db</span>.<span class="ident">inner</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">c_void</span>);
+            <span class="kw">let</span> <span class="ident">new_pkg_ptr</span> <span class="op">=</span> <span class="ident">alpm_sync_newversion</span>(<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> _, <span class="ident">dbs</span>);
+            <span class="kw">if</span> <span class="ident">new_pkg_ptr</span>.<span class="ident">is_null</span>() {
+                <span class="prelude-val">None</span>
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">PackageRef</span>::<span class="ident">new</span>(<span class="ident">new_pkg_ptr</span>))
+            }
         }
     }
 }
 
-<span class='doccomment'>/// A group of related pacakges in a database</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Group</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span> <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>,
-    <span class='kw'>pub</span> <span class='ident'>packages</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>PackageRef</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// An operation on packages in this database</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PackageOperation</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Package (to be) installed. (No oldpkg)</span>
+    <span class="ident">Install</span> {
+        <span class="ident">new_pkg</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">PackageRef</span>,
+    },
+    <span class="doccomment">/// Package (to be) upgraded</span>
+    <span class="ident">Upgrade</span> {
+        <span class="ident">old_pkg</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">PackageRef</span>,
+        <span class="ident">new_pkg</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">PackageRef</span>,
+    },
+    <span class="doccomment">/// Package (to be) re-installed.</span>
+    <span class="ident">Reinstall</span> {
+        <span class="ident">old_pkg</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">PackageRef</span>,
+        <span class="ident">new_pkg</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">PackageRef</span>,
+    },
+    <span class="doccomment">/// Package (to be) downgraded.</span>
+    <span class="ident">Downgrade</span> {
+        <span class="ident">old_pkg</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">PackageRef</span>,
+        <span class="ident">new_pkg</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">PackageRef</span>,
+    },
+    <span class="doccomment">/// Package (to be) removed. (No newpkg)</span>
+    <span class="ident">Remove</span> {
+        <span class="ident">old_pkg</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">PackageRef</span>,
+    },
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Group</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span>(<span class='kw'>crate</span>) <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>(<span class='ident'>name</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>, <span class='ident'>packages</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>alpm_list_t</span>) <span class='op'>-&gt;</span> <span class='ident'>Group</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>name</span>).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>(); <span class='comment'>//probably should&#39;t fail</span>
-        <span class='kw'>let</span> <span class='ident'>packages</span> <span class='op'>=</span> <span class='ident'>util</span>::<span class='ident'>alpm_list_to_vec</span>(<span class='ident'>packages</span>, <span class='op'>|</span><span class='ident'>pkg_ptr</span><span class='op'>|</span> {
-            <span class='kw-2'>&amp;</span><span class='kw-2'>*</span>(<span class='ident'>pkg_ptr</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>PackageRef</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">PackageOperation</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="ident">op</span>: <span class="kw-2">&amp;</span><span class="ident">alpm_event_package_operation_t</span>) <span class="op">-&gt;</span> <span class="ident">PackageOperation</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="ident">op</span>.<span class="ident">operation</span> {
+            <span class="ident">ALPM_PACKAGE_INSTALL</span> <span class="op">=&gt;</span> <span class="ident">PackageOperation</span>::<span class="ident">Install</span> {
+                <span class="ident">new_pkg</span>: <span class="ident">PackageRef</span>::<span class="ident">new</span>(<span class="ident">op</span>.<span class="ident">newpkg</span>),
+            },
+            <span class="ident">ALPM_PACKAGE_UPGRADE</span> <span class="op">=&gt;</span> <span class="ident">PackageOperation</span>::<span class="ident">Upgrade</span> {
+                <span class="ident">new_pkg</span>: <span class="ident">PackageRef</span>::<span class="ident">new</span>(<span class="ident">op</span>.<span class="ident">newpkg</span>),
+                <span class="ident">old_pkg</span>: <span class="ident">PackageRef</span>::<span class="ident">new</span>(<span class="ident">op</span>.<span class="ident">oldpkg</span>),
+            },
+            <span class="ident">ALPM_PACKAGE_REINSTALL</span> <span class="op">=&gt;</span> <span class="ident">PackageOperation</span>::<span class="ident">Reinstall</span> {
+                <span class="ident">new_pkg</span>: <span class="ident">PackageRef</span>::<span class="ident">new</span>(<span class="ident">op</span>.<span class="ident">newpkg</span>),
+                <span class="ident">old_pkg</span>: <span class="ident">PackageRef</span>::<span class="ident">new</span>(<span class="ident">op</span>.<span class="ident">oldpkg</span>),
+            },
+            <span class="ident">ALPM_PACKAGE_DOWNGRADE</span> <span class="op">=&gt;</span> <span class="ident">PackageOperation</span>::<span class="ident">Downgrade</span> {
+                <span class="ident">new_pkg</span>: <span class="ident">PackageRef</span>::<span class="ident">new</span>(<span class="ident">op</span>.<span class="ident">newpkg</span>),
+                <span class="ident">old_pkg</span>: <span class="ident">PackageRef</span>::<span class="ident">new</span>(<span class="ident">op</span>.<span class="ident">oldpkg</span>),
+            },
+            <span class="ident">ALPM_PACKAGE_REMOVE</span> <span class="op">=&gt;</span> <span class="ident">PackageOperation</span>::<span class="ident">Remove</span> {
+                <span class="ident">old_pkg</span>: <span class="ident">PackageRef</span>::<span class="ident">new</span>(<span class="ident">op</span>.<span class="ident">oldpkg</span>),
+            },
+            _ <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unrecognised package operation&quot;</span>),
+        }
+    }
+}
+
+<span class="doccomment">/// A group of related pacakges in a database</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Group</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+    <span class="kw">pub</span> <span class="ident">packages</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">PackageRef</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Group</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Group(\&quot;{}\&quot;)&quot;</span>, <span class="self">self</span>.<span class="ident">name</span>)
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Group</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">packages</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_list_t</span>) <span class="op">-&gt;</span> <span class="ident">Group</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">name</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>(); <span class="comment">//probably should&#39;t fail</span>
+        <span class="kw">let</span> <span class="ident">packages</span> <span class="op">=</span> <span class="ident">util</span>::<span class="ident">alpm_list_to_vec</span>(<span class="ident">packages</span>, <span class="op">|</span><span class="ident">pkg_ptr</span><span class="op">|</span> {
+            <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">pkg_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">PackageRef</span>)
         });
-        <span class='ident'>Group</span> {
-            <span class='ident'>name</span>: <span class='ident'>name</span>,
-            <span class='ident'>packages</span>: <span class='ident'>packages</span>,
+        <span class="ident">Group</span> {
+            <span class="ident">name</span>: <span class="ident">name</span>,
+            <span class="ident">packages</span>: <span class="ident">packages</span>,
         }
     }
 }
 
-<span class='doccomment'>/// A package version</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>PackageVersion</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>, <span class='ident'>PhantomData</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>u8</span><span class='op'>&gt;</span>);
+<span class="doccomment">/// A package version</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PackageVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">u8</span><span class="op">&gt;</span>);
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>PackageVersion</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='ident'>p</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>) <span class='op'>-&gt;</span> <span class='ident'>PackageVersion</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>PackageVersion</span>(<span class='ident'>p</span>, <span class='ident'>PhantomData</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> <span class="ident">PackageVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>) <span class="op">-&gt;</span> <span class="ident">PackageVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">PackageVersion</span>(<span class="ident">p</span>, <span class="ident">PhantomData</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>str</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>PackageVersion</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>as_ref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='self'>self</span>.<span class='number'>0</span>).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>() }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PackageVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">unsafe</span> { <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="self">self</span>.<span class="number">0</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>() }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>PackageVersion</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-        <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;{}&quot;</span>, <span class='self'>self</span>.<span class='ident'>as_ref</span>())
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">PackageVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">as_ref</span>())
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>PartialEq</span> <span class='kw'>for</span> <span class='ident'>PackageVersion</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>eq</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='self'>self</span>.<span class='number'>0</span>) <span class='op'>==</span> <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>other</span>.<span class='number'>0</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">PackageVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> {
+            <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="self">self</span>.<span class="number">0</span>) <span class="op">==</span> <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">other</span>.<span class="number">0</span>)
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Eq</span> <span class='kw'>for</span> <span class='ident'>PackageVersion</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> { }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="ident">PackageVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> { }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>cmp</span>::<span class='ident'>Ord</span> <span class='kw'>for</span> <span class='ident'>PackageVersion</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='ident'>cmp</span>::<span class='ident'>Ordering</span> {
-        <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>alpm_pkg_vercmp</span>(<span class='self'>self</span>.<span class='number'>0</span>, <span class='ident'>other</span>.<span class='number'>0</span>) };
-        <span class='kw'>match</span> <span class='ident'>res</span> {
-            <span class='ident'>x</span> <span class='kw'>if</span> <span class='ident'>x</span> <span class='op'>&gt;</span> <span class='number'>0</span> <span class='op'>=&gt;</span> <span class='ident'>cmp</span>::<span class='ident'>Ordering</span>::<span class='ident'>Greater</span>,
-            <span class='ident'>x</span> <span class='kw'>if</span> <span class='ident'>x</span> <span class='op'>&lt;</span> <span class='number'>0</span> <span class='op'>=&gt;</span> <span class='ident'>cmp</span>::<span class='ident'>Ordering</span>::<span class='ident'>Less</span>,
-            _ <span class='op'>=&gt;</span> <span class='ident'>cmp</span>::<span class='ident'>Ordering</span>::<span class='ident'>Equal</span>,
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">cmp</span>::<span class="ident">Ord</span> <span class="kw">for</span> <span class="ident">PackageVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">cmp</span>::<span class="ident">Ordering</span> {
+        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">alpm_pkg_vercmp</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">other</span>.<span class="number">0</span>) };
+        <span class="kw">match</span> <span class="ident">res</span> {
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">=&gt;</span> <span class="ident">cmp</span>::<span class="ident">Ordering</span>::<span class="ident">Greater</span>,
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">&lt;</span> <span class="number">0</span> <span class="op">=&gt;</span> <span class="ident">cmp</span>::<span class="ident">Ordering</span>::<span class="ident">Less</span>,
+            _ <span class="op">=&gt;</span> <span class="ident">cmp</span>::<span class="ident">Ordering</span>::<span class="ident">Equal</span>,
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>cmp</span>::<span class='ident'>PartialOrd</span> <span class='kw'>for</span> <span class='ident'>PackageVersion</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>partial_cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>cmp</span>::<span class='ident'>Ordering</span><span class='op'>&gt;</span> {
-        <span class='prelude-val'>Some</span>(<span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>cmp</span>(<span class='kw-2'>&amp;</span><span class='ident'>other</span>.<span class='number'>0</span>))
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">cmp</span>::<span class="ident">PartialOrd</span> <span class="kw">for</span> <span class="ident">PackageVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp</span>::<span class="ident">Ordering</span><span class="op">&gt;</span> {
+        <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="number">0</span>))
     }
 }
 
-<span class='attribute'>#[<span class='ident'>test</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>test_cmp_pkg_version</span>() {
-    <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ffi</span>::<span class='ident'>CString</span>;
-    <span class='kw'>unsafe</span> {
-        <span class='kw'>let</span> <span class='ident'>less</span> <span class='op'>=</span> <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='string'>&quot;1.0&quot;</span>).<span class='ident'>unwrap</span>();
-        <span class='kw'>let</span> <span class='ident'>greater</span> <span class='op'>=</span> <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='string'>&quot;1.1&quot;</span>).<span class='ident'>unwrap</span>();
-        <span class='kw'>let</span> <span class='ident'>less_v</span> <span class='op'>=</span> <span class='ident'>PackageVersion</span>::<span class='ident'>new</span>(<span class='ident'>less</span>.<span class='ident'>as_ptr</span>());
-        <span class='kw'>let</span> <span class='ident'>greater_v</span> <span class='op'>=</span> <span class='ident'>PackageVersion</span>::<span class='ident'>new</span>(<span class='ident'>greater</span>.<span class='ident'>as_ptr</span>());
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>less_v</span> <span class='op'>&lt;</span> <span class='ident'>greater_v</span>);
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span>(<span class='ident'>less_v</span> <span class='op'>&gt;=</span> <span class='ident'>greater_v</span>));
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>greater_v</span> <span class='op'>&gt;</span> <span class='ident'>less_v</span>);
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span>(<span class='ident'>greater_v</span> <span class='op'>&lt;=</span> <span class='ident'>less_v</span>));
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>greater_v</span> <span class='op'>&lt;=</span> <span class='ident'>greater_v</span>);
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span>(<span class='ident'>greater_v</span> <span class='op'>&gt;</span> <span class='ident'>greater_v</span>));
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>greater_v</span> <span class='op'>&gt;=</span> <span class='ident'>greater_v</span>);
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span>(<span class='ident'>greater_v</span> <span class='op'>&lt;</span> <span class='ident'>greater_v</span>));
+<span class="attribute">#[<span class="ident">test</span>]</span>
+<span class="kw">fn</span> <span class="ident">test_cmp_pkg_version</span>() {
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">CString</span>;
+    <span class="kw">unsafe</span> {
+        <span class="kw">let</span> <span class="ident">less</span> <span class="op">=</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="string">&quot;1.0&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">greater</span> <span class="op">=</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="string">&quot;1.1&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">less_v</span> <span class="op">=</span> <span class="ident">PackageVersion</span>::<span class="ident">new</span>(<span class="ident">less</span>.<span class="ident">as_ptr</span>());
+        <span class="kw">let</span> <span class="ident">greater_v</span> <span class="op">=</span> <span class="ident">PackageVersion</span>::<span class="ident">new</span>(<span class="ident">greater</span>.<span class="ident">as_ptr</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">less_v</span> <span class="op">&lt;</span> <span class="ident">greater_v</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span>(<span class="ident">less_v</span> <span class="op">&gt;=</span> <span class="ident">greater_v</span>));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">greater_v</span> <span class="op">&gt;</span> <span class="ident">less_v</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span>(<span class="ident">greater_v</span> <span class="op">&lt;=</span> <span class="ident">less_v</span>));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">greater_v</span> <span class="op">&lt;=</span> <span class="ident">greater_v</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span>(<span class="ident">greater_v</span> <span class="op">&gt;</span> <span class="ident">greater_v</span>));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">greater_v</span> <span class="op">&gt;=</span> <span class="ident">greater_v</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span>(<span class="ident">greater_v</span> <span class="op">&lt;</span> <span class="ident">greater_v</span>));
     }
 }
 
-<span class='doccomment'>/// Where a package came from</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>PackageFrom</span> {
-    <span class='ident'>File</span>,
-    <span class='ident'>LocalDb</span>,
-    <span class='ident'>SyncDb</span>,
+<span class="doccomment">/// Where a package came from</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PackageFrom</span> {
+    <span class="ident">File</span>,
+    <span class="ident">LocalDb</span>,
+    <span class="ident">SyncDb</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>PackageFrom</span> {
-    <span class='kw'>fn</span> <span class='ident'>into</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='ident'>PackageFrom</span>::<span class='ident'>File</span> <span class='op'>=&gt;</span> <span class='ident'>ALPM_PKG_FROM_FILE</span>,
-            <span class='ident'>PackageFrom</span>::<span class='ident'>LocalDb</span> <span class='op'>=&gt;</span> <span class='ident'>ALPM_PKG_FROM_LOCALDB</span>,
-            <span class='ident'>PackageFrom</span>::<span class='ident'>SyncDb</span> <span class='op'>=&gt;</span> <span class='ident'>ALPM_PKG_FROM_SYNCDB</span>,
+<span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PackageFrom</span> {
+    <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">PackageFrom</span>::<span class="ident">File</span> <span class="op">=&gt;</span> <span class="ident">ALPM_PKG_FROM_FILE</span>,
+            <span class="ident">PackageFrom</span>::<span class="ident">LocalDb</span> <span class="op">=&gt;</span> <span class="ident">ALPM_PKG_FROM_LOCALDB</span>,
+            <span class="ident">PackageFrom</span>::<span class="ident">SyncDb</span> <span class="op">=&gt;</span> <span class="ident">ALPM_PKG_FROM_SYNCDB</span>,
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>PackageFrom</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>f</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='kw'>match</span> <span class='ident'>f</span> {
-            <span class='ident'>ALPM_PKG_FROM_FILE</span> <span class='op'>=&gt;</span> <span class='ident'>PackageFrom</span>::<span class='ident'>File</span>,
-            <span class='ident'>ALPM_PKG_FROM_LOCALDB</span> <span class='op'>=&gt;</span> <span class='ident'>PackageFrom</span>::<span class='ident'>LocalDb</span>,
-            <span class='ident'>ALPM_PKG_FROM_SYNCDB</span> <span class='op'>=&gt;</span> <span class='ident'>PackageFrom</span>::<span class='ident'>SyncDb</span>,
-            _ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>()
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PackageFrom</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">f</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">match</span> <span class="ident">f</span> {
+            <span class="ident">ALPM_PKG_FROM_FILE</span> <span class="op">=&gt;</span> <span class="ident">PackageFrom</span>::<span class="ident">File</span>,
+            <span class="ident">ALPM_PKG_FROM_LOCALDB</span> <span class="op">=&gt;</span> <span class="ident">PackageFrom</span>::<span class="ident">LocalDb</span>,
+            <span class="ident">ALPM_PKG_FROM_SYNCDB</span> <span class="op">=&gt;</span> <span class="ident">PackageFrom</span>::<span class="ident">SyncDb</span>,
+            _ <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>()
         }
     }
 }
 
-<span class='doccomment'>/// Why a package was installed, either because it was explicitally requested, or required as a</span>
-<span class='doccomment'>/// dependency.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Reason</span> {
-    <span class='doccomment'>/// Package was explicitally installed by the user.</span>
-    <span class='ident'>Explicit</span>,
-    <span class='doccomment'>/// Package was installed because it was a dependency of another package.</span>
-    <span class='ident'>Depend</span>
+<span class="doccomment">/// Why a package was installed, either because it was explicitally requested, or required as a</span>
+<span class="doccomment">/// dependency.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Reason</span> {
+    <span class="doccomment">/// Package was explicitally installed by the user.</span>
+    <span class="ident">Explicit</span>,
+    <span class="doccomment">/// Package was installed because it was a dependency of another package.</span>
+    <span class="ident">Depend</span>
 }
 
-<span class='kw'>impl</span> <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Reason</span> {
-    <span class='kw'>fn</span> <span class='ident'>into</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='ident'>Reason</span>::<span class='ident'>Explicit</span> <span class='op'>=&gt;</span> <span class='ident'>ALPM_PKG_REASON_EXPLICIT</span>,
-            <span class='ident'>Reason</span>::<span class='ident'>Depend</span> <span class='op'>=&gt;</span> <span class='ident'>ALPM_PKG_REASON_DEPEND</span>,
+<span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Reason</span> {
+    <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">Reason</span>::<span class="ident">Explicit</span> <span class="op">=&gt;</span> <span class="ident">ALPM_PKG_REASON_EXPLICIT</span>,
+            <span class="ident">Reason</span>::<span class="ident">Depend</span> <span class="op">=&gt;</span> <span class="ident">ALPM_PKG_REASON_DEPEND</span>,
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Reason</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>f</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='kw'>match</span> <span class='ident'>f</span> {
-            <span class='ident'>ALPM_PKG_REASON_EXPLICIT</span> <span class='op'>=&gt;</span> <span class='ident'>Reason</span>::<span class='ident'>Explicit</span>,
-            <span class='ident'>ALPM_PKG_REASON_DEPEND</span>  <span class='op'>=&gt;</span> <span class='ident'>Reason</span>::<span class='ident'>Depend</span>,
-            _ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>()
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Reason</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">f</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">match</span> <span class="ident">f</span> {
+            <span class="ident">ALPM_PKG_REASON_EXPLICIT</span> <span class="op">=&gt;</span> <span class="ident">Reason</span>::<span class="ident">Explicit</span>,
+            <span class="ident">ALPM_PKG_REASON_DEPEND</span>  <span class="op">=&gt;</span> <span class="ident">Reason</span>::<span class="ident">Depend</span>,
+            _ <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>()
         }
     }
 }
 
-<span class='doccomment'>/// The methods used to validate a package when it was downloaded.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ValidationMethod</span> {
-    <span class='doccomment'>/// Package was validated using md5</span>
-    <span class='kw'>pub</span> <span class='ident'>md5sum</span>: <span class='ident'>bool</span>,
-    <span class='doccomment'>/// Package was validated using sha256</span>
-    <span class='kw'>pub</span> <span class='ident'>sha256sum</span>: <span class='ident'>bool</span>,
-    <span class='doccomment'>/// Package was validated using gpg signature</span>
-    <span class='kw'>pub</span> <span class='ident'>signature</span>: <span class='ident'>bool</span>,
+<span class="doccomment">/// The methods used to validate a package when it was downloaded.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ValidationMethod</span> {
+    <span class="doccomment">/// Package was validated using md5</span>
+    <span class="kw">pub</span> <span class="ident">md5sum</span>: <span class="ident">bool</span>,
+    <span class="doccomment">/// Package was validated using sha256</span>
+    <span class="kw">pub</span> <span class="ident">sha256sum</span>: <span class="ident">bool</span>,
+    <span class="doccomment">/// Package was validated using gpg signature</span>
+    <span class="kw">pub</span> <span class="ident">signature</span>: <span class="ident">bool</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>ValidationMethod</span> {
-    <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='ident'>ValidationMethod</span> {
-        <span class='ident'>ValidationMethod</span> {
-            <span class='ident'>md5sum</span>: <span class='bool-val'>false</span>,
-            <span class='ident'>sha256sum</span>: <span class='bool-val'>false</span>,
-            <span class='ident'>signature</span>: <span class='bool-val'>false</span>,
+<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">ValidationMethod</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">ValidationMethod</span> {
+        <span class="ident">ValidationMethod</span> {
+            <span class="ident">md5sum</span>: <span class="bool-val">false</span>,
+            <span class="ident">sha256sum</span>: <span class="bool-val">false</span>,
+            <span class="ident">signature</span>: <span class="bool-val">false</span>,
         }
     }
 }
 
-<span class='doccomment'>/// Whether validation was performed.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Validation</span> {
-    <span class='doccomment'>/// It is not known whether validation was performed.</span>
-    <span class='ident'>Unknown</span>,
-    <span class='doccomment'>/// No validation was performed</span>
-    <span class='prelude-val'>None</span>,
-    <span class='doccomment'>/// 1 or more validation methods were performed.</span>
-    <span class='prelude-val'>Some</span>(<span class='ident'>ValidationMethod</span>)
+<span class="doccomment">/// Whether validation was performed.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Validation</span> {
+    <span class="doccomment">/// It is not known whether validation was performed.</span>
+    <span class="ident">Unknown</span>,
+    <span class="doccomment">/// No validation was performed</span>
+    <span class="prelude-val">None</span>,
+    <span class="doccomment">/// 1 or more validation methods were performed.</span>
+    <span class="prelude-val">Some</span>(<span class="ident">ValidationMethod</span>)
 }
 
-<span class='kw'>impl</span> <span class='ident'>Validation</span> {
-    <span class='doccomment'>/// Creates a `ValidationMethod` for when a package validation method is not known.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unknown</span>() <span class='op'>-&gt;</span> <span class='ident'>Validation</span> {
-        <span class='ident'>Validation</span>::<span class='ident'>Unknown</span>
+<span class="kw">impl</span> <span class="ident">Validation</span> {
+    <span class="doccomment">/// Creates a `ValidationMethod` for when a package validation method is not known.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unknown</span>() <span class="op">-&gt;</span> <span class="ident">Validation</span> {
+        <span class="ident">Validation</span>::<span class="ident">Unknown</span>
     }
 
-    <span class='doccomment'>/// Creates a `ValidationMethod` for when no validation was performed.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>none</span>() <span class='op'>-&gt;</span> <span class='ident'>Validation</span> {
-        <span class='ident'>Validation</span>::<span class='prelude-val'>None</span>
+    <span class="doccomment">/// Creates a `ValidationMethod` for when no validation was performed.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">none</span>() <span class="op">-&gt;</span> <span class="ident">Validation</span> {
+        <span class="ident">Validation</span>::<span class="prelude-val">None</span>
     }
 
-    <span class='doccomment'>/// Creates a `ValidationMethod` for when md5sum validation was performed.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>md5sum</span>() <span class='op'>-&gt;</span> <span class='ident'>Validation</span> {
-        <span class='ident'>Validation</span>::<span class='prelude-val'>Some</span>(<span class='ident'>ValidationMethod</span> { <span class='ident'>md5sum</span>: <span class='bool-val'>true</span>, ..<span class='ident'>Default</span>::<span class='ident'>default</span>() })
+    <span class="doccomment">/// Creates a `ValidationMethod` for when md5sum validation was performed.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">md5sum</span>() <span class="op">-&gt;</span> <span class="ident">Validation</span> {
+        <span class="ident">Validation</span>::<span class="prelude-val">Some</span>(<span class="ident">ValidationMethod</span> { <span class="ident">md5sum</span>: <span class="bool-val">true</span>, ..<span class="ident">Default</span>::<span class="ident">default</span>() })
     }
 
-    <span class='doccomment'>/// Creates a `ValidationMethod` for when sha256sum validation was performed.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sha256sum</span>() <span class='op'>-&gt;</span> <span class='ident'>Validation</span> {
-        <span class='ident'>Validation</span>::<span class='prelude-val'>Some</span>(<span class='ident'>ValidationMethod</span> { <span class='ident'>sha256sum</span>: <span class='bool-val'>true</span>, ..<span class='ident'>Default</span>::<span class='ident'>default</span>() })
+    <span class="doccomment">/// Creates a `ValidationMethod` for when sha256sum validation was performed.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sha256sum</span>() <span class="op">-&gt;</span> <span class="ident">Validation</span> {
+        <span class="ident">Validation</span>::<span class="prelude-val">Some</span>(<span class="ident">ValidationMethod</span> { <span class="ident">sha256sum</span>: <span class="bool-val">true</span>, ..<span class="ident">Default</span>::<span class="ident">default</span>() })
     }
 
-    <span class='doccomment'>/// Creates a `ValidationMethod` for when gpg signature validation was performed.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>signature</span>() <span class='op'>-&gt;</span> <span class='ident'>Validation</span> {
-        <span class='ident'>Validation</span>::<span class='prelude-val'>Some</span>(<span class='ident'>ValidationMethod</span> { <span class='ident'>signature</span>: <span class='bool-val'>true</span>, ..<span class='ident'>Default</span>::<span class='ident'>default</span>() })
+    <span class="doccomment">/// Creates a `ValidationMethod` for when gpg signature validation was performed.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">signature</span>() <span class="op">-&gt;</span> <span class="ident">Validation</span> {
+        <span class="ident">Validation</span>::<span class="prelude-val">Some</span>(<span class="ident">ValidationMethod</span> { <span class="ident">signature</span>: <span class="bool-val">true</span>, ..<span class="ident">Default</span>::<span class="ident">default</span>() })
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Validation</span> {
-    <span class='kw'>fn</span> <span class='ident'>into</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='ident'>Validation</span>::<span class='ident'>Unknown</span> <span class='op'>=&gt;</span> <span class='ident'>ALPM_PKG_VALIDATION_UNKNOWN</span>,
-            <span class='ident'>Validation</span>::<span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='ident'>ALPM_PKG_VALIDATION_NONE</span>,
-            <span class='ident'>Validation</span>::<span class='prelude-val'>Some</span>(<span class='ident'>methods</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>acc</span> <span class='op'>=</span> <span class='number'>0</span>;
-                <span class='kw'>if</span> <span class='ident'>methods</span>.<span class='ident'>md5sum</span> {
-                    <span class='ident'>acc</span> <span class='op'>|=</span> <span class='ident'>ALPM_PKG_VALIDATION_MD5SUM</span>;
+<span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Validation</span> {
+    <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">Validation</span>::<span class="ident">Unknown</span> <span class="op">=&gt;</span> <span class="ident">ALPM_PKG_VALIDATION_UNKNOWN</span>,
+            <span class="ident">Validation</span>::<span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">ALPM_PKG_VALIDATION_NONE</span>,
+            <span class="ident">Validation</span>::<span class="prelude-val">Some</span>(<span class="ident">methods</span>) <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">acc</span> <span class="op">=</span> <span class="number">0</span>;
+                <span class="kw">if</span> <span class="ident">methods</span>.<span class="ident">md5sum</span> {
+                    <span class="ident">acc</span> <span class="op">|=</span> <span class="ident">ALPM_PKG_VALIDATION_MD5SUM</span>;
                 };
-                <span class='kw'>if</span> <span class='ident'>methods</span>.<span class='ident'>sha256sum</span> {
-                    <span class='ident'>acc</span> <span class='op'>|=</span> <span class='ident'>ALPM_PKG_VALIDATION_SHA256SUM</span>;
+                <span class="kw">if</span> <span class="ident">methods</span>.<span class="ident">sha256sum</span> {
+                    <span class="ident">acc</span> <span class="op">|=</span> <span class="ident">ALPM_PKG_VALIDATION_SHA256SUM</span>;
                 };
-                <span class='kw'>if</span> <span class='ident'>methods</span>.<span class='ident'>signature</span> {
-                    <span class='ident'>acc</span> <span class='op'>|=</span> <span class='ident'>ALPM_PKG_VALIDATION_SIGNATURE</span>;
+                <span class="kw">if</span> <span class="ident">methods</span>.<span class="ident">signature</span> {
+                    <span class="ident">acc</span> <span class="op">|=</span> <span class="ident">ALPM_PKG_VALIDATION_SIGNATURE</span>;
                 };
-                <span class='ident'>acc</span>
+                <span class="ident">acc</span>
             }
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Validation</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>from</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='ident'>Validation</span> {
-        <span class='kw'>match</span> <span class='ident'>from</span> {
-            <span class='ident'>ALPM_PKG_VALIDATION_UNKNWON</span> <span class='op'>=&gt;</span> <span class='ident'>Validation</span>::<span class='ident'>Unknown</span>,
-            <span class='ident'>ALPM_PKG_VALIDATION_NONE</span> <span class='op'>=&gt;</span> <span class='ident'>Validation</span>::<span class='prelude-val'>None</span>,
-            <span class='ident'>other</span> <span class='op'>=&gt;</span> <span class='ident'>Validation</span>::<span class='prelude-val'>Some</span>(<span class='ident'>ValidationMethod</span> {
-                <span class='ident'>md5sum</span>: <span class='ident'>from</span> <span class='op'>&amp;</span> <span class='ident'>ALPM_PKG_VALIDATION_MD5SUM</span> <span class='op'>!=</span> <span class='number'>0</span>,
-                <span class='ident'>sha256sum</span>: <span class='ident'>from</span> <span class='op'>&amp;</span> <span class='ident'>ALPM_PKG_VALIDATION_SHA256SUM</span> <span class='op'>!=</span> <span class='number'>0</span>,
-                <span class='ident'>signature</span>: <span class='ident'>from</span> <span class='op'>&amp;</span> <span class='ident'>ALPM_PKG_VALIDATION_SIGNATURE</span> <span class='op'>!=</span> <span class='number'>0</span>,
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Validation</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">from</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">Validation</span> {
+        <span class="kw">match</span> <span class="ident">from</span> {
+            <span class="ident">ALPM_PKG_VALIDATION_UNKNWON</span> <span class="op">=&gt;</span> <span class="ident">Validation</span>::<span class="ident">Unknown</span>,
+            <span class="ident">ALPM_PKG_VALIDATION_NONE</span> <span class="op">=&gt;</span> <span class="ident">Validation</span>::<span class="prelude-val">None</span>,
+            <span class="ident">other</span> <span class="op">=&gt;</span> <span class="ident">Validation</span>::<span class="prelude-val">Some</span>(<span class="ident">ValidationMethod</span> {
+                <span class="ident">md5sum</span>: <span class="ident">from</span> <span class="op">&amp;</span> <span class="ident">ALPM_PKG_VALIDATION_MD5SUM</span> <span class="op">!=</span> <span class="number">0</span>,
+                <span class="ident">sha256sum</span>: <span class="ident">from</span> <span class="op">&amp;</span> <span class="ident">ALPM_PKG_VALIDATION_SHA256SUM</span> <span class="op">!=</span> <span class="number">0</span>,
+                <span class="ident">signature</span>: <span class="ident">from</span> <span class="op">&amp;</span> <span class="ident">ALPM_PKG_VALIDATION_SIGNATURE</span> <span class="op">!=</span> <span class="number">0</span>,
             }),
         }
     }
 }
 
+<span class="doccomment">/// A package&#39;s dependency</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Dependency</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
+    <span class="ident">version</span>: <span class="ident">PackageVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
+    <span class="ident">description</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
+    <span class="ident">name_hash</span>: <span class="ident">c_ulong</span>,
+    <span class="ident">version_constraint_type</span>: <span class="ident">VersionConstraintType</span>
+}
 
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Dependency</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Dependency(\&quot;{}\&quot;)&quot;</span>, <span class="self">self</span>.<span class="ident">name</span>())
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Dependency</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="ident">raw</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_depend_t</span>) <span class="op">-&gt;</span> <span class="ident">Dependency</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+        <span class="ident">Dependency</span> {
+            <span class="ident">name</span>: (<span class="kw-2">*</span><span class="ident">raw</span>).<span class="ident">name</span>,
+            <span class="ident">version</span>: <span class="ident">PackageVersion</span>::<span class="ident">new</span>((<span class="kw-2">*</span><span class="ident">raw</span>).<span class="ident">version</span>),
+            <span class="ident">description</span>: (<span class="kw-2">*</span><span class="ident">raw</span>).<span class="ident">desc</span>,
+            <span class="ident">name_hash</span>: (<span class="kw-2">*</span><span class="ident">raw</span>).<span class="ident">name_hash</span>,
+            <span class="ident">version_constraint_type</span>: (<span class="kw-2">*</span><span class="ident">raw</span>).<span class="ident">mod_</span>.<span class="ident">into</span>()
+        }
+    }
+
+    <span class="doccomment">/// Gets the name of the dependency</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">unsafe</span> { <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="self">self</span>.<span class="ident">name</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>() }
+    }
+
+    <span class="doccomment">/// Gets the version of the dependency</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">PackageVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">version</span>
+    }
+
+    <span class="doccomment">/// Gets a description of the dependency</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">unsafe</span> { <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="self">self</span>.<span class="ident">description</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>() }
+    }
+
+    <span class="doccomment">/// Gets a hash of the dependency&#39;s name</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
+        <span class="self">self</span>.<span class="ident">name_hash</span> <span class="kw">as</span> <span class="ident">u64</span>
+    }
+
+    <span class="doccomment">/// Gets the version restriction type</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version_constraint_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">VersionConstraintType</span> {
+        <span class="self">self</span>.<span class="ident">version_constraint_type</span>
+    }
+}
+
+<span class="doccomment">/// Types of version constraint to be applied to a package&#39;s dependency.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">VersionConstraintType</span> {
+    <span class="ident">Any</span>,
+    <span class="ident">Equal</span>,
+    <span class="ident">GreaterOrEqual</span>,
+    <span class="ident">LessOrEqual</span>,
+    <span class="ident">Greater</span>,
+    <span class="ident">Less</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">VersionConstraintType</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">f</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">VersionConstraintType</span> {
+        <span class="kw">match</span> <span class="ident">f</span> {
+            <span class="ident">ALPM_DEP_MOD_ANY</span> <span class="op">=&gt;</span> <span class="ident">VersionConstraintType</span>::<span class="ident">Any</span>,
+            <span class="ident">ALPM_DEP_MOD_EQ</span> <span class="op">=&gt;</span> <span class="ident">VersionConstraintType</span>::<span class="ident">Equal</span>,
+            <span class="ident">ALPM_DEP_MOD_GE</span> <span class="op">=&gt;</span> <span class="ident">VersionConstraintType</span>::<span class="ident">GreaterOrEqual</span>,
+            <span class="ident">ALPM_DEP_MOD_LE</span> <span class="op">=&gt;</span> <span class="ident">VersionConstraintType</span>::<span class="ident">LessOrEqual</span>,
+            <span class="ident">ALPM_DEP_MOD_GT</span> <span class="op">=&gt;</span> <span class="ident">VersionConstraintType</span>::<span class="ident">Greater</span>,
+            <span class="ident">ALPM_DEP_MOD_LT</span> <span class="op">=&gt;</span> <span class="ident">VersionConstraintType</span>::<span class="ident">Less</span>,
+            _ <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>()
+        }
+    }
+}
+
+<span class="doccomment">/// A list of files in a package</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileList</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Thie files this filelist contains</span>
+    <span class="kw">pub</span> <span class="ident">list</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">File</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">inner</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_filelist_t</span>,
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FileList</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="ident">raw</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_filelist_t</span>) <span class="op">-&gt;</span> <span class="ident">FileList</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">count</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">raw</span>).<span class="ident">count</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">file_ptr</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">raw</span>).<span class="ident">files</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">files</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">File</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;&gt;</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">count</span> {
+            <span class="ident">files</span>.<span class="ident">push</span>(<span class="ident">File</span>::<span class="ident">new</span>(<span class="ident">file_ptr</span>));
+            <span class="ident">file_ptr</span> <span class="op">=</span> <span class="ident">file_ptr</span>.<span class="ident">offset</span>(<span class="number">1</span>);
+        }
+        <span class="ident">FileList</span> {
+            <span class="ident">list</span>: <span class="ident">files</span>,
+            <span class="ident">inner</span>: <span class="ident">raw</span>,
+        }
+    }
+
+    <span class="doccomment">/// Test to see whether this filelist contains a path given.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The path should be relative to the installation root without preceeding slash (e.g.</span>
+    <span class="doccomment">/// `etc/pacman.conf`). Directories should have a trailing slash (e.g. `etc/`)</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">File</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">path</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">file_ptr</span> <span class="op">=</span> <span class="ident">alpm_filelist_contains</span>(<span class="self">self</span>.<span class="ident">inner</span>, <span class="ident">path</span>.<span class="ident">as_ptr</span>());
+            <span class="kw">if</span> <span class="ident">file_ptr</span>.<span class="ident">is_null</span>() {
+                <span class="prelude-val">None</span>
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">File</span>::<span class="ident">new</span>(<span class="ident">file_ptr</span>))
+            }
+        }
+    }
+}
+
+<span class="doccomment">/// A file in a package</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">File</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The filename.</span>
+    <span class="kw">pub</span> <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+    <span class="doccomment">/// The size of the file in bytes.</span>
+    <span class="kw">pub</span> <span class="ident">size</span>: <span class="ident">u64</span>,
+    <span class="doccomment">/// The file mode. e.g. 0644 would be urw,gr,or</span>
+    <span class="kw">pub</span> <span class="ident">mode</span>: <span class="ident">u32</span>,
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">File</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="ident">file_ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_file_t</span>) <span class="op">-&gt;</span>  <span class="ident">File</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+        <span class="ident">File</span> {
+            <span class="ident">name</span>: <span class="ident">CStr</span>::<span class="ident">from_ptr</span>((<span class="kw-2">*</span><span class="ident">file_ptr</span>).<span class="ident">name</span>).<span class="ident">to_str</span>().<span class="ident">unwrap</span>(),
+            <span class="ident">size</span>: (<span class="kw-2">*</span><span class="ident">file_ptr</span>).<span class="ident">size</span> <span class="kw">as</span> <span class="ident">u64</span>,
+            <span class="ident">mode</span>: (<span class="kw-2">*</span><span class="ident">file_ptr</span>).<span class="ident">mode</span>,
+        }
+    }
+}
+
+<span class="doccomment">/// A backup</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Backup</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+    <span class="kw">pub</span> <span class="ident">hash</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+}
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -195,156 +195,156 @@
 <span id="150">150</span>
 <span id="151">151</span>
 <span id="152">152</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Utility types/fn for alpm_event_t</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Utility types/fn for alpm_event_t</span>
 
-<span class='kw'>use</span> <span class='ident'>alpm_sys</span>::<span class='kw-2'>*</span>;
+<span class="kw">use</span> <span class="ident">alpm_sys</span>::<span class="kw-2">*</span>;
 
-<span class='kw'>use</span> <span class='ident'>package</span>::{<span class='ident'>Package</span>, <span class='ident'>PackageOperation</span>};
+<span class="kw">use</span> <span class="ident">package</span>::{<span class="ident">Package</span>, <span class="ident">PackageOperation</span>};
 
-<span class='doccomment'>/// An event emitted from libalpm</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Event</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Dependencies will be computed for a package.</span>
-    <span class='ident'>CheckDepsStart</span>,
-    <span class='doccomment'>/// Dependencies were computed for a package.</span>
-    <span class='ident'>CheckDepsDone</span>,
-    <span class='doccomment'>/// File conflicts will be computed for a package.</span>
-    <span class='ident'>FileConflictsStart</span>,
-    <span class='doccomment'>/// File conflicts were computed for a package.</span>
-    <span class='ident'>FileConflictsDone</span>,
-    <span class='doccomment'>/// Dependencies will be resolved for target package.</span>
-    <span class='ident'>ResolveDepsStart</span>,
-    <span class='doccomment'>/// Dependencies were resolved for target package.</span>
-    <span class='ident'>ResolveDepsDone</span>,
-    <span class='doccomment'>/// Inter-conflicts will be checked for target package.</span>
-    <span class='ident'>InterConflictsStart</span>,
-    <span class='doccomment'>/// Inter-conflicts were checked for target package.</span>
-    <span class='ident'>InterConflictsDone</span>,
-    <span class='doccomment'>/// Processing the package transaction is starting.</span>
-    <span class='ident'>TransactionStart</span>,
-    <span class='doccomment'>/// Processing the package transaction is finished.</span>
-    <span class='ident'>TransactionDone</span>,
-    <span class='doccomment'>/// Package will be installed/upgraded/downgraded/re-installed/removed; See alpm_event_package_operation_t for arguments.</span>
-    <span class='ident'>PackageOperationStart</span>(<span class='ident'>PackageOperation</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>),
-    <span class='doccomment'>/// Package was installed/upgraded/downgraded/re-installed/removed; See alpm_event_package_operation_t for arguments.</span>
-    <span class='ident'>PackageOperationDone</span>(<span class='ident'>PackageOperation</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>),
-    <span class='doccomment'>/// Target package&#39;s integrity will be checked.</span>
-    <span class='ident'>IntegrityStart</span>,
-    <span class='doccomment'>/// Target package&#39;s integrity was checked.</span>
-    <span class='ident'>IntegrityDone</span>,
-    <span class='doccomment'>/// Target package will be loaded.</span>
-    <span class='ident'>LoadStart</span>,
-    <span class='doccomment'>/// Target package is finished loading.</span>
-    <span class='ident'>LoadDone</span>,
-    <span class='doccomment'>/// Target delta&#39;s integrity will be checked.</span>
-    <span class='ident'>DeltaIntegrityStart</span>,
-    <span class='doccomment'>/// Target delta&#39;s integrity was checked.</span>
-    <span class='ident'>DeltaIntegrityDone</span>,
-    <span class='doccomment'>/// Deltas will be applied to packages.</span>
-    <span class='ident'>DeltaPatchesStart</span>,
-    <span class='doccomment'>/// Deltas were applied to packages.</span>
-    <span class='ident'>DeltaPatchesDone</span>,
-    <span class='doccomment'>/// Delta patch will be applied to target package; See alpm_event_delta_patch_t for arguments..</span>
-    <span class='ident'>DeltaPatchStart</span>,
-    <span class='doccomment'>/// Delta patch was applied to target package.</span>
-    <span class='ident'>DeltaPatchDone</span>,
-    <span class='doccomment'>/// Delta patch failed to apply to target package.</span>
-    <span class='ident'>DeltaPatchFailed</span>,
-    <span class='doccomment'>/// Scriptlet has printed information; See alpm_event_scriptlet_info_t for arguments.</span>
-    <span class='ident'>ScriptletInfo</span>,
-    <span class='doccomment'>/// Files will be downloaded from a repository.</span>
-    <span class='ident'>RetrieveStart</span>,
-    <span class='doccomment'>/// Files were downloaded from a repository.</span>
-    <span class='ident'>RetrieveDone</span>,
-    <span class='doccomment'>/// Not all files were successfully downloaded from a repository.</span>
-    <span class='ident'>RetrieveFailed</span>,
-    <span class='doccomment'>/// A file will be downloaded from a repository; See alpm_event_pkgdownload_t for arguments</span>
-    <span class='ident'>PkgDownloadStart</span>,
-    <span class='doccomment'>/// A file was downloaded from a repository; See alpm_event_pkgdownload_t for arguments</span>
-    <span class='ident'>PkgDownloadDone</span>,
-    <span class='doccomment'>/// A file failed to be downloaded from a repository; See alpm_event_pkgdownload_t for arguments</span>
-    <span class='ident'>PkgDownloadFailed</span>,
-    <span class='doccomment'>/// Disk space usage will be computed for a package.</span>
-    <span class='ident'>DiskspaceStart</span>,
-    <span class='doccomment'>/// Disk space usage was computed for a package.</span>
-    <span class='ident'>DiskspaceDone</span>,
-    <span class='doccomment'>/// An optdepend for another package is being removed; See alpm_event_optdep_removal_t for arguments.</span>
-    <span class='ident'>OptDepRemoval</span>,
-    <span class='doccomment'>/// A configured repository database is missing; See alpm_event_database_missing_t for arguments.</span>
-    <span class='ident'>DatabaseMissing</span>,
-    <span class='doccomment'>/// Checking keys used to create signatures are in keyring.</span>
-    <span class='ident'>KeyringStart</span>,
-    <span class='doccomment'>/// Keyring checking is finished.</span>
-    <span class='ident'>KeyringDone</span>,
-    <span class='doccomment'>/// Downloading missing keys into keyring.</span>
-    <span class='ident'>KeyDownloadStart</span>,
-    <span class='doccomment'>/// Key downloading is finished.</span>
-    <span class='ident'>KeyDownloadDone</span>,
-    <span class='doccomment'>/// A .pacnew file was created; See alpm_event_pacnew_created_t for arguments.</span>
-    <span class='ident'>PacnewCreated</span>,
-    <span class='doccomment'>/// A .pacsave file was created; See alpm_event_pacsave_created_t for arguments</span>
-    <span class='ident'>PacsaveCreated</span>,
-    <span class='doccomment'>/// Processing hooks will be started.</span>
-    <span class='ident'>HookStart</span>,
-    <span class='doccomment'>/// Processing hooks is finished.</span>
-    <span class='ident'>HookDone</span>,
-    <span class='doccomment'>/// A hook is starting</span>
-    <span class='ident'>HookRunStart</span>,
-    <span class='doccomment'>/// A hook has finished running</span>
-    <span class='ident'>HookRunDone</span>,
-    <span class='ident'>__Unknown</span>
+<span class="doccomment">/// An event emitted from libalpm</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Dependencies will be computed for a package.</span>
+    <span class="ident">CheckDepsStart</span>,
+    <span class="doccomment">/// Dependencies were computed for a package.</span>
+    <span class="ident">CheckDepsDone</span>,
+    <span class="doccomment">/// File conflicts will be computed for a package.</span>
+    <span class="ident">FileConflictsStart</span>,
+    <span class="doccomment">/// File conflicts were computed for a package.</span>
+    <span class="ident">FileConflictsDone</span>,
+    <span class="doccomment">/// Dependencies will be resolved for target package.</span>
+    <span class="ident">ResolveDepsStart</span>,
+    <span class="doccomment">/// Dependencies were resolved for target package.</span>
+    <span class="ident">ResolveDepsDone</span>,
+    <span class="doccomment">/// Inter-conflicts will be checked for target package.</span>
+    <span class="ident">InterConflictsStart</span>,
+    <span class="doccomment">/// Inter-conflicts were checked for target package.</span>
+    <span class="ident">InterConflictsDone</span>,
+    <span class="doccomment">/// Processing the package transaction is starting.</span>
+    <span class="ident">TransactionStart</span>,
+    <span class="doccomment">/// Processing the package transaction is finished.</span>
+    <span class="ident">TransactionDone</span>,
+    <span class="doccomment">/// Package will be installed/upgraded/downgraded/re-installed/removed; See alpm_event_package_operation_t for arguments.</span>
+    <span class="ident">PackageOperationStart</span>(<span class="ident">PackageOperation</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>),
+    <span class="doccomment">/// Package was installed/upgraded/downgraded/re-installed/removed; See alpm_event_package_operation_t for arguments.</span>
+    <span class="ident">PackageOperationDone</span>(<span class="ident">PackageOperation</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>),
+    <span class="doccomment">/// Target package&#39;s integrity will be checked.</span>
+    <span class="ident">IntegrityStart</span>,
+    <span class="doccomment">/// Target package&#39;s integrity was checked.</span>
+    <span class="ident">IntegrityDone</span>,
+    <span class="doccomment">/// Target package will be loaded.</span>
+    <span class="ident">LoadStart</span>,
+    <span class="doccomment">/// Target package is finished loading.</span>
+    <span class="ident">LoadDone</span>,
+    <span class="doccomment">/// Target delta&#39;s integrity will be checked.</span>
+    <span class="ident">DeltaIntegrityStart</span>,
+    <span class="doccomment">/// Target delta&#39;s integrity was checked.</span>
+    <span class="ident">DeltaIntegrityDone</span>,
+    <span class="doccomment">/// Deltas will be applied to packages.</span>
+    <span class="ident">DeltaPatchesStart</span>,
+    <span class="doccomment">/// Deltas were applied to packages.</span>
+    <span class="ident">DeltaPatchesDone</span>,
+    <span class="doccomment">/// Delta patch will be applied to target package; See alpm_event_delta_patch_t for arguments..</span>
+    <span class="ident">DeltaPatchStart</span>,
+    <span class="doccomment">/// Delta patch was applied to target package.</span>
+    <span class="ident">DeltaPatchDone</span>,
+    <span class="doccomment">/// Delta patch failed to apply to target package.</span>
+    <span class="ident">DeltaPatchFailed</span>,
+    <span class="doccomment">/// Scriptlet has printed information; See alpm_event_scriptlet_info_t for arguments.</span>
+    <span class="ident">ScriptletInfo</span>,
+    <span class="doccomment">/// Files will be downloaded from a repository.</span>
+    <span class="ident">RetrieveStart</span>,
+    <span class="doccomment">/// Files were downloaded from a repository.</span>
+    <span class="ident">RetrieveDone</span>,
+    <span class="doccomment">/// Not all files were successfully downloaded from a repository.</span>
+    <span class="ident">RetrieveFailed</span>,
+    <span class="doccomment">/// A file will be downloaded from a repository; See alpm_event_pkgdownload_t for arguments</span>
+    <span class="ident">PkgDownloadStart</span>,
+    <span class="doccomment">/// A file was downloaded from a repository; See alpm_event_pkgdownload_t for arguments</span>
+    <span class="ident">PkgDownloadDone</span>,
+    <span class="doccomment">/// A file failed to be downloaded from a repository; See alpm_event_pkgdownload_t for arguments</span>
+    <span class="ident">PkgDownloadFailed</span>,
+    <span class="doccomment">/// Disk space usage will be computed for a package.</span>
+    <span class="ident">DiskspaceStart</span>,
+    <span class="doccomment">/// Disk space usage was computed for a package.</span>
+    <span class="ident">DiskspaceDone</span>,
+    <span class="doccomment">/// An optdepend for another package is being removed; See alpm_event_optdep_removal_t for arguments.</span>
+    <span class="ident">OptDepRemoval</span>,
+    <span class="doccomment">/// A configured repository database is missing; See alpm_event_database_missing_t for arguments.</span>
+    <span class="ident">DatabaseMissing</span>,
+    <span class="doccomment">/// Checking keys used to create signatures are in keyring.</span>
+    <span class="ident">KeyringStart</span>,
+    <span class="doccomment">/// Keyring checking is finished.</span>
+    <span class="ident">KeyringDone</span>,
+    <span class="doccomment">/// Downloading missing keys into keyring.</span>
+    <span class="ident">KeyDownloadStart</span>,
+    <span class="doccomment">/// Key downloading is finished.</span>
+    <span class="ident">KeyDownloadDone</span>,
+    <span class="doccomment">/// A .pacnew file was created; See alpm_event_pacnew_created_t for arguments.</span>
+    <span class="ident">PacnewCreated</span>,
+    <span class="doccomment">/// A .pacsave file was created; See alpm_event_pacsave_created_t for arguments</span>
+    <span class="ident">PacsaveCreated</span>,
+    <span class="doccomment">/// Processing hooks will be started.</span>
+    <span class="ident">HookStart</span>,
+    <span class="doccomment">/// Processing hooks is finished.</span>
+    <span class="ident">HookDone</span>,
+    <span class="doccomment">/// A hook is starting</span>
+    <span class="ident">HookRunStart</span>,
+    <span class="doccomment">/// A hook has finished running</span>
+    <span class="ident">HookRunDone</span>,
+    <span class="ident">__Unknown</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Event</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span>(<span class='kw'>crate</span>) <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>e</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>alpm_event_t</span>) <span class='op'>-&gt;</span> <span class='ident'>Event</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> (<span class='kw-2'>*</span><span class='ident'>e</span>).<span class='ident'>type_</span> {
-            <span class='ident'>ALPM_EVENT_CHECKDEPS_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>CheckDepsStart</span>,
-            <span class='ident'>ALPM_EVENT_CHECKDEPS_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>CheckDepsDone</span>,
-            <span class='ident'>ALPM_EVENT_FILECONFLICTS_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>FileConflictsStart</span>,
-            <span class='ident'>ALPM_EVENT_FILECONFLICTS_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>FileConflictsDone</span>,
-            <span class='ident'>ALPM_EVENT_RESOLVEDEPS_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>ResolveDepsStart</span>,
-            <span class='ident'>ALPM_EVENT_RESOLVEDEPS_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>ResolveDepsDone</span>,
-            <span class='ident'>ALPM_EVENT_INTERCONFLICTS_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>InterConflictsStart</span>,
-            <span class='ident'>ALPM_EVENT_INTERCONFLICTS_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>InterConflictsDone</span>,
-            <span class='ident'>ALPM_EVENT_TRANSACTION_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>TransactionStart</span>,
-            <span class='ident'>ALPM_EVENT_TRANSACTION_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>TransactionDone</span>,
-            <span class='ident'>ALPM_EVENT_PACKAGE_OPERATION_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>PackageOperationStart</span>(
-                <span class='ident'>PackageOperation</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span>(<span class='kw-2'>*</span><span class='ident'>e</span>).<span class='ident'>package_operation</span>)),
-            <span class='ident'>ALPM_EVENT_PACKAGE_OPERATION_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>PackageOperationDone</span>(
-                <span class='ident'>PackageOperation</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span>(<span class='kw-2'>*</span><span class='ident'>e</span>).<span class='ident'>package_operation</span>)),
-            <span class='ident'>ALPM_EVENT_INTEGRITY_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>IntegrityStart</span>,
-            <span class='ident'>ALPM_EVENT_INTEGRITY_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>IntegrityDone</span>,
-            <span class='ident'>ALPM_EVENT_LOAD_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>LoadStart</span>,
-            <span class='ident'>ALPM_EVENT_LOAD_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>LoadDone</span>,
-            <span class='ident'>ALPM_EVENT_DELTA_INTEGRITY_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>DeltaIntegrityStart</span>,
-            <span class='ident'>ALPM_EVENT_DELTA_INTEGRITY_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>DeltaIntegrityDone</span>,
-            <span class='ident'>ALPM_EVENT_DELTA_PATCHES_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>DeltaPatchesStart</span>,
-            <span class='ident'>ALPM_EVENT_DELTA_PATCHES_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>DeltaPatchesDone</span>,
-            <span class='ident'>ALPM_EVENT_DELTA_PATCH_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>DeltaPatchStart</span>,
-            <span class='ident'>ALPM_EVENT_DELTA_PATCH_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>DeltaPatchDone</span>,
-            <span class='ident'>ALPM_EVENT_DELTA_PATCH_FAILED</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>DeltaPatchFailed</span>,
-            <span class='ident'>ALPM_EVENT_SCRIPTLET_INFO</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>ScriptletInfo</span>,
-            <span class='ident'>ALPM_EVENT_RETRIEVE_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>RetrieveStart</span>,
-            <span class='ident'>ALPM_EVENT_RETRIEVE_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>RetrieveDone</span>,
-            <span class='ident'>ALPM_EVENT_RETRIEVE_FAILED</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>RetrieveFailed</span>,
-            <span class='ident'>ALPM_EVENT_PKGDOWNLOAD_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>PkgDownloadStart</span>,
-            <span class='ident'>ALPM_EVENT_PKGDOWNLOAD_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>PkgDownloadDone</span>,
-            <span class='ident'>ALPM_EVENT_PKGDOWNLOAD_FAILED</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>PkgDownloadFailed</span>,
-            <span class='ident'>ALPM_EVENT_DISKSPACE_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>DiskspaceStart</span>,
-            <span class='ident'>ALPM_EVENT_DISKSPACE_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>DiskspaceDone</span>,
-            <span class='ident'>ALPM_EVENT_OPTDEP_REMOVAL</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>OptDepRemoval</span>,
-            <span class='ident'>ALPM_EVENT_DATABASE_MISSING</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>DatabaseMissing</span>,
-            <span class='ident'>ALPM_EVENT_KEYRING_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>KeyringStart</span>,
-            <span class='ident'>ALPM_EVENT_KEYRING_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>KeyringDone</span>,
-            <span class='ident'>ALPM_EVENT_KEY_DOWNLOAD_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>KeyDownloadStart</span>,
-            <span class='ident'>ALPM_EVENT_KEY_DOWNLOAD_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>KeyDownloadDone</span>,
-            <span class='ident'>ALPM_EVENT_PACNEW_CREATED</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>PacnewCreated</span>,
-            <span class='ident'>ALPM_EVENT_PACSAVE_CREATED</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>PacsaveCreated</span>,
-            <span class='ident'>ALPM_EVENT_HOOK_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>HookStart</span>,
-            <span class='ident'>ALPM_EVENT_HOOK_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>HookDone</span>,
-            <span class='ident'>ALPM_EVENT_HOOK_RUN_START</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>HookRunStart</span>,
-            <span class='ident'>ALPM_EVENT_HOOK_RUN_DONE</span> <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>HookRunDone</span>,
-            _ <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>__Unknown</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">e</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">alpm_event_t</span>) <span class="op">-&gt;</span> <span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> (<span class="kw-2">*</span><span class="ident">e</span>).<span class="ident">type_</span> {
+            <span class="ident">ALPM_EVENT_CHECKDEPS_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">CheckDepsStart</span>,
+            <span class="ident">ALPM_EVENT_CHECKDEPS_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">CheckDepsDone</span>,
+            <span class="ident">ALPM_EVENT_FILECONFLICTS_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">FileConflictsStart</span>,
+            <span class="ident">ALPM_EVENT_FILECONFLICTS_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">FileConflictsDone</span>,
+            <span class="ident">ALPM_EVENT_RESOLVEDEPS_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">ResolveDepsStart</span>,
+            <span class="ident">ALPM_EVENT_RESOLVEDEPS_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">ResolveDepsDone</span>,
+            <span class="ident">ALPM_EVENT_INTERCONFLICTS_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">InterConflictsStart</span>,
+            <span class="ident">ALPM_EVENT_INTERCONFLICTS_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">InterConflictsDone</span>,
+            <span class="ident">ALPM_EVENT_TRANSACTION_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">TransactionStart</span>,
+            <span class="ident">ALPM_EVENT_TRANSACTION_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">TransactionDone</span>,
+            <span class="ident">ALPM_EVENT_PACKAGE_OPERATION_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">PackageOperationStart</span>(
+                <span class="ident">PackageOperation</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>(<span class="kw-2">*</span><span class="ident">e</span>).<span class="ident">package_operation</span>)),
+            <span class="ident">ALPM_EVENT_PACKAGE_OPERATION_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">PackageOperationDone</span>(
+                <span class="ident">PackageOperation</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>(<span class="kw-2">*</span><span class="ident">e</span>).<span class="ident">package_operation</span>)),
+            <span class="ident">ALPM_EVENT_INTEGRITY_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">IntegrityStart</span>,
+            <span class="ident">ALPM_EVENT_INTEGRITY_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">IntegrityDone</span>,
+            <span class="ident">ALPM_EVENT_LOAD_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">LoadStart</span>,
+            <span class="ident">ALPM_EVENT_LOAD_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">LoadDone</span>,
+            <span class="ident">ALPM_EVENT_DELTA_INTEGRITY_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">DeltaIntegrityStart</span>,
+            <span class="ident">ALPM_EVENT_DELTA_INTEGRITY_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">DeltaIntegrityDone</span>,
+            <span class="ident">ALPM_EVENT_DELTA_PATCHES_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">DeltaPatchesStart</span>,
+            <span class="ident">ALPM_EVENT_DELTA_PATCHES_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">DeltaPatchesDone</span>,
+            <span class="ident">ALPM_EVENT_DELTA_PATCH_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">DeltaPatchStart</span>,
+            <span class="ident">ALPM_EVENT_DELTA_PATCH_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">DeltaPatchDone</span>,
+            <span class="ident">ALPM_EVENT_DELTA_PATCH_FAILED</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">DeltaPatchFailed</span>,
+            <span class="ident">ALPM_EVENT_SCRIPTLET_INFO</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">ScriptletInfo</span>,
+            <span class="ident">ALPM_EVENT_RETRIEVE_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">RetrieveStart</span>,
+            <span class="ident">ALPM_EVENT_RETRIEVE_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">RetrieveDone</span>,
+            <span class="ident">ALPM_EVENT_RETRIEVE_FAILED</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">RetrieveFailed</span>,
+            <span class="ident">ALPM_EVENT_PKGDOWNLOAD_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">PkgDownloadStart</span>,
+            <span class="ident">ALPM_EVENT_PKGDOWNLOAD_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">PkgDownloadDone</span>,
+            <span class="ident">ALPM_EVENT_PKGDOWNLOAD_FAILED</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">PkgDownloadFailed</span>,
+            <span class="ident">ALPM_EVENT_DISKSPACE_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">DiskspaceStart</span>,
+            <span class="ident">ALPM_EVENT_DISKSPACE_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">DiskspaceDone</span>,
+            <span class="ident">ALPM_EVENT_OPTDEP_REMOVAL</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">OptDepRemoval</span>,
+            <span class="ident">ALPM_EVENT_DATABASE_MISSING</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">DatabaseMissing</span>,
+            <span class="ident">ALPM_EVENT_KEYRING_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">KeyringStart</span>,
+            <span class="ident">ALPM_EVENT_KEYRING_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">KeyringDone</span>,
+            <span class="ident">ALPM_EVENT_KEY_DOWNLOAD_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">KeyDownloadStart</span>,
+            <span class="ident">ALPM_EVENT_KEY_DOWNLOAD_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">KeyDownloadDone</span>,
+            <span class="ident">ALPM_EVENT_PACNEW_CREATED</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">PacnewCreated</span>,
+            <span class="ident">ALPM_EVENT_PACSAVE_CREATED</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">PacsaveCreated</span>,
+            <span class="ident">ALPM_EVENT_HOOK_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">HookStart</span>,
+            <span class="ident">ALPM_EVENT_HOOK_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">HookDone</span>,
+            <span class="ident">ALPM_EVENT_HOOK_RUN_START</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">HookRunStart</span>,
+            <span class="ident">ALPM_EVENT_HOOK_RUN_DONE</span> <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">HookRunDone</span>,
+            _ <span class="op">=&gt;</span> <span class="ident">Event</span>::<span class="ident">__Unknown</span>
         }
     }
 }

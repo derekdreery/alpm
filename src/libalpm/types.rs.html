@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -75,37 +75,37 @@
 <span id="30">30</span>
 <span id="31">31</span>
 <span id="32">32</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! A place for types related to alpm, rather than e.g. a package</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! A place for types related to alpm, rather than e.g. a package</span>
 
-<span class='kw'>use</span> <span class='ident'>alpm_sys</span>::<span class='kw-2'>*</span>;
+<span class="kw">use</span> <span class="ident">alpm_sys</span>::<span class="kw-2">*</span>;
 
-<span class='doccomment'>/// This version of libalpm&#39;s capabilities</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Caps</span> {
-    <span class='kw'>pub</span> <span class='ident'>nls</span>: <span class='ident'>bool</span>,
-    <span class='kw'>pub</span> <span class='ident'>downloader</span>: <span class='ident'>bool</span>,
-    <span class='kw'>pub</span> <span class='ident'>signatures</span>: <span class='ident'>bool</span>,
+<span class="doccomment">/// This version of libalpm&#39;s capabilities</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Caps</span> {
+    <span class="kw">pub</span> <span class="ident">nls</span>: <span class="ident">bool</span>,
+    <span class="kw">pub</span> <span class="ident">downloader</span>: <span class="ident">bool</span>,
+    <span class="kw">pub</span> <span class="ident">signatures</span>: <span class="ident">bool</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Caps</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>f</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='ident'>Caps</span> {
-        <span class='ident'>Caps</span> {
-            <span class='ident'>nls</span>: <span class='ident'>f</span> <span class='op'>&amp;</span> <span class='ident'>ALPM_CAPABILITY_NLS</span> <span class='op'>!=</span> <span class='number'>0</span>,
-            <span class='ident'>downloader</span>: <span class='ident'>f</span> <span class='op'>&amp;</span> <span class='ident'>ALPM_CAPABILITY_DOWNLOADER</span> <span class='op'>!=</span> <span class='number'>0</span>,
-            <span class='ident'>signatures</span>: <span class='ident'>f</span> <span class='op'>&amp;</span> <span class='ident'>ALPM_CAPABILITY_SIGNATURES</span> <span class='op'>!=</span> <span class='number'>0</span>,
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Caps</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">f</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">Caps</span> {
+        <span class="ident">Caps</span> {
+            <span class="ident">nls</span>: <span class="ident">f</span> <span class="op">&amp;</span> <span class="ident">ALPM_CAPABILITY_NLS</span> <span class="op">!=</span> <span class="number">0</span>,
+            <span class="ident">downloader</span>: <span class="ident">f</span> <span class="op">&amp;</span> <span class="ident">ALPM_CAPABILITY_DOWNLOADER</span> <span class="op">!=</span> <span class="number">0</span>,
+            <span class="ident">signatures</span>: <span class="ident">f</span> <span class="op">&amp;</span> <span class="ident">ALPM_CAPABILITY_SIGNATURES</span> <span class="op">!=</span> <span class="number">0</span>,
         }
     }
 }
 
-<span class='doccomment'>/// The result of a download</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>DownloadResult</span> {
-    <span class='doccomment'>/// The download succeeded</span>
-    <span class='prelude-val'>Ok</span>,
-    <span class='doccomment'>/// The download was not needed</span>
-    <span class='ident'>NotNeeded</span>,
-    <span class='doccomment'>/// The download failed</span>
-    <span class='prelude-val'>Err</span>,
+<span class="doccomment">/// The result of a download</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">DownloadResult</span> {
+    <span class="doccomment">/// The download succeeded</span>
+    <span class="prelude-val">Ok</span>,
+    <span class="doccomment">/// The download was not needed</span>
+    <span class="ident">NotNeeded</span>,
+    <span class="doccomment">/// The download failed</span>
+    <span class="prelude-val">Err</span>,
 }
 
 </pre>
