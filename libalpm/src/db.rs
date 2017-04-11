@@ -13,10 +13,18 @@ use util::{self, alpm_list_to_vec, vec_to_alpm_list, str_to_unowned_char_array,
 /// A database of packages. This is only ever available as a reference
 #[derive(Debug)]
 pub struct Db<'a> {
-    inner: *const Struct_alpm_db,
+    pub(crate) inner: *const Struct_alpm_db,
     // we need this handle so we can get error codes
     handle: &'a Alpm,
 }
+
+/* not safe
+impl<'a> Drop for Db<'a> {
+    fn drop(&mut self) {
+        unsafe { alpm_db_unregister(self.inner); }
+    }
+}
+*/
 
 impl<'a> Db<'a> {
 
@@ -26,6 +34,22 @@ impl<'a> Db<'a> {
             handle: handle,
         }
     }
+
+    /* not worth having
+    /// Consumes the Db, unregistering it from the alpm instance
+    ///
+    /// # Safety
+    /// There must be no other references to this database stored.
+    pub unsafe fn unregister(self) -> AlpmResult<()> {
+        unsafe {
+            if alpm_db_unregister(self.inner) == 0 {
+                Ok(())
+            } else {
+                Err(self.handle.error().unwrap_or(Error::__Unknown))
+            }
+        }
+    }
+    */
 
     /// Gets the name of the database.
     pub fn name(&self) -> Result<&'a str, Utf8Error> {

@@ -289,6 +289,7 @@ impl From<str::Utf8Error> for Error {
     }
 }
 
+/// The ubiquitous crate result type.
 pub type AlpmResult<T> = Result<T, Error>;
 
 #[cfg(test)]

@@ -1,13 +1,16 @@
+//! Some helper functions not directly related to the API
+
 use libc;
 use std::mem;
 use std::ptr;
 use std::ffi::{CStr, CString};
 use alpm_sys::*;
 
-
+/// A wrapper around a libc::utsname struct, holding information on the current computer and os.
 pub struct UtsName(libc::utsname);
 
 impl UtsName {
+    /// The system name
     pub fn sysname(&self) -> &str {
         unsafe {
             CStr::from_ptr(self.0.sysname.as_ptr())
@@ -15,6 +18,7 @@ impl UtsName {
         }
     }
 
+    /// The node name
     pub fn nodename(&self) -> &str {
         unsafe {
             CStr::from_ptr(self.0.nodename.as_ptr())
@@ -22,6 +26,7 @@ impl UtsName {
         }
     }
 
+    /// The release
     pub fn release(&self) -> &str {
         unsafe {
             CStr::from_ptr(self.0.release.as_ptr())
@@ -29,6 +34,7 @@ impl UtsName {
         }
     }
 
+    /// The version
     pub fn version(&self) -> &str {
         unsafe {
             CStr::from_ptr(self.0.version.as_ptr())
@@ -164,6 +170,7 @@ pub(crate) fn cstring_to_owned_char_array(s: &CString) -> *const libc::c_void {
 
 /// A TEMPORARY helper function to extract server urls from a pacman conf file (until I've
 /// implemented `Options::from_ini`).
+#[deprecated]
 pub fn get_servers(path: &str, repo: &str, arch: &str) -> Vec<String> {
     use std::fs::File;
     use std::io::{BufRead, BufReader};

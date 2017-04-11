@@ -1,3 +1,20 @@
+//! A library to access the functionality of libalpm (the library used by pacman).
+//!
+//! # Getting started
+//! The main struct here is `Alpm`. It is responsible for wrapping an alpm database and filesystem,
+//! and providing functionality for thtat alpm instance. For example...
+//!
+//! ```ignore
+//! use libalpm::Alpm;
+//! use libalpm::util;
+//!
+//! // get the architecture (e.g. x86_64).
+//! let arch = util::uname().machine().to_owned();
+//!
+//! let alpm = Alpm::new("/", "/var/lib/pacman"); // default locations on arch linux
+//! alpm
+//! ```
+
 #![feature(untagged_unions)]
 #![feature(pub_restricted)]
 
@@ -574,11 +591,115 @@ impl Alpm {
             }
         }
     }
+
+    /*
+    /// Unregister all sync dbs.
+    ///
+    /// # Safety
+    /// There must not be any remaining Db instances, as these will be de-allocated.
+    pub unsafe fn unregister_all_sync_dbs(&self) -> AlpmResult<()> {
+        let res = alpm_unregister_all_syncdbs(self.handle);
+        if res == 0 {
+            Ok(())
+        } else {
+            Err(self.error().unwrap_or(Error::__Unknown))
+        }
+    }
+    */
+
+    /// Start a package modification transaction
+    pub fn init_transaction(self, flags: TransactionFlags) -> Result<Transaction, (Error, Alpm)> {
+        let res = unsafe { alpm_trans_init(self.handle, flags.into()) };
+        if res == 0 {
+            Ok(Transaction(self))
+        } else {
+            Err((self.error().unwrap_or(Error::__Unknown), self))
+        }
+    }
 }
 
 impl Drop for Alpm {
     fn drop(&mut self) {
         unsafe { alpm_release(self.handle); }
+    }
+}
+
+/// A transaction of package operations
+///
+/// Consumes an Alpm instance as only 1 transaction can be performed at a time. Use `commit` or
+/// `rollback` to recover the Alpm instance.
+pub struct Transaction(Alpm);
+
+impl Transaction {
+
+    /// Returns the flags for the current transaction.
+    pub fn flags(&self) -> TransactionFlags {
+        unsafe { alpm_trans_get_flags(self.0.handle).into() }
+    }
+
+    /// Gets packages added by the current transaction.
+    pub fn added_packages<'a>(&'a self) -> Vec<&'a PackageRef> {
+        unimplemented!()
+    }
+
+    /// Gets packages removed by the current transaction.
+    pub fn removed_packages<'a>(&'a self) -> Vec<&'a PackageRef> {
+        unimplemented!()
+    }
+
+    /// Prepares a transaction for committing.
+    pub fn prepare<'a>(&'a self) -> AlpmResult<()> {
+        use std::ptr;
+        unsafe {
+            let mut p: *mut alpm_list_t = ptr::null_mut();
+            let res = alpm_trans_prepare(self.0.handle, &mut p as *mut _);
+            if res == 0 {
+                Ok(())
+            } else {
+                Err(self.0.error().unwrap_or(Error::__Unknown))
+            }
+        }
+    }
+
+    /// Commits the transaction and returns the alpm instance. TODO conflict type
+    pub fn commit(self) -> Result<Alpm, (Error, Vec<()>, Transaction)> {
+        use std::ptr;
+        unsafe {
+            let mut p: *mut alpm_list_t = ptr::null_mut();
+            let res = alpm_trans_commit(self.0.handle, &mut p as *mut _);
+            if res == 0 {
+                Ok(self.0)
+            } else {
+                Err((self.0.error().unwrap_or(Error::__Unknown), Vec::new(), self))
+            }
+        }
+    }
+
+    /// Releases (discards) the transaction and returns the alpm instance.
+    pub fn release(self) -> Result<Alpm, (Error, Alpm)> {
+        unimplemented!()
+    }
+
+    /// Adds a system upgrade to this transaction.
+    pub fn sys_upgrade(&self, enable_downgrade: bool) -> AlpmResult<()> {
+        unsafe {
+            let res = alpm_sync_sysupgrade(self.0.handle, enable_downgrade as libc::c_int);
+            if res == 0 {
+                Ok(())
+            } else {
+                Err(self.0.error().unwrap_or(Error::__Unknown))
+            }
+        }
+    }
+
+    /// Adds a new package to system in this transaction.
+    pub fn add_package(&self, pkg: &PackageRef) -> AlpmResult<()> {
+        unimplemented!()
+    }
+
+    /// Removes a package from the system in this transaction.
+    pub fn remove_package(&self, pkg: &PackageRef) -> AlpmResult<()> {
+        unimplemented!()
     }
 }
 
@@ -594,3 +715,125 @@ pub fn version() -> &'static str {
 pub fn capabilities() -> Caps {
     unsafe { alpm_capabilities().into() }
 }
+
+#[derive(Default, Debug, PartialEq, Eq, Copy, Clone)]
+pub struct TransactionFlags {
+    /// Ignore dependency checks
+    no_deps: bool,
+    /// Ignore file conflicts and overwrite files
+    force: bool,
+    /// Delete files even if they are tagged as backup
+    no_save: bool,
+    /// Ignore version numbers when checking dependencies
+    no_dep_version: bool,
+    /// Remove also any packages depending on a package being removed
+    cascade: bool,
+    /// Remove packages and their unneeded deps (not explicitally installed)
+    recurse: bool,
+    /// Modify database but do not commit changes to filesystem
+    db_only: bool,
+    /// Mark all installed packages as dependencies.
+    all_deps: bool,
+    /// Only download packages and do not actually install.
+    download_only: bool,
+    /// Do not execute install scriptlets after installing
+    no_scriptlet: bool,
+    /// Ignore dependency conflicts
+    no_conflicts: bool,
+    /// Do not install a package if it is already installed and up to date
+    needed: bool,
+    /// Mark all installed packages as explicitally requested.
+    all_explicit: bool,
+    /// Do not remove a package if it is needed by another one.
+    unneeded: bool,
+    /// Remove also explicitly installed unneeded deps (use with `recurse: true`)
+    recurse_all: bool,
+    /// Do not lock the database during the operation.
+    no_lock: bool,
+}
+
+impl Into<u32> for TransactionFlags {
+    fn into(self) -> u32 {
+        let mut acc = 0;
+        if self.no_deps {
+            acc |= ALPM_TRANS_FLAG_NODEPS;
+        }
+        if self.force {
+            acc |= ALPM_TRANS_FLAG_FORCE;
+        }
+        if self.no_save {
+            acc |= ALPM_TRANS_FLAG_NOSAVE;
+        }
+        if self.no_dep_version {
+            acc |= ALPM_TRANS_FLAG_NODEPVERSION;
+        }
+        if self.cascade {
+            acc |= ALPM_TRANS_FLAG_CASCADE;
+        }
+        if self.recurse {
+            acc |= ALPM_TRANS_FLAG_RECURSE;
+        }
+        if self.db_only {
+            acc |= ALPM_TRANS_FLAG_DBONLY;
+        }
+        if self.all_deps {
+            acc |= ALPM_TRANS_FLAG_ALLDEPS;
+        }
+        if self.download_only {
+            acc |= ALPM_TRANS_FLAG_DOWNLOADONLY;
+        }
+        if self.no_scriptlet {
+            acc |= ALPM_TRANS_FLAG_NOSCRIPTLET;
+        }
+        if self.no_conflicts {
+            acc |= ALPM_TRANS_FLAG_NOCONFLICTS;
+        }
+        if self.needed {
+            acc |= ALPM_TRANS_FLAG_NEEDED;
+        }
+        if self.all_explicit {
+            acc |= ALPM_TRANS_FLAG_ALLEXPLICIT;
+        }
+        if self.unneeded {
+            acc |= ALPM_TRANS_FLAG_UNNEEDED;
+        }
+        if self.recurse_all {
+            acc |= ALPM_TRANS_FLAG_RECURSEALL;
+        }
+        if self.no_lock {
+            acc |= ALPM_TRANS_FLAG_NOLOCK;
+        }
+        acc
+    }
+}
+
+impl From<u32> for TransactionFlags {
+    fn from(from: u32) -> TransactionFlags {
+        TransactionFlags {
+            no_deps: from & ALPM_TRANS_FLAG_NODEPS != 0,
+            force: from & ALPM_TRANS_FLAG_FORCE != 0,
+            no_save: from & ALPM_TRANS_FLAG_NOSAVE != 0,
+            no_dep_version: from & ALPM_TRANS_FLAG_NODEPVERSION != 0,
+            cascade: from & ALPM_TRANS_FLAG_CASCADE != 0,
+            recurse: from & ALPM_TRANS_FLAG_RECURSE != 0,
+            db_only: from & ALPM_TRANS_FLAG_DBONLY != 0,
+            all_deps: from & ALPM_TRANS_FLAG_ALLDEPS != 0,
+            download_only: from & ALPM_TRANS_FLAG_DOWNLOADONLY != 0,
+            no_scriptlet: from & ALPM_TRANS_FLAG_NOSCRIPTLET != 0,
+            no_conflicts: from & ALPM_TRANS_FLAG_NOCONFLICTS != 0,
+            needed: from & ALPM_TRANS_FLAG_NEEDED != 0,
+            all_explicit: from & ALPM_TRANS_FLAG_ALLEXPLICIT != 0,
+            unneeded: from & ALPM_TRANS_FLAG_UNNEEDED != 0,
+            recurse_all: from & ALPM_TRANS_FLAG_RECURSEALL != 0,
+            no_lock: from & ALPM_TRANS_FLAG_NOLOCK != 0,
+        }
+    }
+}
+
+#[test]
+fn test_transaction_flags() {
+    let t: TransactionFlags = Default::default();
+    // (my) sanity check that deriving bool = false
+    assert!(!t.no_lock);
+}
+

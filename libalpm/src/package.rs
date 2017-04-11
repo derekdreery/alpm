@@ -4,7 +4,7 @@ use libc::{self, c_char, c_ulong};
 use chrono::{NaiveDateTime, NaiveDate};
 
 use util;
-use {Alpm, SigLevel, AlpmResult, Error};
+use {Alpm, SigLevel, AlpmResult, Error, Db};
 
 use std::ops::Deref;
 use std::ffi::{CStr, CString};
@@ -441,6 +441,21 @@ impl PackageRef {
     pub fn set_reason(&self, r: Reason) -> bool {
         unsafe { alpm_pkg_set_reason(self as *const _ as _, r.into()) == 0 }
     }
+
+    /// (As part of overall transaction) Checks for new version of this package in sync repos.
+    ///
+    /// Returns the first newer version found
+    pub fn sync_new_version<'a>(&self, dbs: Vec<Db<'a>>) -> Option<&'a PackageRef> {
+        unsafe {
+            let dbs = util::vec_to_alpm_list(dbs, |db| db.inner as *const libc::c_void);
+            let new_pkg_ptr = alpm_sync_newversion(self as *const _ as _, dbs);
+            if new_pkg_ptr.is_null() {
+                None
+            } else {
+                Some(PackageRef::new(new_pkg_ptr))
+            }
+        }
+    }
 }
 
 /// An operation on packages in this database
@@ -821,7 +836,9 @@ impl From<u32> for VersionConstraintType {
 /// A list of files in a package
 #[derive(Debug, PartialEq, Eq)]
 pub struct FileList<'a> {
-    pub list: Vec<File<'a>>
+    /// Thie files this filelist contains
+    pub list: Vec<File<'a>>,
+    inner: *const alpm_filelist_t,
 }
 
 impl<'a> FileList<'a> {
@@ -830,14 +847,29 @@ impl<'a> FileList<'a> {
         let mut file_ptr = (*raw).files;
         let mut files: Vec<File<'b>> = Vec::new();
         for i in 0..count {
-            files.push(File {
-                name: CStr::from_ptr((*file_ptr).name).to_str().unwrap(),
-                size: (*file_ptr).size as u64,
-                mode: (*file_ptr).mode,
-            });
+            files.push(File::new(file_ptr));
             file_ptr = file_ptr.offset(1);
         }
-        FileList { list: files }
+        FileList {
+            list: files,
+            inner: raw,
+        }
+    }
+
+    /// Test to see whether this filelist contains a path given.
+    ///
+    /// The path should be relative to the installation root without preceeding slash (e.g.
+    /// `etc/pacman.conf`). Directories should have a trailing slash (e.g. `etc/`)
+    pub fn contains(&self, path: &str) -> Option<File<'a>> {
+        unsafe {
+            let path = CString::new(path).unwrap();
+            let file_ptr = alpm_filelist_contains(self.inner, path.as_ptr());
+            if file_ptr.is_null() {
+                None
+            } else {
+                Some(File::new(file_ptr))
+            }
+        }
     }
 }
 
@@ -848,8 +880,18 @@ pub struct File<'a> {
     pub name: &'a str,
     /// The size of the file in bytes.
     pub size: u64,
-    /// The file mode.
+    /// The file mode. e.g. 0644 would be urw,gr,or
     pub mode: u32,
+}
+
+impl<'a> File<'a> {
+    pub(crate) unsafe fn new<'b>(file_ptr: *const alpm_file_t) ->  File<'b> {
+        File {
+            name: CStr::from_ptr((*file_ptr).name).to_str().unwrap(),
+            size: (*file_ptr).size as u64,
+            mode: (*file_ptr).mode,
+        }
+    }
 }
 
 /// A backup

@@ -2,11 +2,17 @@ use std::path::Path;
 
 const MIRROR: &'static str = "http://archlinux.polymorf.fr/$repo/os/$arch";
 
+/// The options that can be set in the pacman conf file.
 pub struct Options {
+    /// The root directory of the instance. Packages are installed relative to here.
     pub root_dir: String,
+    /// The location of the synced databases.
     pub db_path: String,
+    /// The location of the cache directory.
     pub cache_dir: String,
+    /// The location of the log file.
     pub log_file: String,
+    /// The location of the gpg directory.
     pub gpg_dir: String,
     pub hook_dir: String,
     pub hold_pkg: Vec<String>,
@@ -76,8 +82,11 @@ impl Default for Options {
 
 }
 
+/// Options for a repository.
 pub struct RepoOptions {
+    /// The name of the repository.
     pub name: String,
+    /// A vector containing urls for the repository's mirrors.
     pub servers: Vec<String>
 }
 

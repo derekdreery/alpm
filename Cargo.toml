@@ -4,6 +4,6 @@ members = [ "alpm-sys", "libalpm", "printf", "printf_helper" ]
 
 
 [replace]
-"alpm-sys:0.1.1" = { "path" = "./alpm-sys" }
+"alpm-sys:0.1.2" = { "path" = "./alpm-sys" }
 "printf:0.1.0" = { "path" = "./printf" }
 
