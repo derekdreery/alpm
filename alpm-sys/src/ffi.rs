@@ -216,7 +216,7 @@ pub enum Struct_alpm_db { }
 pub enum Struct_alpm_pkg { }
 pub enum Struct_va_list { }
 
-pub type alpm_time_t = c_long;
+pub type alpm_time_t = int64_t;
 
 // const'd enums
 pub type alpm_errno_t = u32;
