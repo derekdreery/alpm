@@ -27,7 +27,7 @@ fn download(filename: &str, transferred: u64, total: u64) {
 
 fn main() {
     let arch = libalpm::util::uname().machine().to_owned();
-    let alpm = libalpm::Alpm::new("/", "/var/lib/pacman").unwrap();
+    let mut alpm = libalpm::Alpm::new("/", "/var/lib/pacman").unwrap();
 
     // write a log function that colors output based on level
     alpm.log_function(log);

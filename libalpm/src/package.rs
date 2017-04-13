@@ -16,7 +16,7 @@ use std::marker::PhantomData;
 // https://github.com/jeremyletang/rust-sfml/blob/csfml-2.4/src/graphics/texture.rs#L44-L60 for
 // pattern
 
-/// An owning version of Package
+/// An owning version of PackageRef
 pub struct Package<'a> {
     inner: *const Struct_alpm_pkg,
     handle: &'a Alpm

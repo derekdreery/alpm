@@ -42,6 +42,9 @@ use std::path::{PathBuf};
 use std::sync::Mutex;
 use std::borrow::Borrow;
 use std::mem;
+use std::ptr;
+use std::any::Any;
+use std::marker::PhantomData;
 
 use alpm_sys::*;
 use libc::{c_char, c_void};
@@ -120,7 +123,7 @@ impl Alpm {
     /// Logs a message using alpm's built in logging functionality.
     ///
     /// TODO test if all prefixes are allowed, or just DEBUG etc., & test generally
-    pub fn log_action<T, U>(&self, prefix: &str, msg: &str) -> AlpmResult<()> {
+    pub fn log_action<T, U>(&mut self, prefix: &str, msg: &str) -> AlpmResult<()> {
         let prefix = CString::new(prefix)?;
         let msg = CString::new(msg.replace("%", "%%"))?;
         let res = unsafe {alpm_logaction(self.handle, prefix.as_ptr(), msg.as_ptr()) };
@@ -132,7 +135,7 @@ impl Alpm {
     }
 
     /// Fetch a remote pkg from the given URL and return its path.
-    pub fn fetch_pkgurl(&self, url: &str) -> AlpmResult<PathBuf> {
+    pub fn fetch_pkgurl(&mut self, url: &str) -> AlpmResult<PathBuf> {
         unsafe {
             let url = CString::new(url)?;
             let path = alpm_fetch_pkgurl(self.handle, url.as_ptr());
@@ -148,7 +151,7 @@ impl Alpm {
     }
 
     /// Set the callback called when a log message is received.
-    pub fn log_function<F>(&self, func: F)
+    pub fn log_function<F>(&mut self, func: F)
         where F: FnMut(LogLevels, String) + Send + 'static
     {
         let mut cb = LOG_CB.lock().unwrap();
@@ -157,14 +160,14 @@ impl Alpm {
     }
 
     /// Clears the log callback.
-    pub fn clear_log_function(&self) {
+    pub fn clear_log_function(&mut self) {
         let mut cb = LOG_CB.lock().unwrap();
         (*cb) = None;
         unsafe { alpm_option_set_logcb(self.handle, None); }
     }
 
     /// Set the callback called to report progress on downloading a file.
-    pub fn file_download_progress_function<F>(&self, func: F)
+    pub fn file_download_progress_function<F>(&mut self, func: F)
         where F: FnMut(&str, u64, u64) + Send + 'static
     {
         let mut cb = DOWNLOAD_CB.lock().unwrap();
@@ -173,14 +176,14 @@ impl Alpm {
     }
 
     /// Clears the file download progress callback.
-    pub fn clear_file_download_progress_function(&self) {
+    pub fn clear_file_download_progress_function(&mut self) {
         let mut cb = DOWNLOAD_CB.lock().unwrap();
         (*cb) = None;
         unsafe { alpm_option_set_dlcb(self.handle, None); }
     }
 
     /// Set the callback called to report progress on total download
-    pub fn total_download_progress_function<F>(&self, func: F)
+    pub fn total_download_progress_function<F>(&mut self, func: F)
         where F: FnMut(u64) + Send + 'static
     {
         let mut cb = DLTOTAL_CB.lock().unwrap();
@@ -189,7 +192,7 @@ impl Alpm {
     }
 
     /// Clears the total download progress callback.
-    pub fn clear_total_download_progress_function(&self) {
+    pub fn clear_total_download_progress_function(&mut self) {
         let mut cb = DLTOTAL_CB.lock().unwrap();
         (*cb) = None;
         unsafe { alpm_option_set_totaldlcb(self.handle, None); }
@@ -209,7 +212,7 @@ impl Alpm {
     /// libalpm (i.e. not undefined behaviour).
     ///
     /// TODO investigate whether safe to relax 'static bound
-    pub unsafe fn fetch_function<F>(&self, func: F)
+    pub unsafe fn fetch_function<F>(&mut self, func: F)
         where F: FnMut(&str, &str, bool) -> DownloadResult + Send + 'static
     {
         let mut cb = FETCH_CB.lock().unwrap();
@@ -218,14 +221,14 @@ impl Alpm {
     }
 
     /// Clears the file download callback, falling back to built-in fetch functionality.
-    pub fn clear_fetch_function(&self) {
+    pub fn clear_fetch_function(&mut self) {
         let mut cb = DLTOTAL_CB.lock().unwrap();
         (*cb) = None;
         unsafe { alpm_option_set_fetchcb(self.handle, None); }
     }
 
     /// Sets the function called when an event occurs
-    pub fn event_function<F>(&self, func: F)
+    pub fn event_function<F>(&mut self, func: F)
         where F: FnMut(Event) + Send + 'static
     {
         let mut cb = EVENT_CB.lock().unwrap();
@@ -234,33 +237,33 @@ impl Alpm {
     }
 
     /// Clears the file download callback, falling back to built-in fetch functionality.
-    pub fn clear_event_function(&self) {
+    pub fn clear_event_function(&mut self) {
         let mut cb = DLTOTAL_CB.lock().unwrap();
         (*cb) = None;
         unsafe { alpm_option_set_eventcb(self.handle, None); }
     }
 
     /// Sets the function called when a question needs answering (todo i think)
-    pub fn question_function<F>(&self, func: F)
+    pub fn question_function<F>(&mut self, func: F)
         where F: FnMut() + Send + 'static
     {
         unimplemented!()
     }
 
     /// Clears the function called when a question needs answering (todo i think)
-    pub fn clear_question_function(&self) {
+    pub fn clear_question_function(&mut self) {
         unimplemented!()
     }
 
     /// Sets the function called to show operation progress
-    pub fn progress_function<F>(&self, func: F)
+    pub fn progress_function<F>(&mut self, func: F)
         where F: FnMut() + Send + 'static
     {
         unimplemented!()
     }
 
     /// Clears the function called to show operation progress
-    pub fn clear_progress_function(&self) {
+    pub fn clear_progress_function(&mut self) {
         unimplemented!()
     }
 
@@ -454,7 +457,7 @@ impl Alpm {
     }
 
     /// Sets the targeted architecture.
-    pub fn set_arch(&self, arch: &str) -> AlpmResult<()> {
+    pub fn set_arch(&mut self, arch: &str) -> AlpmResult<()> {
         let arch = CString::new(arch)?;
         let res = unsafe { alpm_option_set_arch(self.handle, arch.as_ptr()) };
         if res == 0 {
@@ -470,7 +473,7 @@ impl Alpm {
     }
 
     /// Sets the targeted architecture
-    pub fn set_delta_ratio(&self, r: f64) -> AlpmResult<()> {
+    pub fn set_delta_ratio(&mut self, r: f64) -> AlpmResult<()> {
         let res = unsafe { alpm_option_set_deltaratio(self.handle, r) };
         if res == 0 {
             Ok(())
@@ -485,7 +488,7 @@ impl Alpm {
     }
 
     /// Sets the targeted architecture
-    pub fn set_check_space(&self, check: bool) -> AlpmResult<()> {
+    pub fn set_check_space(&mut self, check: bool) -> AlpmResult<()> {
         let res = unsafe { alpm_option_set_checkspace(self.handle, if check { 1 } else { 0 }) };
         if res == 0 {
             Ok(())
@@ -504,7 +507,7 @@ impl Alpm {
     }
 
     /// Sets the targeted architecture
-    pub fn set_db_extension(&self, ext: &str) -> AlpmResult<()> {
+    pub fn set_db_extension(&mut self, ext: &str) -> AlpmResult<()> {
         let cstr = CString::new(ext)?;
         let res = unsafe { alpm_option_set_dbext(self.handle, cstr.as_ptr()) };
         if res == 0 {
@@ -520,7 +523,7 @@ impl Alpm {
     }
 
     /// Sets the default signing level
-    pub fn set_default_sign_level(&self, s: SigLevel) -> AlpmResult<()> {
+    pub fn set_default_sign_level(&mut self, s: SigLevel) -> AlpmResult<()> {
         let res = unsafe { alpm_option_set_default_siglevel(self.handle, s.into()) };
         if res == 0 {
             Ok(())
@@ -535,7 +538,7 @@ impl Alpm {
     }
 
     /// Sets the default signing level
-    pub fn set_local_file_sign_level(&self, s: SigLevel) -> AlpmResult<()> {
+    pub fn set_local_file_sign_level(&mut self, s: SigLevel) -> AlpmResult<()> {
         let res = unsafe { alpm_option_set_local_file_siglevel(self.handle, s.into()) };
         if res == 0 {
             Ok(())
@@ -550,7 +553,7 @@ impl Alpm {
     }
 
     /// Sets the default signing level
-    pub fn set_remote_file_sign_level(&self, s: SigLevel) -> AlpmResult<()> {
+    pub fn set_remote_file_sign_level(&mut self, s: SigLevel) -> AlpmResult<()> {
         let res = unsafe { alpm_option_set_remote_file_siglevel(self.handle, s.into()) };
         if res == 0 {
             Ok(())
@@ -579,7 +582,7 @@ impl Alpm {
 
     /// Register a sync db (remote db). You will need to attach servers to the db to be able to
     /// sync
-    pub fn register_sync_db<'a>(&'a self, treename: &str, level: SigLevel) -> AlpmResult<Db<'a>> {
+    pub fn register_sync_db<'a>(&'a mut self, treename: &str, level: SigLevel) -> AlpmResult<Db<'a>> {
         unsafe {
             let db = alpm_register_syncdb(self.handle,
                                           (CString::new(treename)?).as_ptr(),
@@ -587,7 +590,7 @@ impl Alpm {
             if db.is_null() {
                 Err(self.error().unwrap_or(Error::__Unknown))
             } else {
-                Ok(Db::new(db, &self))
+                Ok(Db::new(db, self))
             }
         }
     }
@@ -608,12 +611,21 @@ impl Alpm {
     */
 
     /// Start a package modification transaction
-    pub fn init_transaction(self, flags: TransactionFlags) -> Result<Transaction, (Error, Alpm)> {
+    ///
+    /// This locks the database (creates the lockfile).
+    pub fn init_transaction<'a>(&'a mut self, flags: TransactionFlags)
+        -> AlpmResult<Transaction<'a, Initialized>>
+    {
         let res = unsafe { alpm_trans_init(self.handle, flags.into()) };
         if res == 0 {
-            Ok(Transaction(self))
+            Ok(Transaction {
+                alpm: self,
+                _state: PhantomData,
+            })
         } else {
-            Err((self.error().unwrap_or(Error::__Unknown), self))
+            // Make sure we release our db lock
+            unsafe { alpm_trans_release(self.handle) };
+            Err(self.error().unwrap_or(Error::__Unknown))
         }
     }
 }
@@ -624,70 +636,82 @@ impl Drop for Alpm {
     }
 }
 
+/// A state marker for before a transaction is prepared
+pub enum Initialized {}
+
+/// A state marker for before a transaction is committed, but after it is prepared
+pub enum Prepared {}
+
 /// A transaction of package operations
+///
+/// Only certain state transitions are valid TODO model this how hyper crate models response state
 ///
 /// Consumes an Alpm instance as only 1 transaction can be performed at a time. Use `commit` or
 /// `rollback` to recover the Alpm instance.
-pub struct Transaction(Alpm);
+pub struct Transaction<'a, S: Any = Initialized> {
+    alpm: &'a mut Alpm,
+    _state: PhantomData<S>
+}
 
-impl Transaction {
+// This removes the lockfile to make sure future alpm changes can happen
+impl<'a, S: Any> Drop for Transaction<'a, S> {
+    fn drop(&mut self) {
+        unsafe { alpm_trans_release(self.alpm.handle) };
+    }
+}
+
+impl<'a, S: Any> Transaction<'a, S> {
 
     /// Returns the flags for the current transaction.
     pub fn flags(&self) -> TransactionFlags {
-        unsafe { alpm_trans_get_flags(self.0.handle).into() }
+        unsafe { alpm_trans_get_flags(self.alpm.handle).into() }
     }
 
-    /// Gets packages added by the current transaction.
-    pub fn added_packages<'a>(&'a self) -> Vec<&'a PackageRef> {
-        unimplemented!()
+    /// Deconstructs the transaction without dropping. Internal only. From hyper.
+    fn deconstruct(self) -> &'a mut Alpm {
+        unsafe {
+            let alpm = ptr::read(&self.alpm);
+            mem::forget(self);
+            alpm
+        }
     }
 
-    /// Gets packages removed by the current transaction.
-    pub fn removed_packages<'a>(&'a self) -> Vec<&'a PackageRef> {
-        unimplemented!()
-    }
+}
+
+impl<'a> Transaction<'a, Initialized> {
 
     /// Prepares a transaction for committing.
-    pub fn prepare<'a>(&'a self) -> AlpmResult<()> {
-        use std::ptr;
+    ///
+    ///  - Checks arch of added packages (fails if arch is wrong for any of them).
+    ///  - Checks package removal (todo how does this work?)
+    ///  - Reorders package addition and removal into correct dependency order. Emits warning on
+    ///    circular dependency.
+    pub fn prepare(mut self)
+        -> AlpmResult<Transaction<'a, Prepared>>
+    {
         unsafe {
             let mut p: *mut alpm_list_t = ptr::null_mut();
-            let res = alpm_trans_prepare(self.0.handle, &mut p as *mut _);
+            let res = alpm_trans_prepare(self.alpm.handle, &mut p as *mut _);
             if res == 0 {
-                Ok(())
+                let alpm = self.deconstruct();
+                Ok(Transaction {
+                    alpm: alpm,
+                    _state: PhantomData
+                })
             } else {
-                Err(self.0.error().unwrap_or(Error::__Unknown))
+                Err(self.alpm.error().unwrap_or(Error::__Unknown))
             }
         }
-    }
-
-    /// Commits the transaction and returns the alpm instance. TODO conflict type
-    pub fn commit(self) -> Result<Alpm, (Error, Vec<()>, Transaction)> {
-        use std::ptr;
-        unsafe {
-            let mut p: *mut alpm_list_t = ptr::null_mut();
-            let res = alpm_trans_commit(self.0.handle, &mut p as *mut _);
-            if res == 0 {
-                Ok(self.0)
-            } else {
-                Err((self.0.error().unwrap_or(Error::__Unknown), Vec::new(), self))
-            }
-        }
-    }
-
-    /// Releases (discards) the transaction and returns the alpm instance.
-    pub fn release(self) -> Result<Alpm, (Error, Alpm)> {
-        unimplemented!()
     }
 
     /// Adds a system upgrade to this transaction.
     pub fn sys_upgrade(&self, enable_downgrade: bool) -> AlpmResult<()> {
         unsafe {
-            let res = alpm_sync_sysupgrade(self.0.handle, enable_downgrade as libc::c_int);
+            let res = alpm_sync_sysupgrade(self.alpm.handle, enable_downgrade as libc::c_int);
             if res == 0 {
                 Ok(())
             } else {
-                Err(self.0.error().unwrap_or(Error::__Unknown))
+                Err(self.alpm.error().unwrap_or(Error::__Unknown))
             }
         }
     }
@@ -702,6 +726,42 @@ impl Transaction {
         unimplemented!()
     }
 }
+
+impl<'a> Transaction<'a, Prepared> {
+
+    /// Commits the transaction and returns the alpm instance. TODO conflict type
+    ///
+    ///  - Download required new packages
+    ///  - Check downloaded packages for integrity
+    ///  - Synchronize filesystem
+    ///
+    /// TODO find out how this long-run op works (I guess that this blocks, but another thread can
+    /// call interrupt?)
+    pub fn commit(self) -> AlpmResult<()> {
+        use std::ptr;
+        unsafe {
+            let mut p: *mut alpm_list_t = ptr::null_mut();
+            let res = alpm_trans_commit(self.alpm.handle, &mut p as *mut _);
+            if res == 0 {
+                Ok(())
+            } else {
+                Err(self.alpm.error().unwrap_or(Error::__Unknown))
+            }
+        }
+    }
+
+    /// Gets packages added by the current transaction.
+    pub fn added_packages(&'a self) -> Vec<&'a PackageRef> {
+        unimplemented!()
+    }
+
+    /// Gets packages removed by the current transaction.
+    pub fn removed_packages(&'a self) -> Vec<&'a PackageRef> {
+        unimplemented!()
+    }
+
+}
+
 
 /// Get the version of the attached libalpm
 pub fn version() -> &'static str {

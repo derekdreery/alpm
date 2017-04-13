@@ -28,7 +28,7 @@ fn fetch(url: &str, loc: &str, force: bool) -> DownloadResult {
 }
 
 fn main() {
-    let alpm = Alpm::new("/", "/var/lib/pacman").unwrap();
+    let mut alpm = Alpm::new("/", "/var/lib/pacman").unwrap();
     unsafe { alpm.fetch_function(fetch); }
     let dl_loc = alpm.fetch_pkgurl("http://archlinux.polymorf.fr/extra/os/x86_64/a2ps");
     println!("{:?}", dl_loc);

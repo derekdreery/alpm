@@ -63,7 +63,7 @@ fn main() {
     let arch = util::uname().machine().to_owned();
     println!("arch: {:?}", arch);
     let options = Options::default();
-    let alpm = Alpm::new("./tmp", "./tmp/var/lib/pacman").unwrap();
+    let mut alpm = Alpm::new("/tmp/test", "/tmp/test/var/lib/pacman").unwrap();
     alpm.log_function(log);
     alpm.set_arch(&arch).unwrap();
     println!("arch: {:?}", alpm.arch());
@@ -74,7 +74,7 @@ fn main() {
         let mut fixed_servers = repo.servers.iter().map(
                 |el| el.replace("$arch", &arch).replace("$repo", &repo.name)
                 );
-        db.add_server(&fixed_servers.next().unwrap());
+        db.add_server(&fixed_servers.next().unwrap()).unwrap();
         println!("  name: {:?}", db.name());
     }
     {
@@ -82,11 +82,11 @@ fn main() {
         println!("Iter sync");
         for db in dbs.iter() {
             println!("  Updating: {:?}", db.name());
-            //db.update(false).unwrap();
+            db.update(false).unwrap();
         }
     }
     let transaction = alpm.init_transaction(Default::default()).unwrap();
     transaction.sys_upgrade(true).unwrap();
-    transaction.prepare().unwrap();
-    let alpm = transaction.commit();
+    let trans = transaction.prepare().unwrap();
+    trans.commit().unwrap();
 }

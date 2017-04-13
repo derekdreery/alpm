@@ -18,7 +18,7 @@ pub struct Db<'a> {
     handle: &'a Alpm,
 }
 
-/* not safe
+/* we don't run db_unregister, as alpm_cleanup will handle this
 impl<'a> Drop for Db<'a> {
     fn drop(&mut self) {
         unsafe { alpm_db_unregister(self.inner); }
@@ -35,7 +35,7 @@ impl<'a> Db<'a> {
         }
     }
 
-    /* not worth having
+    /* permanently removed, on advice of @guinux, alpm_db_unregister doesn't work well
     /// Consumes the Db, unregistering it from the alpm instance
     ///
     /// # Safety

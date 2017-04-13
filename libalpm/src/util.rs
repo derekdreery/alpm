@@ -154,7 +154,8 @@ pub(crate) unsafe fn vec_as_alpm_list<T, F>(v: &Vec<T>, f: F) -> *const alpm_lis
     list
 }
 
-/// Convert a str to unowned raw mem allocated with libc::malloc
+/// Convert a str to unowned raw mem allocated with libc::malloc, useful when a C library will
+/// de-allocate
 pub(crate) unsafe fn str_to_unowned_char_array(s: *const &str) -> *const libc::c_void {
     let len = (*s).len();
     // remember extra byte for '\0' (will be zero since calloc)

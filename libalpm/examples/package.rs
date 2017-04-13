@@ -67,7 +67,7 @@ fn main() {
     let arch = util::uname().machine().to_owned();
     println!("arch: {:?}", arch);
     let options = Options::default();
-    let alpm = Alpm::new("./tmp", "./tmp/var/lib/pacman").unwrap();
+    let mut alpm = Alpm::new("./tmp", "./tmp/var/lib/pacman").unwrap();
     alpm.set_arch(&arch).unwrap();
     println!("arch: {:?}", alpm.arch());
     //panic!("bail");
