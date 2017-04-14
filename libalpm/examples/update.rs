@@ -86,6 +86,7 @@ fn main() {
         db.add_server(&fixed_servers.next().unwrap()).unwrap();
         println!("  name: {:?}", db.name());
     }
+    // update sync dbs and get package
     {
         let dbs = alpm.sync_dbs();
         println!("Iter sync");
@@ -96,6 +97,8 @@ fn main() {
     }
     let transaction = alpm.init_transaction(Default::default()).unwrap();
     transaction.sys_upgrade(true).unwrap();
+    // tzdata doesn't have any dependencies and is small
+    transaction.add_package(alpm.sync_dbs()[0].pkg("tzdata").unwrap()).unwrap();
     let trans = transaction.prepare().unwrap();
     trans.commit().unwrap();
 }

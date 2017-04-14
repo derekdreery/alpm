@@ -10,6 +10,7 @@ use std::ops::Deref;
 use std::ffi::{CStr, CString};
 use std::cmp;
 use std::ptr;
+use std::mem;
 use std::fmt;
 use std::marker::PhantomData;
 
@@ -19,34 +20,27 @@ use std::marker::PhantomData;
 /// An owning version of PackageRef
 pub struct Package<'a> {
     inner: *const Struct_alpm_pkg,
-    handle: &'a Alpm
+    /// This makes sure we can't outlive the Alpm instance.
+    _lifetime: PhantomData<&'a u8> // u8 is arbitary here
 }
 
 impl<'b> Package<'b> {
-    pub(crate) fn new<'a>(raw: *const Struct_alpm_pkg, handle: &'a Alpm) -> Package<'a> {
+    pub(crate) fn new<'a>(raw: *const Struct_alpm_pkg) -> Package<'a> {
         Package {
             inner: raw,
-            handle: handle,
+            // Is this safe? What are the single-threaded issues. What are the multi-threaded
+            // issues? My guess is that single-threaded is fine, but multi-threaded is not.
+            _lifetime: PhantomData
         }
     }
 
-    /// Creates a package from a file
-    pub fn load<'a>(alpm: &'a Alpm, filename: &str, full: bool, level: SigLevel)
-        -> AlpmResult<Package<'a>>
-    {
-        unsafe {
-            let pkg: *mut Struct_alpm_pkg = ptr::null_mut();
-            let res = alpm_pkg_load(alpm.handle,
-                                    CString::new(filename).unwrap().as_ptr(),
-                                    if full { 1 } else { 0 },
-                                    level.into(),
-                                    &pkg as *const *mut Struct_alpm_pkg);
-            if res == 0 {
-                Ok(Package::new(pkg, alpm))
-            } else {
-                Err(alpm.error().unwrap_or(Error::__Unknown))
-            }
-        }
+    /// Unwraps the raw pointer without running destructor. Private
+    ///
+    /// This is used to move ownership into the C library
+    pub(crate) unsafe fn forget(self) -> *const Struct_alpm_pkg {
+        let raw = self.inner;
+        mem::forget(self);
+        raw
     }
 }
 
@@ -74,6 +68,8 @@ impl fmt::Debug for PackageRef {
 }
 
 impl PackageRef {
+
+    /// Use this to turn a raw ptr into a reference. Private
     pub(crate) unsafe fn new<'b>(p: *const Struct_alpm_pkg) -> &'b PackageRef {
         &*(p as *const PackageRef as *mut PackageRef)
     }

@@ -6,14 +6,31 @@ use std::mem;
 use std::marker::PhantomData;
 
 use alpm_sys::*;
-use super::{Alpm, PackageRef, Error, AlpmResult};
+use super::{Alpm, Package, PackageRef, Error, AlpmResult, util};
 use libc;
 
 /// A state marker for before a transaction is prepared
+#[derive(Debug)]
 pub enum Initialized {}
 
 /// A state marker for before a transaction is committed, but after it is prepared
+#[derive(Debug)]
 pub enum Prepared {}
+
+/// A special error type for transactions.
+#[derive(Debug)]
+pub enum TransactionError<'a> {
+    /// An error from the library.
+    AlpmError(Error),
+    /// The transaction was not prepared as there is nothing to do (no packages added or removed).
+    NothingToDo(Transaction<'a, Initialized>),
+}
+
+impl From<Error> for TransactionError<'static> {
+    fn from(e: Error) -> TransactionError<'static> {
+        TransactionError::AlpmError(e)
+    }
+}
 
 /// A transaction of package operations
 ///
@@ -21,9 +38,11 @@ pub enum Prepared {}
 ///
 /// Consumes an Alpm instance as only 1 transaction can be performed at a time. Use `commit` or
 /// `rollback` to recover the Alpm instance.
+#[derive(Debug)]
 pub struct Transaction<'a, S: Any = Initialized> {
-    pub(crate) alpm: &'a mut Alpm,
-    pub(crate) _state: PhantomData<S>
+    pub(crate) alpm: &'a Alpm,
+    pub(crate) _state: PhantomData<S>,
+    // We could cache added/removed packages here for speed
 }
 
 // This removes the lockfile to make sure future alpm changes can happen
@@ -41,11 +60,31 @@ impl<'a, S: Any> Transaction<'a, S> {
     }
 
     /// Deconstructs the transaction without dropping. Internal only. From hyper.
-    fn deconstruct(self) -> &'a mut Alpm {
+    fn deconstruct(self) -> &'a Alpm {
         unsafe {
             let alpm = ptr::read(&self.alpm);
             mem::forget(self);
             alpm
+        }
+    }
+
+    /// Gets packages added by the current transaction.
+    pub fn added_packages(&'a self) -> Vec<&'a PackageRef> {
+        unsafe {
+            let raw_list = alpm_trans_get_add(self.alpm.handle);
+            util::alpm_list_to_vec(raw_list, |ptr| {
+                &*(ptr as *const PackageRef)
+            })
+        }
+    }
+
+    /// Gets packages removed by the current transaction.
+    pub fn removed_packages(&'a self) -> Vec<&'a PackageRef> {
+        unsafe {
+            let raw_list = alpm_trans_get_remove(self.alpm.handle);
+            util::alpm_list_to_vec(raw_list, |ptr| {
+                &*(ptr as *const PackageRef)
+            })
         }
     }
 
@@ -59,11 +98,19 @@ impl<'a> Transaction<'a, Initialized> {
     ///  - Checks package removal (todo how does this work?)
     ///  - Reorders package addition and removal into correct dependency order. Emits warning on
     ///    circular dependency.
+    ///
+    /// TODO an alternative strategy is not return the transaction. This makes things simpler. If
+    /// the user needs to recover from this state, there could be `no_op` method (with a better
+    /// name) to check if a prepare will fail for this reason.
     pub fn prepare(mut self)
-        -> AlpmResult<Transaction<'a, Prepared>>
+        -> Result<Transaction<'a, Prepared>, TransactionError<'a>>
     {
         unsafe {
             let mut p: *mut alpm_list_t = ptr::null_mut();
+            // This introduces overhead but means that we can get the correct transaction state.
+            if self.added_packages().is_empty() && self.removed_packages().is_empty() {
+                return Err(TransactionError::NothingToDo(self))
+            }
             let res = alpm_trans_prepare(self.alpm.handle, &mut p as *mut _);
             if res == 0 {
                 let alpm = self.deconstruct();
@@ -72,7 +119,7 @@ impl<'a> Transaction<'a, Initialized> {
                     _state: PhantomData
                 })
             } else {
-                Err(self.alpm.error().unwrap_or(Error::__Unknown))
+                Err(self.alpm.error().unwrap_or(Error::__Unknown).into())
             }
         }
     }
@@ -91,12 +138,34 @@ impl<'a> Transaction<'a, Initialized> {
 
     /// Adds a new package to system in this transaction.
     pub fn add_package(&self, pkg: &PackageRef) -> AlpmResult<()> {
-        unimplemented!()
+        unsafe {
+            if alpm_add_pkg(self.alpm.handle, pkg as *const _ as _) == 0 {
+                Ok(())
+            } else {
+                Err(self.alpm.error().unwrap_or(Error::__Unknown))
+            }
+        }
+    }
+
+    /// Adds an owned package, moving ownership to the library. A borrowed reference is available,
+    /// but it is not necessary to use it.
+    pub fn add_owned_package(&self, pkg: Package) -> AlpmResult<&'a PackageRef> {
+        unsafe {
+            let pkg_ref = PackageRef::new(pkg.forget());
+            self.add_package(pkg_ref)?;
+            Ok(pkg_ref)
+        }
     }
 
     /// Removes a package from the system in this transaction.
     pub fn remove_package(&self, pkg: &PackageRef) -> AlpmResult<()> {
-        unimplemented!()
+        unsafe {
+            if alpm_remove_pkg(self.alpm.handle, pkg as *const _ as _) == 0 {
+                Ok(())
+            } else {
+                Err(self.alpm.error().unwrap_or(Error::__Unknown))
+            }
+        }
     }
 }
 
@@ -123,18 +192,9 @@ impl<'a> Transaction<'a, Prepared> {
         }
     }
 
-    /// Gets packages added by the current transaction.
-    pub fn added_packages(&'a self) -> Vec<&'a PackageRef> {
-        unimplemented!()
-    }
-
-    /// Gets packages removed by the current transaction.
-    pub fn removed_packages(&'a self) -> Vec<&'a PackageRef> {
-        unimplemented!()
-    }
-
 }
 
+/// Configuration options for a transaction.
 #[derive(Default, Debug, PartialEq, Eq, Copy, Clone)]
 pub struct TransactionFlags {
     /// Ignore dependency checks
