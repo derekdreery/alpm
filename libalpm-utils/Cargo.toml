@@ -1,0 +1,13 @@
+[package]
+name = "libalpm-utils"
+version = "0.0.1"
+authors = ["Richard Dodd <richard.o.dodd@gmail.com>"]
+license = "MIT/Apache-2.0"
+repository = "https://github.com/derekdreery/alpm"
+homepage = "https://github.com/derekdreery/tree/master/libalpm-utils"
+description = """
+A library for helpful additions to libalpm not from the C library
+"""
+
+[dependencies]
+nom = "^2.0"
