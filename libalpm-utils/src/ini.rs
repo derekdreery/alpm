@@ -45,27 +45,9 @@ named!(parse_key<&str, &str>, do_parse!(
 ));
 
 ///
-/// Parses a pacman-style INI config file.
+/// Lexes a pacman-style INI config file.
 ///
-/// # Params
-///  - file path to the config file
-///  - cb callback for key/value pairs
-///  - data caller defined data to be passed to the callback
-///
-/// Returns the callback return value
-///
-/// The callback will be called at the beginning of each section with an
-/// empty key and value and for each key/value pair.
-///
-/// If the parser encounters an error the callback will be called with
-/// section, key, and value set to NULL and errno set by fopen, fgets, or
-/// strdup.
-///
-/// The key and value passed to cb will be overwritten between
-/// calls. The section name will remain valid until after cb is called to
-/// begin a new section.
-///
-/// Parsing will immediately stop if the callback returns non-zero.
+/// Returns a list of tokens. `Include` directives are expanded.
 ///
 pub fn lex_ini(filename: &str) -> Result<Vec<Token>, Error> {
 
