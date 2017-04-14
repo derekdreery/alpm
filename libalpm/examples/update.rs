@@ -2,7 +2,12 @@ extern crate libalpm;
 extern crate term;
 
 use std::error::Error;
+use std::fs;
+
 use libalpm::{Alpm, PackageRef, Options, SigLevel, LogLevels, LogLevel, util};
+
+const ALPM_BASE: &'static str = "/tmp/alpmtest";
+const ALPM_DB: &'static str = "/tmp/alpmtest/var/lib/pacman";
 
 fn log(level: LogLevels, msg: String) {
     let mut t = match term::stdout() {
@@ -60,10 +65,14 @@ fn print_pkg_info(pkg: &PackageRef) {
 }
 
 fn main() {
+    print!("Testing for arch .. ");
     let arch = util::uname().machine().to_owned();
-    println!("arch: {:?}", arch);
+    println!("found: {:?}", arch);
     let options = Options::default();
-    let mut alpm = Alpm::new("/tmp/test", "/tmp/test/var/lib/pacman").unwrap();
+    println!("Create folder structure for testing");
+    fs::create_dir_all(ALPM_DB).unwrap();
+    println!("Creating Alpm instance with base \"{}\" and db \"{}\"", ALPM_BASE, ALPM_DB);
+    let mut alpm = Alpm::new(ALPM_BASE, ALPM_DB).unwrap();
     alpm.log_function(log);
     alpm.set_arch(&arch).unwrap();
     println!("arch: {:?}", alpm.arch());
