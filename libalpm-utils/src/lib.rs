@@ -3,5 +3,6 @@
 //!
 //! VERY MUCH WIP
 #[macro_use] extern crate nom;
+extern crate libalpm;
 
 pub mod ini;

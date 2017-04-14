@@ -11,3 +11,4 @@ A library for helpful additions to libalpm not from the C library
 
 [dependencies]
 nom = "^2.0"
+libalpm = { path = "../libalpm" }

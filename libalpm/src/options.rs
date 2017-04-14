@@ -3,23 +3,24 @@ use std::path::Path;
 const MIRROR: &'static str = "http://archlinux.polymorf.fr/$repo/os/$arch";
 
 /// The options that can be set in the pacman conf file.
+#[derive(Debug)]
 pub struct Options {
     /// The root directory of the instance. Packages are installed relative to here.
     pub root_dir: String,
     /// The location of the synced databases.
     pub db_path: String,
     /// The location of the cache directory.
-    pub cache_dir: String,
+    pub cache_dirs: Vec<String>,
     /// The location of the log file.
     pub log_file: String,
     /// The location of the gpg directory.
     pub gpg_dir: String,
-    pub hook_dir: String,
+    pub hook_dirs: Vec<String>,
     pub hold_pkg: Vec<String>,
-    //pub XferCommand
+    pub transfer_command: Option<String>,
     //pub clean_method: TODO,
-    //pub use_delta: TODO,
-    //pub architecture: TODO,
+    pub use_delta: f32,
+    pub arch: String,
     pub ignore_pkg: Vec<String>,
     pub ignore_group: Vec<String>,
     pub no_upgrade: Vec<String>,
@@ -50,15 +51,15 @@ impl Default for Options {
         Options {
             root_dir: "/".into(),
             db_path: "/var/lib/pacman/".into(),
-            cache_dir: "/var/cache/pacman/pkg/".into(),
+            cache_dirs: vec!["/var/cache/pacman/pkg/".into()],
             log_file: "/var/log/pacman.log".into(),
             gpg_dir: "/etc/pacman.d/gnupg/".into(),
-            hook_dir: "/etc/pacman.d/hooks/".into(),
+            hook_dirs: vec!["/etc/pacman.d/hooks/".into()],
             hold_pkg: vec!["pacman".into(), "glibc".into()],
-            // xfer_command
+            transfer_command: None,
             //clean_method
-            //use_delta: TODO,
-            //architecture: TODO,
+            use_delta: 0.7,
+            arch: "auto".into(),
             ignore_pkg: vec![],
             ignore_group: vec![],
             no_upgrade: vec![],
@@ -83,6 +84,7 @@ impl Default for Options {
 }
 
 /// Options for a repository.
+#[derive(Debug)]
 pub struct RepoOptions {
     /// The name of the repository.
     pub name: String,

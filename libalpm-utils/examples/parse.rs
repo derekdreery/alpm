@@ -1,7 +1,7 @@
 extern crate libalpm_utils;
 
-use libalpm_utils::ini::lex_ini;
+use libalpm_utils::ini::parse_ini;
 
 fn main() {
-    println!("{:#?}", lex_ini("/etc/pacman.conf"));
+    println!("{:#?}", parse_ini("/etc/pacman.conf"));
 }
