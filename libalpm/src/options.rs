@@ -1,10 +1,9 @@
 use std::path::Path;
-
-const MIRROR: &'static str = "http://archlinux.polymorf.fr/$repo/os/$arch";
+use std::collections::HashMap;
 
 /// The options that can be set in the pacman conf file.
 #[derive(Debug)]
-pub struct Options {
+pub struct Config {
     /// The root directory of the instance. Packages are installed relative to here.
     pub root_dir: String,
     /// The location of the synced databases.
@@ -33,29 +32,19 @@ pub struct Options {
     //pub sig_level: TODO,
     //pub local_files_sig_level: TODO,
     //pub remote_files_sig_level: TODO,
-    pub repositories: Vec<RepoOptions>,
+    pub repositories: HashMap<String, RepoConfig>,
 }
 
-impl Options {
-    /// Reads a pacman-style ini file and returns an Options instance to match
-    ///
-    /// TODO will only be implemented after I've finished the rest of the lib
-    pub fn from_ini(loc: &Path) -> Option<Options> {
-        unimplemented!()
-    }
-}
-
-
-impl Default for Options {
-    fn default() -> Options {
-        Options {
+impl Default for Config {
+    fn default() -> Config {
+        Config {
             root_dir: "/".into(),
             db_path: "/var/lib/pacman/".into(),
             cache_dirs: vec!["/var/cache/pacman/pkg/".into()],
             log_file: "/var/log/pacman.log".into(),
             gpg_dir: "/etc/pacman.d/gnupg/".into(),
             hook_dirs: vec!["/etc/pacman.d/hooks/".into()],
-            hold_pkg: vec!["pacman".into(), "glibc".into()],
+            hold_pkg: vec![],
             transfer_command: None,
             //clean_method
             use_delta: 0.7,
@@ -72,28 +61,21 @@ impl Default for Options {
             //sig_level: TODO,
             //local_files_sig_level: TODO,
             //remote_files_sig_level: TODO,
-            repositories: vec![
-                RepoOptions::new("core", vec![MIRROR.into()]),
-                RepoOptions::new("extra", vec![MIRROR.into()]),
-                RepoOptions::new("community", vec![MIRROR.into()]),
-                RepoOptions::new("multilib", vec![MIRROR.into()]),
-            ],
+            repositories: HashMap::new(),
         }
     }
 
 }
 
-/// Options for a repository.
-#[derive(Debug)]
-pub struct RepoOptions {
-    /// The name of the repository.
-    pub name: String,
+/// Config for a repository.
+#[derive(Debug, Default)]
+pub struct RepoConfig {
     /// A vector containing urls for the repository's mirrors.
     pub servers: Vec<String>
 }
 
-impl RepoOptions {
-    fn new<Name: Into<String>>(name: Name, servers: Vec<String>) -> RepoOptions {
-        RepoOptions { name: name.into(), servers: servers }
+impl RepoConfig {
+    fn new(servers: Vec<String>) -> RepoConfig {
+        RepoConfig { servers }
     }
 }

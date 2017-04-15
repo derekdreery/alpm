@@ -2,7 +2,7 @@ extern crate libalpm;
 extern crate term;
 
 use std::error::Error;
-use libalpm::{Alpm, PackageRef, Options, SigLevel, LogLevels, LogLevel, util};
+use libalpm::{Alpm, PackageRef, Config, SigLevel, LogLevels, LogLevel, util};
 
 fn log(level: LogLevels, msg: String) {
     let mut t = match term::stdout() {
@@ -66,7 +66,7 @@ fn print_pkg_info(pkg: &PackageRef) {
 fn main() {
     let arch = util::uname().machine().to_owned();
     println!("arch: {:?}", arch);
-    let options = Options::default();
+    let options = Config::default();
     let mut alpm = Alpm::new("./tmp", "./tmp/var/lib/pacman").unwrap();
     alpm.set_arch(&arch).unwrap();
     println!("arch: {:?}", alpm.arch());
@@ -87,10 +87,10 @@ fn main() {
     //println!("md5: {:?} - {:?}", pkg.md5(), pkg.check_md5());
     //println!("error: {:?}", alpm.error().unwrap().description());
 
-    for repo in options.repositories {
-        let db = alpm.register_sync_db(&repo.name, SigLevel::default()).unwrap();
+    for (name, repo) in options.repositories.iter() {
+        let db = alpm.register_sync_db(name, SigLevel::default()).unwrap();
         let mut fixed_servers = repo.servers.iter().map(
-                |el| el.replace("$arch", &arch).replace("$repo", &repo.name)
+                |el| el.replace("$arch", &arch).replace("$repo", name)
                 );
         db.add_server(&fixed_servers.next().unwrap());
         println!("  name: {:?}", db.name());

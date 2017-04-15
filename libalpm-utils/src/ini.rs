@@ -4,14 +4,14 @@ use std::io;
 use std::io::prelude::*;
 
 use nom::{IResult};
-use libalpm::Options;
+use libalpm::{Config, RepoConfig};
 
 /// Library error type
 #[derive(Debug)]
 pub enum Error {
     Io(io::Error),
     /// Filename, line number, text
-    Lex(String, usize, String),
+    Parse(String, usize, String),
 }
 
 impl From<io::Error> for Error {
@@ -20,8 +20,9 @@ impl From<io::Error> for Error {
     }
 }
 
+/// A token TODO include file/line no.
 #[derive(Debug)]
-pub enum Token {
+enum Token {
     /// Start of a new section
     Header(String),
     /// A key/value pair
@@ -38,7 +39,7 @@ enum Section {
     /// In options section
     Options,
     /// In a repo section
-    Repo(String)
+    Repo(String),
 }
 
 /// Matches a header line
@@ -61,7 +62,7 @@ named!(parse_key<&str, &str>, do_parse!(
 ///
 /// Returns a list of tokens. `Include` directives are expanded.
 ///
-pub fn lex_ini(filename: &str) -> Result<Vec<Token>, Error> {
+fn lex_ini(filename: &str) -> Result<Vec<Token>, Error> {
 
     let mut tok_list = Vec::new();
 
@@ -99,9 +100,10 @@ pub fn lex_ini(filename: &str) -> Result<Vec<Token>, Error> {
     Ok(tok_list)
 }
 
-pub fn parse_ini(filename: &str) -> Result<Options, Error> {
+/// Parses an ini file into an `Config` object.
+pub fn parse_ini(filename: &str) -> Result<Config, Error> {
     let mut section = Section::None;
-    let mut options = Options::default();
+    let mut options = Config::default();
     let toks = lex_ini(filename)?;
     for tok in toks.into_iter() {
         parse_token(tok, &mut options, &mut section)?;
@@ -109,25 +111,29 @@ pub fn parse_ini(filename: &str) -> Result<Options, Error> {
     Ok(options)
 }
 
-/// Adds a token
-fn parse_token(tok: Token, conf: &mut Options, section: &mut Section) -> Result<(), Error> {
+/// Parses a single token a token
+fn parse_token(tok: Token, conf: &mut Config, section: &mut Section) -> Result<(), Error> {
     match &tok {
-        &Token::Header(ref name) if name == "Options" => {
+        &Token::Header(ref name) if name == "Options" || name == "options" => {
             *section = Section::Options;
         }
         &Token::Header(ref name) => {
             *section = Section::Repo(name.clone());
+            // log error if section has already been processed
+            if let Some(_) = conf.repositories.insert(name.clone(), RepoConfig::default()) {
+                println!("Repository \"{}\" has already been added - replacing", name);
+            }
         }
         &Token::Pair(ref key, ref value) => match section {
             &mut Section::None => {
-                println!("Key {} found before any section header - ignoring", key);
+                println!("Key \"{}\" found before any section header - ignoring", key);
             }
             &mut Section::Options => parse_pair_option(&key, &value, conf),
-            &mut Section::Repo(ref repo_name) => (),
+            &mut Section::Repo(ref repo_name) => parse_pair_repo(&repo_name, &key, &value, conf),
         },
         &Token::Valueless(ref key) => match section {
             &mut Section::None => {
-                println!("Key {} found before any section header - ignoring", key);
+                println!("Key \"{}\" found before any section header - ignoring", key);
             }
             &mut Section::Options => parse_valueless_option(&key, conf),
             &mut Section::Repo(ref repo_name) => (),
@@ -136,8 +142,8 @@ fn parse_token(tok: Token, conf: &mut Options, section: &mut Section) -> Result<
     Ok(())
 }
 
-
-fn parse_pair_option(key: &str, value: &str, config: &mut Options) {
+/// Parses a key-value pair in the *Options* section.
+fn parse_pair_option(key: &str, value: &str, config: &mut Config) {
     if key == "NoUpgrade" {
         config.no_upgrade.append(&mut split_whitespace(value));
     } else if key == "NoExtract" {
@@ -170,7 +176,7 @@ fn parse_pair_option(key: &str, value: &str, config: &mut Options) {
             };
             config.use_delta = parsed_val;
         } else {
-            println!("Cannot parse {} as float for UseDelta, ignoring", value);
+            println!("Cannot parse \"{}\" as float for UseDelta, ignoring", value);
         }
     } else if key == "DBPath" {
         config.db_path = value.into();
@@ -189,7 +195,7 @@ fn parse_pair_option(key: &str, value: &str, config: &mut Options) {
             } else if method == "KeepCurrent" {
                 // TODO
             } else {
-                println!("Unrecognised clean method: {}.", method)
+                println!("Unrecognised clean method: \"{}\".", method)
             }
         }
         // TODO
@@ -200,12 +206,13 @@ fn parse_pair_option(key: &str, value: &str, config: &mut Options) {
     } else if key == "RemoteFileSigLevel" {
         // TODO
     } else {
-        println!("Unrecognised config key: {} = {}.", key, value)
+        println!("Unrecognised options key: \"{}\" = \"{}\".", key, value)
     }
 
 }
 
-fn parse_valueless_option(key: &str, conf: &mut Options) {
+/// Parses a valueless key in the *Options* section.
+fn parse_valueless_option(key: &str, conf: &mut Config) {
     if key == "UseSyslog" {
         conf.use_syslog = true;
     } else if key == "ILoveCandy" {
@@ -221,7 +228,15 @@ fn parse_valueless_option(key: &str, conf: &mut Options) {
     } else if key == "Color" {
         // todo check if we are a tty
     } else {
-        println!("Unrecognised valueless config: {}.", key)
+        println!("Unrecognised valueless option: {}.", key)
+    }
+}
+
+fn parse_pair_repo(repo: &str, key: &str, value: &str, conf: &mut Config) {
+    if key == "Server" {
+        conf.repositories.get_mut(repo).unwrap().servers.push(value.into());
+    } else {
+        println!("Unrecognised repo key in repo \"{}\": \"{}\" = \"{}\".", repo, key, value)
     }
 }
 

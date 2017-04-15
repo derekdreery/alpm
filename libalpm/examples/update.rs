@@ -4,7 +4,7 @@ extern crate term;
 use std::error::Error;
 use std::fs;
 
-use libalpm::{Alpm, PackageRef, Options, SigLevel, LogLevels, LogLevel, util};
+use libalpm::{Alpm, PackageRef, Config, SigLevel, LogLevels, LogLevel, util};
 
 const ALPM_BASE: &'static str = "/tmp/alpmtest";
 const ALPM_DB: &'static str = "/tmp/alpmtest/var/lib/pacman";
@@ -68,7 +68,7 @@ fn main() {
     print!("Testing for arch .. ");
     let arch = util::uname().machine().to_owned();
     println!("found: {:?}", arch);
-    let options = Options::default();
+    let options = Config::default();
     println!("Create folder structure for testing");
     fs::create_dir_all(ALPM_DB).unwrap();
     println!("Creating Alpm instance with base \"{}\" and db \"{}\"", ALPM_BASE, ALPM_DB);
@@ -78,10 +78,10 @@ fn main() {
     println!("arch: {:?}", alpm.arch());
     //panic!("bail");
 
-    for repo in options.repositories {
-        let db = alpm.register_sync_db(&repo.name, SigLevel::default()).unwrap();
+    for (name, repo) in options.repositories.iter() {
+        let db = alpm.register_sync_db(name, SigLevel::default()).unwrap();
         let mut fixed_servers = repo.servers.iter().map(
-                |el| el.replace("$arch", &arch).replace("$repo", &repo.name)
+                |el| el.replace("$arch", &arch).replace("$repo", name)
                 );
         db.add_server(&fixed_servers.next().unwrap()).unwrap();
         println!("  name: {:?}", db.name());

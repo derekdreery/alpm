@@ -49,7 +49,7 @@ use std::marker::PhantomData;
 use alpm_sys::*;
 use libc::{c_char, c_void};
 
-pub use options::{Options, RepoOptions};
+pub use options::{Config, RepoConfig};
 pub use error::{Error, AlpmResult};
 pub use log::{LogLevel, LogLevels};
 pub use event::Event;
@@ -106,8 +106,26 @@ impl Alpm {
     /// Creates an alpm instance with the given options.
     ///
     /// TODO will only be implemented after the rest of the library is finished.
-    pub fn with_options(options: &Options) -> AlpmResult<Alpm> {
-        unimplemented!()
+    pub fn with_config(config: &Config) -> AlpmResult<Alpm> {
+        let sys_arch = util::uname().machine().to_owned();
+        let arch = if config.arch == "auto" {
+            &sys_arch
+        } else {
+            &config.arch
+        };
+        let alpm = Alpm::new(&config.root_dir, &config.db_path)?;
+
+        for (name, repo) in config.repositories.iter() {
+            let db = alpm.register_sync_db(name, SigLevel::default()).unwrap();
+            let mut fixed_servers = repo.servers.iter().map(
+                |el| el.replace("$arch", &arch).replace("$repo", name)
+            );
+            for server in fixed_servers {
+                db.add_server(&server).unwrap();
+            }
+        }
+
+        Ok(alpm)
     }
 
     /// Gets the current (last) error status. Most functions use this internally to get the
