@@ -58,7 +58,7 @@ pub use package::{Package, PackageRef, Group, PackageVersion, PackageFrom, Reaso
 pub use db::Db;
 pub use pgp::SigLevel;
 pub use types::{Caps, DownloadResult};
-pub use trans::{Transaction, Initialized, Prepared, TransactionFlags};
+pub use trans::{TransactionError, Transaction, Initialized, Prepared, TransactionFlags};
 use callbacks::{alpm_cb_log, alpm_cb_download, alpm_cb_totaldl, alpm_cb_fetch, alpm_cb_event};
 
 // callbacks
