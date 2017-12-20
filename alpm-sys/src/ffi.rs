@@ -845,7 +845,7 @@ extern "C" {
     pub fn alpm_compute_sha256sum(filename: *const c_char) -> *const c_char;
     pub fn alpm_initialize(root: *const c_char,
                            dbpath: *const c_char,
-                           err: *const alpm_errno_t)
+                           err: *mut alpm_errno_t)
                            -> *const Struct_alpm_handle;
     pub fn alpm_release(handle: *const Struct_alpm_handle) -> c_int;
     pub fn alpm_unlock(handle: *const Struct_alpm_handle) -> c_int;

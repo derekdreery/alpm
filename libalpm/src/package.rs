@@ -4,12 +4,11 @@ use libc::{self, c_char, c_ulong};
 use chrono::{NaiveDateTime, NaiveDate};
 
 use util;
-use {Alpm, SigLevel, AlpmResult, Error, Db};
+use {Alpm, Db};
 
 use std::ops::Deref;
 use std::ffi::{CStr, CString};
 use std::cmp;
-use std::ptr;
 use std::mem;
 use std::fmt;
 use std::marker::PhantomData;
@@ -17,7 +16,7 @@ use std::marker::PhantomData;
 // https://github.com/jeremyletang/rust-sfml/blob/csfml-2.4/src/graphics/texture.rs#L44-L60 for
 // pattern
 
-/// An owning version of PackageRef
+/// An owning version of `PackageRef`
 pub struct Package<'a> {
     inner: *const Struct_alpm_pkg,
     /// This makes sure we can't outlive the Alpm instance.
@@ -145,7 +144,7 @@ impl PackageRef {
     }
 
     /// Gets the package version.
-    pub fn version<'a>(&'a self) -> PackageVersion<'a> {
+    pub fn version(&self) -> PackageVersion {
         unsafe {
             let v = alpm_pkg_get_version(self as *const _ as _);
             PackageVersion::new(v)
@@ -273,7 +272,7 @@ impl PackageRef {
     }
 
     /// Gets the packages this package depends on.
-    pub fn depends<'a>(&'a self) -> Vec<Dependency<'a>> {
+    pub fn depends(&self) -> Vec<Dependency> {
         unsafe {
             let deps = alpm_pkg_get_depends(self as *const _ as _);
             util::alpm_list_to_vec(deps, |dep| {
@@ -283,7 +282,7 @@ impl PackageRef {
     }
 
     /// Gets the packages this package optionally depends on.
-    pub fn optionally_depends<'a>(&'a self) -> Vec<Dependency<'a>> {
+    pub fn optionally_depends(&self) -> Vec<Dependency> {
         unsafe {
             let deps = alpm_pkg_get_optdepends(self as *const _ as _);
             util::alpm_list_to_vec(deps, |dep| {
@@ -315,7 +314,7 @@ impl PackageRef {
     */
 
     /// Gets the packages this package conflicts with.
-    pub fn conflicts<'a>(&'a self) -> Vec<Dependency<'a>> {
+    pub fn conflicts(&self) -> Vec<Dependency> {
         unsafe {
             let deps = alpm_pkg_get_conflicts(self as *const _ as _);
             util::alpm_list_to_vec(deps, |dep| {
@@ -325,7 +324,7 @@ impl PackageRef {
     }
 
     /// Gets the packages provided by this package.
-    pub fn provides<'a>(&'a self) -> Vec<Dependency<'a>> {
+    pub fn provides(&self) -> Vec<Dependency> {
         unsafe {
             let deps = alpm_pkg_get_provides(self as *const _ as _);
             util::alpm_list_to_vec(deps, |dep| {
@@ -345,7 +344,7 @@ impl PackageRef {
     }
 
     /// Gets a list of packages to be replaced by this package.
-    pub fn replaces<'a>(&'a self) -> Vec<Dependency<'a>> {
+    pub fn replaces(&self) -> Vec<Dependency> {
         unsafe {
             let deps = alpm_pkg_get_replaces(self as *const _ as _);
             util::alpm_list_to_vec(deps, |dep| {
@@ -355,12 +354,12 @@ impl PackageRef {
     }
 
     /// Gets a list of files installed by this package.
-    pub fn files<'a>(&'a self) -> FileList<'a> {
+    pub fn files(&self) -> FileList {
         unsafe { FileList::from_raw(alpm_pkg_get_files(self as *const _ as _)) }
     }
 
     /// Gets a list of files backed up when installing this package.
-    pub fn backup<'a>(&self) -> Vec<Backup<'a>> {
+    pub fn backup(&self) -> Vec<Backup> {
         unsafe {
             let backups = alpm_pkg_get_backup(self as *const _ as _);
             util::alpm_list_to_vec(backups, |bkup| Backup {
@@ -741,9 +740,9 @@ impl Into<u32> for Validation {
 impl From<u32> for Validation {
     fn from(from: u32) -> Validation {
         match from {
-            ALPM_PKG_VALIDATION_UNKNWON => Validation::Unknown,
+            ALPM_PKG_VALIDATION_UNKNOWN => Validation::Unknown,
             ALPM_PKG_VALIDATION_NONE => Validation::None,
-            other => Validation::Some(ValidationMethod {
+            _ => Validation::Some(ValidationMethod {
                 md5sum: from & ALPM_PKG_VALIDATION_MD5SUM != 0,
                 sha256sum: from & ALPM_PKG_VALIDATION_SHA256SUM != 0,
                 signature: from & ALPM_PKG_VALIDATION_SIGNATURE != 0,
@@ -842,7 +841,7 @@ impl<'a> FileList<'a> {
         let count = (*raw).count;
         let mut file_ptr = (*raw).files;
         let mut files: Vec<File<'b>> = Vec::new();
-        for i in 0..count {
+        for _ in 0..count {
             files.push(File::new(file_ptr));
             file_ptr = file_ptr.offset(1);
         }

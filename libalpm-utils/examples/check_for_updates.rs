@@ -1,7 +1,7 @@
-extern crate libalpm_utils;
 extern crate libalpm;
+extern crate libalpm_utils;
 
-use libalpm_utils::ini::{parse_ini};
+use libalpm_utils::ini::parse_ini;
 use libalpm::{Alpm, TransactionError};
 use std::process;
 
@@ -23,8 +23,8 @@ fn main() {
         Err(TransactionError::NothingToDo(_)) => {
             println!("There are no packages that need updating");
             process::exit(0);
-        },
-        Err(e) => panic!(format!("{:?}", e))
+        }
+        Err(e) => panic!(format!("{:?}", e)),
     };
 
     print!("Packages that need adding/updating: ");
@@ -38,5 +38,4 @@ fn main() {
         print!("{}, ", pkg.name());
     }
     println!();
-
 }

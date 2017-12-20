@@ -1,4 +1,3 @@
-use std::path::Path;
 use std::collections::HashMap;
 
 /// The options that can be set in the pacman conf file.
@@ -75,7 +74,7 @@ pub struct RepoConfig {
 }
 
 impl RepoConfig {
-    fn new(servers: Vec<String>) -> RepoConfig {
+    pub fn new(servers: Vec<String>) -> RepoConfig {
         RepoConfig { servers }
     }
 }

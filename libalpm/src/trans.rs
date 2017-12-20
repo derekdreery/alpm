@@ -102,7 +102,7 @@ impl<'a> Transaction<'a, Initialized> {
     /// TODO an alternative strategy is not return the transaction. This makes things simpler. If
     /// the user needs to recover from this state, there could be `no_op` method (with a better
     /// name) to check if a prepare will fail for this reason.
-    pub fn prepare(mut self)
+    pub fn prepare(self)
         -> Result<Transaction<'a, Prepared>, TransactionError<'a>>
     {
         unsafe {

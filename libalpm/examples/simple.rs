@@ -7,7 +7,9 @@ use libalpm::{LogLevel, LogLevels};
 fn log(level: LogLevels, msg: String) {
     let mut t = match term::stdout() {
         Some(t) => t,
-        None => { return; }
+        None => {
+            return;
+        }
     };
     let color = match level.into() {
         LogLevel::Error => term::color::RED,
@@ -27,7 +29,7 @@ fn download(filename: &str, transferred: u64, total: u64) {
 
 fn main() {
     let arch = libalpm::util::uname().machine().to_owned();
-    let mut alpm = libalpm::Alpm::new("/", "/var/lib/pacman").unwrap();
+    let alpm = libalpm::Alpm::new("/", "/var/lib/pacman").unwrap();
 
     // write a log function that colors output based on level
     alpm.log_function(log);
@@ -35,5 +37,8 @@ fn main() {
     println!("Root: {}", alpm.root());
     println!("Database path: {}", alpm.db_path());
     println!("Lockfile: {}", alpm.lockfile());
-    println!("{:?}", libalpm::util::get_servers("/etc/pacman.d/mirrorlist", "core", &arch));
+    println!(
+        "{:?}",
+        libalpm::util::get_servers("/etc/pacman.d/mirrorlist", "core", &arch)
+    );
 }

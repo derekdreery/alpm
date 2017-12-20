@@ -136,7 +136,7 @@ fn parse_token(tok: Token, conf: &mut Config, section: &mut Section) -> Result<(
                 println!("Key \"{}\" found before any section header - ignoring", key);
             }
             &mut Section::Options => parse_valueless_option(&key, conf),
-            &mut Section::Repo(ref repo_name) => (),
+            &mut Section::Repo(..) => (),
         }
     };
     Ok(())

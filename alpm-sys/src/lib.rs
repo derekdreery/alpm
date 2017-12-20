@@ -1,9 +1,9 @@
-#![feature(untagged_unions)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
-extern crate libc;
+#![feature(untagged_unions)]
+
 extern crate libarchive3_sys;
+extern crate libc;
 
 mod ffi;
 pub use ffi::*;
-

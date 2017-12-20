@@ -1,8 +1,8 @@
-//! Utility types/fn for alpm_event_t
+//! Utility types/fn for `alpm_event_t`
 
 use alpm_sys::*;
 
-use package::{Package, PackageOperation};
+use package::PackageOperation;
 
 /// An event emitted from libalpm
 pub enum Event<'a> {
