@@ -1,5 +1,7 @@
-extern crate gcc;
+extern crate cc;
 
 fn main() {
-    gcc::compile_library("libprintf_wrapper.a", &["src/printf_wrapper.c"]);
+    cc::Build::new()
+        .file("src/printf_wrapper.c")
+        .compile("printf_wrapper");
 }

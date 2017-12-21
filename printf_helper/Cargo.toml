@@ -5,4 +5,4 @@ authors = ["Richard Dodd <richard.o.dodd@gmail.com>"]
 build = "build.rs"
 
 [build-dependencies]
-gcc = "*"
+cc = "^1.0"

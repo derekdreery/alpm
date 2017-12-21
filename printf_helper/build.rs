@@ -1,5 +1,7 @@
-extern crate gcc;
+extern crate cc;
 
 fn main() {
-    gcc::compile_library("libprintf_test_helper.a", &["src/helper.c"]);
+    cc::Build::new()
+        .file("src/helper.c")
+        .compile("printf_test_helper");
 }
