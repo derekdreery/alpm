@@ -110,7 +110,7 @@ impl Alpm {
         let alpm = Alpm::new(&config.root_dir, &config.db_path)?;
 
         for (name, repo) in &config.repositories {
-            let db = alpm.register_sync_db(name, SigLevel::default()).unwrap();
+            let db = alpm.register_sync_db(name, &SigLevel::default()).unwrap();
             let mut fixed_servers = repo.servers
                 .iter()
                 .map(|el| el.replace("$arch", arch).replace("$repo", name));

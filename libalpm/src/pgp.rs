@@ -32,6 +32,12 @@ impl Default for SigLevel {
 
 impl Into<u32> for SigLevel {
     fn into(self) -> u32 {
+        (&self).into()
+    }
+}
+
+impl<'a> Into<u32> for &'a SigLevel {
+    fn into(self) -> u32 {
         let mut acc = 0;
         if self.package {
             acc |= ALPM_SIG_PACKAGE;
