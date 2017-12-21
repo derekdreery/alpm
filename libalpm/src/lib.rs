@@ -630,7 +630,7 @@ impl Alpm {
         unsafe {
             let db_list = alpm_get_syncdbs(self.handle);
             let pkg_ptr = alpm_find_dbs_satisfier(self.handle, db_list, depstring_cstr.as_ptr());
-            if pkg_ptr.is_null() {
+            if !pkg_ptr.is_null() {
                 Ok(Some(PackageRef::new(pkg_ptr)))
             } else {
                 Ok(None)

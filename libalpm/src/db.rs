@@ -136,7 +136,7 @@ impl<'a> Db<'a> {
         unsafe {
             let cache_ptr = alpm_db_get_pkgcache(self.inner);
             let pkg_ptr = alpm_find_satisfier(cache_ptr, depstring_cstr.as_ptr());
-            if pkg_ptr.is_null() {
+            if !pkg_ptr.is_null() {
                 Ok(Some(PackageRef::new(pkg_ptr)))
             } else {
                 Ok(None)
