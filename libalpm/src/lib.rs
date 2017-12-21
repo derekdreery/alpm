@@ -640,7 +640,7 @@ impl Alpm {
 
     /// Register a sync db (remote db). You will need to attach servers to the db to be able to
     /// sync
-    pub fn register_sync_db<S>(&self, tree_name: S, level: SigLevel) -> AlpmResult<Db>
+    pub fn register_sync_db<S>(&self, tree_name: S, level: &SigLevel) -> AlpmResult<Db>
     where
         S: AsRef<str>,
     {
