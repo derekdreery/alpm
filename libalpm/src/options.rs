@@ -28,7 +28,7 @@ pub struct Config {
     pub total_download: bool,
     pub check_space: bool,
     pub verbose_pkg_lists: bool,
-    //pub sig_level: TODO,
+    pub sig_level: String,
     //pub local_files_sig_level: TODO,
     //pub remote_files_sig_level: TODO,
     pub repositories: HashMap<String, RepoConfig>,
@@ -57,7 +57,7 @@ impl Default for Config {
             total_download: false,
             check_space: true,
             verbose_pkg_lists: false,
-            //sig_level: TODO,
+            sig_level: "Optional TrustedOnly".into(),
             //local_files_sig_level: TODO,
             //remote_files_sig_level: TODO,
             repositories: HashMap::new(),
@@ -70,11 +70,12 @@ impl Default for Config {
 #[derive(Debug, Default)]
 pub struct RepoConfig {
     /// A vector containing urls for the repository's mirrors.
-    pub servers: Vec<String>
+    pub servers: Vec<String>,
+    pub sig_level: Option<String>,
 }
 
 impl RepoConfig {
     pub fn new(servers: Vec<String>) -> RepoConfig {
-        RepoConfig { servers }
+        RepoConfig { servers, sig_level: None }
     }
 }

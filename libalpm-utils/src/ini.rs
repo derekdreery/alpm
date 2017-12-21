@@ -235,6 +235,8 @@ fn parse_valueless_option(key: &str, conf: &mut Config) {
 fn parse_pair_repo(repo: &str, key: &str, value: &str, conf: &mut Config) {
     if key == "Server" {
         conf.repositories.get_mut(repo).unwrap().servers.push(value.into());
+    } else if key == "" {
+        conf.repositories.get_mut(repo).unwrap().sig_level = Some(value.into());
     } else {
         println!("Unrecognised repo key in repo \"{}\": \"{}\" = \"{}\".", repo, key, value)
     }
