@@ -1,4 +1,4 @@
-#![feature(trace_macros)]
+#![cfg_attr(feature="nightly", feature(trace_macros))]
 //! Useful utility functions that complement libalpm, but are not in the C library.
 //!
 //! VERY MUCH WIP

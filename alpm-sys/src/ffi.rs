@@ -366,11 +366,13 @@ pub struct alpm_siglist_t {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_event_any_t {
     type_: alpm_event_type_t,
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_event_package_operation_t {
     pub type_: alpm_event_type_t,
     pub operation: alpm_package_operation_t,
@@ -379,6 +381,7 @@ pub struct alpm_event_package_operation_t {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_event_optdep_removal_t {
     pub type_: alpm_event_type_t,
     pub pkg: *const Struct_alpm_pkg,
@@ -386,30 +389,35 @@ pub struct alpm_event_optdep_removal_t {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_event_delta_patch_t {
     pub type_: alpm_event_type_t,
     pub delta: *const alpm_delta_t,
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_event_scriptlet_info_t {
     pub type_: alpm_event_type_t,
     pub line: *const c_char,
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_event_database_missing_t {
     pub type_: alpm_event_type_t,
     pub dbname: *const c_char,
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_event_pkgdownload_t {
     pub type_: alpm_event_type_t,
     pub file: *const c_char,
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_event_pacnew_created_t {
     pub type_: alpm_event_type_t,
     pub from_noupgrade: c_int,
@@ -419,6 +427,7 @@ pub struct alpm_event_pacnew_created_t {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_event_pacsave_created_t {
     pub type_: alpm_event_type_t,
     pub oldpkg: *const Struct_alpm_pkg,
@@ -426,12 +435,14 @@ pub struct alpm_event_pacsave_created_t {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_event_hook_t {
     pub type_: alpm_event_type_t,
     pub when: alpm_hook_when_t,
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_event_hook_run_t {
     pub type_: alpm_event_type_t,
     pub name: *const c_char,
@@ -441,6 +452,7 @@ pub struct alpm_event_hook_run_t {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub union alpm_event_t {
     pub type_: alpm_event_type_t,
     pub any: alpm_event_any_t,
@@ -457,12 +469,14 @@ pub union alpm_event_t {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_question_any_t {
     pub type_: alpm_question_type_t,
     pub answer: c_int,
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_question_install_ignorepkg_t {
     pub type_: alpm_question_type_t,
     pub install: c_int,
@@ -470,6 +484,7 @@ pub struct alpm_question_install_ignorepkg_t {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_question_replace_t {
     pub type_: alpm_question_type_t,
     pub replace: c_int,
@@ -479,6 +494,7 @@ pub struct alpm_question_replace_t {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_question_conflict_t {
     pub type_: alpm_question_type_t,
     pub remove: c_int,
@@ -486,6 +502,7 @@ pub struct alpm_question_conflict_t {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_question_corrupted_t {
     pub type_: alpm_question_type_t,
     pub remove: c_int,
@@ -494,6 +511,7 @@ pub struct alpm_question_corrupted_t {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_question_remove_pkgs_t {
     pub type_: alpm_question_type_t,
     pub skip: c_int,
@@ -501,6 +519,7 @@ pub struct alpm_question_remove_pkgs_t {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_question_select_provider_t {
     pub type_: alpm_question_type_t,
     pub use_index: c_int,
@@ -509,6 +528,7 @@ pub struct alpm_question_select_provider_t {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct alpm_question_import_key_t {
     pub type_: alpm_question_type_t,
     pub import: c_int,
