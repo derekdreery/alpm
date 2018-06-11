@@ -56,7 +56,7 @@ impl<'a, S: Any> Transaction<'a, S> {
 
     /// Returns the flags for the current transaction.
     pub fn flags(&self) -> TransactionFlags {
-        unsafe { alpm_trans_get_flags(self.alpm.handle).into() }
+        unsafe { (alpm_trans_get_flags(self.alpm.handle) as u32).into() }
     }
 
     /// Deconstructs the transaction without dropping. Internal only. From hyper.
@@ -231,56 +231,57 @@ pub struct TransactionFlags {
     no_lock: bool,
 }
 
-impl Into<u32> for TransactionFlags {
-    fn into(self) -> u32 {
+impl From<TransactionFlags> for u32 {
+    fn from(from: TransactionFlags) -> u32 {
+        use alpm_transflag_t::*;
         let mut acc = 0;
-        if self.no_deps {
-            acc |= ALPM_TRANS_FLAG_NODEPS;
+        if from.no_deps {
+            acc |= ALPM_TRANS_FLAG_NODEPS as u32;
         }
-        if self.force {
-            acc |= ALPM_TRANS_FLAG_FORCE;
+        if from.force {
+            acc |= ALPM_TRANS_FLAG_FORCE as u32;
         }
-        if self.no_save {
-            acc |= ALPM_TRANS_FLAG_NOSAVE;
+        if from.no_save {
+            acc |= ALPM_TRANS_FLAG_NOSAVE as u32;
         }
-        if self.no_dep_version {
-            acc |= ALPM_TRANS_FLAG_NODEPVERSION;
+        if from.no_dep_version {
+            acc |= ALPM_TRANS_FLAG_NODEPVERSION as u32;
         }
-        if self.cascade {
-            acc |= ALPM_TRANS_FLAG_CASCADE;
+        if from.cascade {
+            acc |= ALPM_TRANS_FLAG_CASCADE as u32;
         }
-        if self.recurse {
-            acc |= ALPM_TRANS_FLAG_RECURSE;
+        if from.recurse {
+            acc |= ALPM_TRANS_FLAG_RECURSE as u32;
         }
-        if self.db_only {
-            acc |= ALPM_TRANS_FLAG_DBONLY;
+        if from.db_only {
+            acc |= ALPM_TRANS_FLAG_DBONLY as u32;
         }
-        if self.all_deps {
-            acc |= ALPM_TRANS_FLAG_ALLDEPS;
+        if from.all_deps {
+            acc |= ALPM_TRANS_FLAG_ALLDEPS as u32;
         }
-        if self.download_only {
-            acc |= ALPM_TRANS_FLAG_DOWNLOADONLY;
+        if from.download_only {
+            acc |= ALPM_TRANS_FLAG_DOWNLOADONLY as u32;
         }
-        if self.no_scriptlet {
-            acc |= ALPM_TRANS_FLAG_NOSCRIPTLET;
+        if from.no_scriptlet {
+            acc |= ALPM_TRANS_FLAG_NOSCRIPTLET as u32;
         }
-        if self.no_conflicts {
-            acc |= ALPM_TRANS_FLAG_NOCONFLICTS;
+        if from.no_conflicts {
+            acc |= ALPM_TRANS_FLAG_NOCONFLICTS as u32;
         }
-        if self.needed {
-            acc |= ALPM_TRANS_FLAG_NEEDED;
+        if from.needed {
+            acc |= ALPM_TRANS_FLAG_NEEDED as u32;
         }
-        if self.all_explicit {
-            acc |= ALPM_TRANS_FLAG_ALLEXPLICIT;
+        if from.all_explicit {
+            acc |= ALPM_TRANS_FLAG_ALLEXPLICIT as u32;
         }
-        if self.unneeded {
-            acc |= ALPM_TRANS_FLAG_UNNEEDED;
+        if from.unneeded {
+            acc |= ALPM_TRANS_FLAG_UNNEEDED as u32;
         }
-        if self.recurse_all {
-            acc |= ALPM_TRANS_FLAG_RECURSEALL;
+        if from.recurse_all {
+            acc |= ALPM_TRANS_FLAG_RECURSEALL as u32;
         }
-        if self.no_lock {
-            acc |= ALPM_TRANS_FLAG_NOLOCK;
+        if from.no_lock {
+            acc |= ALPM_TRANS_FLAG_NOLOCK as u32;
         }
         acc
     }
@@ -288,23 +289,24 @@ impl Into<u32> for TransactionFlags {
 
 impl From<u32> for TransactionFlags {
     fn from(from: u32) -> TransactionFlags {
+        use alpm_transflag_t::*;
         TransactionFlags {
-            no_deps: from & ALPM_TRANS_FLAG_NODEPS != 0,
-            force: from & ALPM_TRANS_FLAG_FORCE != 0,
-            no_save: from & ALPM_TRANS_FLAG_NOSAVE != 0,
-            no_dep_version: from & ALPM_TRANS_FLAG_NODEPVERSION != 0,
-            cascade: from & ALPM_TRANS_FLAG_CASCADE != 0,
-            recurse: from & ALPM_TRANS_FLAG_RECURSE != 0,
-            db_only: from & ALPM_TRANS_FLAG_DBONLY != 0,
-            all_deps: from & ALPM_TRANS_FLAG_ALLDEPS != 0,
-            download_only: from & ALPM_TRANS_FLAG_DOWNLOADONLY != 0,
-            no_scriptlet: from & ALPM_TRANS_FLAG_NOSCRIPTLET != 0,
-            no_conflicts: from & ALPM_TRANS_FLAG_NOCONFLICTS != 0,
-            needed: from & ALPM_TRANS_FLAG_NEEDED != 0,
-            all_explicit: from & ALPM_TRANS_FLAG_ALLEXPLICIT != 0,
-            unneeded: from & ALPM_TRANS_FLAG_UNNEEDED != 0,
-            recurse_all: from & ALPM_TRANS_FLAG_RECURSEALL != 0,
-            no_lock: from & ALPM_TRANS_FLAG_NOLOCK != 0,
+            no_deps: from & ALPM_TRANS_FLAG_NODEPS as u32 != 0,
+            force: from & ALPM_TRANS_FLAG_FORCE as u32 != 0,
+            no_save: from & ALPM_TRANS_FLAG_NOSAVE as u32 != 0,
+            no_dep_version: from & ALPM_TRANS_FLAG_NODEPVERSION as u32 != 0,
+            cascade: from & ALPM_TRANS_FLAG_CASCADE as u32 != 0,
+            recurse: from & ALPM_TRANS_FLAG_RECURSE as u32 != 0,
+            db_only: from & ALPM_TRANS_FLAG_DBONLY as u32 != 0,
+            all_deps: from & ALPM_TRANS_FLAG_ALLDEPS as u32 != 0,
+            download_only: from & ALPM_TRANS_FLAG_DOWNLOADONLY as u32 != 0,
+            no_scriptlet: from & ALPM_TRANS_FLAG_NOSCRIPTLET as u32 != 0,
+            no_conflicts: from & ALPM_TRANS_FLAG_NOCONFLICTS as u32 != 0,
+            needed: from & ALPM_TRANS_FLAG_NEEDED as u32 != 0,
+            all_explicit: from & ALPM_TRANS_FLAG_ALLEXPLICIT as u32 != 0,
+            unneeded: from & ALPM_TRANS_FLAG_UNNEEDED as u32 != 0,
+            recurse_all: from & ALPM_TRANS_FLAG_RECURSEALL as u32 != 0,
+            no_lock: from & ALPM_TRANS_FLAG_NOLOCK as u32 != 0,
         }
     }
 }

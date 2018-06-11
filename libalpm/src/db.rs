@@ -13,14 +13,14 @@ use util::{self, alpm_list_to_vec, vec_to_alpm_list, str_to_unowned_char_array,
 /// A database of packages. This is only ever available as a reference
 #[derive(Debug)]
 pub struct Db<'a> {
-    pub(crate) inner: *const Struct_alpm_db,
+    pub(crate) inner: *mut alpm_db_t,
     // we need this handle so we can get error codes
     handle: &'a Alpm,
 }
 
 impl<'a> Db<'a> {
 
-    pub(crate) fn new(inner: *const Struct_alpm_db, handle: &'a Alpm) -> Db<'a> {
+    pub(crate) fn new(inner: *mut alpm_db_t, handle: &'a Alpm) -> Db<'a> {
         Db { inner, handle }
     }
 
@@ -33,7 +33,7 @@ impl<'a> Db<'a> {
 
     /// Gets the signature checking level of the database.
     pub fn siglevel(&self) -> SigLevel {
-        unsafe { alpm_db_get_siglevel(self.inner).into() }
+        unsafe { (alpm_db_get_siglevel(self.inner) as u32).into() }
     }
 
     /// Checks the database is valid. If not, an error
@@ -208,7 +208,7 @@ impl<'a> Db<'a> {
 
     /// Sets what this database is to be used for.
     pub fn set_usage(&self, usage: Usage) -> AlpmResult<()> {
-        if unsafe { alpm_db_set_usage(self.inner, usage.into()) } == 0 {
+        if unsafe { alpm_db_set_usage(self.inner, u32::from(usage) as i32) } == 0 {
             Ok(())
         } else {
             Err(self.handle.error().unwrap_or(Error::__Unknown))
@@ -218,9 +218,9 @@ impl<'a> Db<'a> {
     /// Gets what this database is to be used for.
     pub fn usage(&self) -> AlpmResult<Usage> {
         unsafe {
-            let usage: u32 = mem::zeroed();
-            if alpm_db_get_usage(self.inner, &usage) == 0 {
-                Ok(usage.into())
+            let mut usage: i32 = mem::zeroed();
+            if alpm_db_get_usage(self.inner, &mut usage) == 0 {
+                Ok((usage as u32).into())
             } else {
                 Err(self.handle.error().unwrap_or(Error::__Unknown))
             }
@@ -268,20 +268,21 @@ impl Default for Usage {
     }
 }
 
-impl Into<u32> for Usage {
-    fn into(self) -> u32 {
+impl From<Usage> for u32 {
+    fn from(from: Usage) -> Self {
+        use alpm_sys::alpm_db_usage_t::*;
         let mut acc = 0;
-        if self.sync {
-            acc |= ALPM_DB_USAGE_SYNC;
+        if from.sync {
+            acc |= ALPM_DB_USAGE_SYNC as u32;
         };
-        if self.search {
-            acc |= ALPM_DB_USAGE_SEARCH;
+        if from.search {
+            acc |= ALPM_DB_USAGE_SEARCH as u32;
         };
-        if self.install {
-            acc |= ALPM_DB_USAGE_INSTALL;
+        if from.install {
+            acc |= ALPM_DB_USAGE_INSTALL as u32;
         };
-        if self.upgrade {
-            acc |= ALPM_DB_USAGE_UPGRADE;
+        if from.upgrade {
+            acc |= ALPM_DB_USAGE_UPGRADE as u32;
         };
         acc
     }
@@ -289,11 +290,12 @@ impl Into<u32> for Usage {
 
 impl From<u32> for Usage {
     fn from(from: u32) -> Self {
+        use alpm_sys::alpm_db_usage_t::*;
         Usage {
-            sync: from & ALPM_DB_USAGE_SYNC != 0,
-            search: from & ALPM_DB_USAGE_SEARCH != 0,
-            install: from & ALPM_DB_USAGE_INSTALL != 0,
-            upgrade: from & ALPM_DB_USAGE_UPGRADE != 0,
+            sync: from & ALPM_DB_USAGE_SYNC as u32 != 0,
+            search: from & ALPM_DB_USAGE_SEARCH as u32 != 0,
+            install: from & ALPM_DB_USAGE_INSTALL as u32 != 0,
+            upgrade: from & ALPM_DB_USAGE_UPGRADE as u32 != 0,
         }
     }
 }

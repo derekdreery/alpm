@@ -1,0 +1,72 @@
+use libc::*;
+
+use ffi::alpm_handle_t;
+
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+pub enum alpm_errno_t {
+    ALPM_ERR_OK = 0,
+    ALPM_ERR_MEMORY = 1,
+    ALPM_ERR_SYSTEM = 2,
+    ALPM_ERR_BADPERMS = 3,
+    ALPM_ERR_NOT_A_FILE = 4,
+    ALPM_ERR_NOT_A_DIR = 5,
+    ALPM_ERR_WRONG_ARGS = 6,
+    ALPM_ERR_DISK_SPACE = 7,
+    ALPM_ERR_HANDLE_NULL = 8,
+    ALPM_ERR_HANDLE_NOT_NULL = 9,
+    ALPM_ERR_HANDLE_LOCK = 10,
+    ALPM_ERR_DB_OPEN = 11,
+    ALPM_ERR_DB_CREATE = 12,
+    ALPM_ERR_DB_NULL = 13,
+    ALPM_ERR_DB_NOT_NULL = 14,
+    ALPM_ERR_DB_NOT_FOUND = 15,
+    ALPM_ERR_DB_INVALID = 16,
+    ALPM_ERR_DB_INVALID_SIG = 17,
+    ALPM_ERR_DB_VERSION = 18,
+    ALPM_ERR_DB_WRITE = 19,
+    ALPM_ERR_DB_REMOVE = 20,
+    ALPM_ERR_SERVER_BAD_URL = 21,
+    ALPM_ERR_SERVER_NONE = 22,
+    ALPM_ERR_TRANS_NOT_NULL = 23,
+    ALPM_ERR_TRANS_NULL = 24,
+    ALPM_ERR_TRANS_DUP_TARGET = 25,
+    ALPM_ERR_TRANS_NOT_INITIALIZED = 26,
+    ALPM_ERR_TRANS_NOT_PREPARED = 27,
+    ALPM_ERR_TRANS_ABORT = 28,
+    ALPM_ERR_TRANS_TYPE = 29,
+    ALPM_ERR_TRANS_NOT_LOCKED = 30,
+    ALPM_ERR_TRANS_HOOK_FAILED = 31,
+    ALPM_ERR_PKG_NOT_FOUND = 32,
+    ALPM_ERR_PKG_IGNORED = 33,
+    ALPM_ERR_PKG_INVALID = 34,
+    ALPM_ERR_PKG_INVALID_CHECKSUM = 35,
+    ALPM_ERR_PKG_INVALID_SIG = 36,
+    ALPM_ERR_PKG_MISSING_SIG = 37,
+    ALPM_ERR_PKG_OPEN = 38,
+    ALPM_ERR_PKG_CANT_REMOVE = 39,
+    ALPM_ERR_PKG_INVALID_NAME = 40,
+    ALPM_ERR_PKG_INVALID_ARCH = 41,
+    ALPM_ERR_PKG_REPO_NOT_FOUND = 42,
+    ALPM_ERR_SIG_MISSING = 43,
+    ALPM_ERR_SIG_INVALID = 44,
+    ALPM_ERR_DLT_INVALID = 45,
+    ALPM_ERR_DLT_PATCHFAILED = 46,
+    ALPM_ERR_UNSATISFIED_DEPS = 47,
+    ALPM_ERR_CONFLICTING_DEPS = 48,
+    ALPM_ERR_FILE_CONFLICTS = 49,
+    ALPM_ERR_RETRIEVE = 50,
+    ALPM_ERR_INVALID_REGEX = 51,
+    ALPM_ERR_LIBARCHIVE = 52,
+    ALPM_ERR_LIBCURL = 53,
+    ALPM_ERR_EXTERNAL_DOWNLOAD = 54,
+    ALPM_ERR_GPGME = 55,
+}
+
+extern "C" {
+    /// Returns the current error code from the handle.
+    pub fn alpm_errno(handle: *mut alpm_handle_t) -> alpm_errno_t;
+
+    /// Returns the string corresponding to an error number.
+    pub fn alpm_strerror(err: alpm_errno_t) -> *const c_char;
+}

@@ -76,7 +76,7 @@ lazy_static! {
 /// will be changed for all.
 #[derive(Debug)]
 pub struct Alpm {
-    handle: *const Struct_alpm_handle,
+    handle: *mut alpm_handle_t,
 }
 
 impl Alpm {
@@ -86,10 +86,10 @@ impl Alpm {
         let root = CString::new(root)?;
         let db_path = CString::new(db_path)?;
         unsafe {
-            let mut err: alpm_errno_t = 0;
+            let mut err = alpm_errno_t::ALPM_ERR_OK;
             let handle = alpm_initialize(root.as_ptr(), db_path.as_ptr(), &mut err);
-            if err != 0 {
-                Err(Error::from(err))
+            if err != alpm_errno_t::ALPM_ERR_OK {
+                Err(Error::from(err as u32))
             } else {
                 let alpm = Alpm { handle: handle };
                 Ok(alpm)
@@ -126,10 +126,10 @@ impl Alpm {
     /// error type to return, so there isn't much need to use this externally.
     pub fn error(&self) -> Option<Error> {
         let code = unsafe { alpm_errno(self.handle) };
-        if code == 0 {
+        if code == alpm_errno_t::ALPM_ERR_OK {
             None
         } else {
-            Some(code.into())
+            Some((code as u32).into())
         }
     }
 
@@ -565,12 +565,12 @@ impl Alpm {
 
     /// Gets the default signing level
     pub fn default_sign_level(&self) -> SigLevel {
-        unsafe { alpm_option_get_default_siglevel(self.handle).into() }
+        unsafe { (alpm_option_get_default_siglevel(self.handle) as u32).into() }
     }
 
     /// Sets the default signing level
     pub fn set_default_sign_level(&self, s: SigLevel) -> AlpmResult<()> {
-        let res = unsafe { alpm_option_set_default_siglevel(self.handle, s.into()) };
+        let res = unsafe { alpm_option_set_default_siglevel(self.handle, u32::from(s) as i32) };
         if res == 0 {
             Ok(())
         } else {
@@ -580,12 +580,12 @@ impl Alpm {
 
     /// Gets the default signing level
     pub fn local_file_sign_level(&self) -> SigLevel {
-        unsafe { alpm_option_get_local_file_siglevel(self.handle).into() }
+        unsafe { (alpm_option_get_local_file_siglevel(self.handle) as u32).into() }
     }
 
     /// Sets the default signing level
     pub fn set_local_file_sign_level(&self, s: SigLevel) -> AlpmResult<()> {
-        let res = unsafe { alpm_option_set_local_file_siglevel(self.handle, s.into()) };
+        let res = unsafe { alpm_option_set_local_file_siglevel(self.handle, u32::from(s) as i32) };
         if res == 0 {
             Ok(())
         } else {
@@ -595,12 +595,12 @@ impl Alpm {
 
     /// Gets the default signing level
     pub fn remote_file_sign_level(&self) -> SigLevel {
-        unsafe { alpm_option_get_remote_file_siglevel(self.handle).into() }
+        unsafe { (alpm_option_get_remote_file_siglevel(self.handle) as u32).into() }
     }
 
     /// Sets the default signing level
     pub fn set_remote_file_sign_level(&self, s: SigLevel) -> AlpmResult<()> {
-        let res = unsafe { alpm_option_set_remote_file_siglevel(self.handle, s.into()) };
+        let res = unsafe { alpm_option_set_remote_file_siglevel(self.handle, u32::from(s) as i32) };
         if res == 0 {
             Ok(())
         } else {
@@ -620,7 +620,7 @@ impl Alpm {
             let raw_list = alpm_get_syncdbs(self.handle);
             //println!("{:?}", raw_list);
             //println!("error: {:?}", self.error().unwrap().description());
-            util::alpm_list_to_vec(raw_list, |ptr| Db::new(ptr as *const Struct_alpm_db, self))
+            util::alpm_list_to_vec(raw_list, |ptr| Db::new(ptr as *mut alpm_sys::alpm_db_t, self))
         }
     }
 
@@ -649,7 +649,7 @@ impl Alpm {
             let db = alpm_register_syncdb(
                 self.handle,
                 tree_name.as_ptr(),
-                level.into(),
+                u32::from(level) as i32,
             );
             if db.is_null() {
                 Err(self.error().unwrap_or(Error::__Unknown))
@@ -681,7 +681,7 @@ impl Alpm {
         &self,
         flags: TransactionFlags,
     ) -> AlpmResult<Transaction<Initialized>> {
-        let res = unsafe { alpm_trans_init(self.handle, flags.into()) };
+        let res = unsafe { alpm_trans_init(self.handle, u32::from(flags) as i32) };
         if res == 0 {
             Ok(Transaction {
                 alpm: self,
@@ -702,14 +702,14 @@ impl Alpm {
         level: SigLevel,
     ) -> AlpmResult<Package<'a>> {
         unsafe {
-            let pkg: *mut Struct_alpm_pkg = ptr::null_mut();
+            let mut pkg: *mut alpm_pkg_t = ptr::null_mut();
             let filename = CString::new(filename).unwrap();
             let res = alpm_pkg_load(
                 self.handle,
                 filename.as_ptr(),
                 if full { 1 } else { 0 },
-                level.into(),
-                &pkg as *const *mut Struct_alpm_pkg,
+                u32::from(level) as i32,
+                &mut pkg as *mut *mut alpm_pkg_t,
             );
             if res == 0 {
                 Ok(Package::new(pkg))

@@ -6,6 +6,7 @@ documentation = "https://docs.rs/alpm-sys/"
 license = "MIT OR Apache-2.0"
 authors = [
     "Richard Dodd <richard.o.dodd@gmail.com>",
+    "James Zhu <jameszhu@berkeley.edu>",
 ]
 description = "alpm.h interface."
 readme = "README.md"

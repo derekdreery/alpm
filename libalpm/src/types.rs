@@ -10,12 +10,19 @@ pub struct Caps {
     pub signatures: bool,
 }
 
+impl From<alpm_caps> for Caps {
+    fn from(f: alpm_caps) -> Caps {
+        Caps::from(f as u32)
+    }
+}
+
 impl From<u32> for Caps {
     fn from(f: u32) -> Caps {
+        use alpm_caps::*;
         Caps {
-            nls: f & ALPM_CAPABILITY_NLS != 0,
-            downloader: f & ALPM_CAPABILITY_DOWNLOADER != 0,
-            signatures: f & ALPM_CAPABILITY_SIGNATURES != 0,
+            nls: f & ALPM_CAPABILITY_NLS as u32 != 0,
+            downloader: f & ALPM_CAPABILITY_DOWNLOADER as u32 != 0,
+            signatures: f & ALPM_CAPABILITY_SIGNATURES as u32 != 0,
         }
     }
 }
