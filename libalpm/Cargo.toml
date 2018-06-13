@@ -12,7 +12,7 @@ An aspirationally safe wrapper around libalpm (the Arch Linux Package Manager).
 """
 
 [dependencies]
-alpm-sys = "0.1"
+alpm-sys = { git = "https://github.com/jameslzhu/alpm", branch = "master" }
 printf = "0.1"
 libc = "0.2"
 url = "1.4"
