@@ -5,7 +5,7 @@ use std::ffi::CStr;
 
 use libc as c;
 
-#[link(name = "printf_wrapper")]
+#[link(name = "printf", kind = "static")]
 extern "C" {
     fn printf_wrapper(format: *const c::c_char, args: *mut c::c_void) -> *const c::c_char;
 }

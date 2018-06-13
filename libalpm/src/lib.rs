@@ -12,7 +12,6 @@
 //! let arch = util::uname().machine().to_owned();
 //!
 //! let alpm = Alpm::new("/", "/var/lib/pacman"); // default locations on arch linux
-//! alpm
 //! ```
 
 extern crate alpm_sys;

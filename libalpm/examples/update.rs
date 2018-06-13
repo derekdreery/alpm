@@ -86,7 +86,7 @@ fn main() {
     //panic!("bail");
 
     for (name, repo) in &options.repositories {
-        let db = alpm.register_sync_db(name, SigLevel::default()).unwrap();
+        let db = alpm.register_sync_db(name, &SigLevel::default()).unwrap();
         let mut fixed_servers = repo.servers
             .iter()
             .map(|el| el.replace("$arch", &arch).replace("$repo", name));

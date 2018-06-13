@@ -74,7 +74,7 @@ fn lex_ini(filename: &str) -> Result<Vec<Token>, Error> {
         let line = line?;
         let line = line.trim();
 
-        if line.is_empty() || line.starts_with("#") {
+        if line.is_empty() || line.starts_with('#') {
             // skip comments
         } else if let IResult::Done(_, name) = parse_header(&line) {
             tok_list.push(Token::Header(name.into()))
@@ -105,38 +105,38 @@ pub fn parse_ini(filename: &str) -> Result<Config, Error> {
     let mut section = Section::None;
     let mut options = Config::default();
     let toks = lex_ini(filename)?;
-    for tok in toks.into_iter() {
-        parse_token(tok, &mut options, &mut section)?;
+    for tok in toks {
+        parse_token(&tok, &mut options, &mut section)?;
     }
     Ok(options)
 }
 
 /// Parses a single token a token
-fn parse_token(tok: Token, conf: &mut Config, section: &mut Section) -> Result<(), Error> {
-    match &tok {
-        &Token::Header(ref name) if name == "Options" || name == "options" => {
+fn parse_token(tok: &Token, conf: &mut Config, section: &mut Section) -> Result<(), Error> {
+    match tok {
+        Token::Header(ref name) if name == "Options" || name == "options" => {
             *section = Section::Options;
         }
-        &Token::Header(ref name) => {
+        Token::Header(ref name) => {
             *section = Section::Repo(name.clone());
             // log error if section has already been processed
-            if let Some(_) = conf.repositories.insert(name.clone(), RepoConfig::default()) {
+            if conf.repositories.insert(name.clone(), RepoConfig::default()).is_some() {
                 println!("Repository \"{}\" has already been added - replacing", name);
             }
         }
-        &Token::Pair(ref key, ref value) => match section {
-            &mut Section::None => {
+        Token::Pair(ref key, ref value) => match section {
+            Section::None => {
                 println!("Key \"{}\" found before any section header - ignoring", key);
             }
-            &mut Section::Options => parse_pair_option(&key, &value, conf),
-            &mut Section::Repo(ref repo_name) => parse_pair_repo(&repo_name, &key, &value, conf),
+            Section::Options => parse_pair_option(&key, &value, conf),
+            Section::Repo(ref repo_name) => parse_pair_repo(&repo_name, &key, &value, conf),
         },
-        &Token::Valueless(ref key) => match section {
-            &mut Section::None => {
+        Token::Valueless(ref key) => match section {
+            Section::None => {
                 println!("Key \"{}\" found before any section header - ignoring", key);
             }
-            &mut Section::Options => parse_valueless_option(&key, conf),
-            &mut Section::Repo(..) => (),
+            Section::Options => parse_valueless_option(&key, conf),
+            Section::Repo(..) => (),
         }
     };
     Ok(())
@@ -192,8 +192,10 @@ fn parse_pair_option(key: &str, value: &str, config: &mut Config) {
         for method in value.split_whitespace() {
             if method == "KeepInstalled" {
                 // TODO
+                unimplemented!()
             } else if method == "KeepCurrent" {
                 // TODO
+                unimplemented!()
             } else {
                 println!("Unrecognised clean method: \"{}\".", method)
             }
@@ -201,10 +203,13 @@ fn parse_pair_option(key: &str, value: &str, config: &mut Config) {
         // TODO
     } else if key == "SigLevel" {
         // TODO
+        unimplemented!()
     } else if key == "LocalFileSigLevel" {
         // TODO
+        unimplemented!()
     } else if key == "RemoteFileSigLevel" {
         // TODO
+        unimplemented!()
     } else {
         println!("Unrecognised options key: \"{}\" = \"{}\".", key, value)
     }

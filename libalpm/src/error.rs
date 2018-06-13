@@ -294,10 +294,11 @@ pub type AlpmResult<T> = Result<T, Error>;
 #[cfg(test)]
 mod test {
     use super::*;
+    extern crate alpm_sys;
 
     #[test]
     fn from_u32() {
-        let err = ALPM_ERR_MEMORY as u32;
+        let err = alpm_sys::alpm_errno_t::ALPM_ERR_MEMORY as u32;
         assert_eq!(Error::Memory, err.into());
     }
 }

@@ -526,8 +526,8 @@ impl<'a> Group<'a> {
             &*(pkg_ptr as *const PackageRef)
         });
         Group {
-            name: name,
-            packages: packages,
+            name,
+            packages,
         }
     }
 }
@@ -583,20 +583,18 @@ impl<'a> cmp::PartialOrd for PackageVersion<'a> {
 #[test]
 fn test_cmp_pkg_version() {
     use std::ffi::CString;
-    unsafe {
-        let less = CString::new("1.0").unwrap();
-        let greater = CString::new("1.1").unwrap();
-        let less_v = PackageVersion::new(less.as_ptr());
-        let greater_v = PackageVersion::new(greater.as_ptr());
-        assert!(less_v < greater_v);
-        assert!(!(less_v >= greater_v));
-        assert!(greater_v > less_v);
-        assert!(!(greater_v <= less_v));
-        assert!(greater_v <= greater_v);
-        assert!(!(greater_v > greater_v));
-        assert!(greater_v >= greater_v);
-        assert!(!(greater_v < greater_v));
-    }
+    let less = CString::new("1.0").unwrap();
+    let greater = CString::new("1.1").unwrap();
+    let less_v = PackageVersion::new(less.as_ptr());
+    let greater_v = PackageVersion::new(greater.as_ptr());
+    assert!(less_v < greater_v);
+    assert!(!(less_v >= greater_v));
+    assert!(greater_v > less_v);
+    assert!(!(greater_v <= less_v));
+    assert!(greater_v <= greater_v);
+    assert!(!(greater_v > greater_v));
+    assert!(greater_v >= greater_v);
+    assert!(!(greater_v < greater_v));
 }
 
 /// Where a package came from

@@ -105,7 +105,7 @@ pub(crate) unsafe fn vec_to_alpm_list<T, F>(v: Vec<T>, f: F) -> *mut alpm_list_t
 
     // init everything to null
     let list = libc::calloc(1, mem::size_of::<alpm_list_t>()) as *mut alpm_list_t;
-    let mut list_prev = list as *mut alpm_list_t;
+    let mut list_prev = list;
     // convert first element and put it in
     (*list_prev).data = f(&v[0]);
     // for each remaining element

@@ -1,15 +1,15 @@
 extern crate libc;
 extern crate printf;
+extern crate printf_helper;
 
-use libc::{c_char, c_int, c_void};
+use libc::{c_char, c_void};
 
-// Test function takes a format string, and a variadic list
-type Callback = extern "C" fn(*const c_char, *mut c_void) -> *mut c_void;
+use printf_helper::dispatch;
 
-#[link(name = "printf_test_helper")]
-extern "C" {
-    fn dispatch(test_no: c_int, cb: Callback) -> *mut c_void;
-}
+// #[link(name = "printf_helper", kind = "static")]
+// extern "C" {
+//     fn dispatch(test_no: c_int, cb: Callback) -> *mut c_void;
+// }
 
 // This should match Callback signature
 extern "C" fn test_cb(format: *const c_char, args: *mut c_void) -> *mut c_void {

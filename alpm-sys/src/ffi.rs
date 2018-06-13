@@ -80,14 +80,14 @@ pub enum alpm_fileconflicttype_t {
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum alpm_siglevel_t {
     ALPM_SIG_PACKAGE = 1,
-    ALPM_SIG_PACKAGE_OPTIONAL = 2,
-    ALPM_SIG_PACKAGE_MARGINAL_OK = 4,
-    ALPM_SIG_PACKAGE_UNKNOWN_OK = 8,
-    ALPM_SIG_DATABASE = 1024,
-    ALPM_SIG_DATABASE_OPTIONAL = 2048,
-    ALPM_SIG_DATABASE_MARGINAL_OK = 4096,
-    ALPM_SIG_DATABASE_UNKNOWN_OK = 8192,
-    ALPM_SIG_USE_DEFAULT = 1073741824,
+    ALPM_SIG_PACKAGE_OPTIONAL = (1 << 1),
+    ALPM_SIG_PACKAGE_MARGINAL_OK = (1 << 2),
+    ALPM_SIG_PACKAGE_UNKNOWN_OK = (1 << 3),
+    ALPM_SIG_DATABASE = (1 << 10),
+    ALPM_SIG_DATABASE_OPTIONAL = (1 << 11),
+    ALPM_SIG_DATABASE_MARGINAL_OK = (1 << 12),
+    ALPM_SIG_DATABASE_UNKNOWN_OK = (1 << 13),
+    ALPM_SIG_USE_DEFAULT = (1 << 30),
 }
 
 /// PGP signature verification status return codes
@@ -263,15 +263,6 @@ pub type alpm_cb_log = Option< unsafe extern "C" fn(
     arg3: *const va_list,
     // arg3: *mut __va_list_tag,
 )>;
-
-extern "C" {
-    pub fn alpm_logaction(
-        handle: *mut alpm_handle_t,
-        prefix: *const c_char,
-        fmt: *const c_char,
-        ...
-    ) -> c_int;
-}
 
 #[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
@@ -707,7 +698,76 @@ pub type alpm_cb_fetch = Option<
         localpath: *const c_char,
         force: c_int,
     ) -> c_int>;
+
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+pub enum alpm_db_usage_t {
+    ALPM_DB_USAGE_SYNC      = 0b0001,
+    ALPM_DB_USAGE_SEARCH    = 0b0010,
+    ALPM_DB_USAGE_INSTALL   = 0b0100,
+    ALPM_DB_USAGE_UPGRADE   = 0b1000,
+    ALPM_DB_USAGE_ALL       = 0b1111,
+}
+
+/// Transaction flags
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+pub enum alpm_transflag_t {
+    /// Ignore dependency checks.
+    ALPM_TRANS_FLAG_NODEPS = 1,
+    /// Ignore file conflicts and overwrite files.
+    ALPM_TRANS_FLAG_FORCE = (1 << 1),
+    /// Delete files even if they are tagged as backup.
+    ALPM_TRANS_FLAG_NOSAVE = (1 << 2),
+    /// Ignore version numbers when checking dependencies.
+    ALPM_TRANS_FLAG_NODEPVERSION = (1 << 3),
+    /// Remove also any packages depending on a package being removed.
+    ALPM_TRANS_FLAG_CASCADE = (1 << 4),
+    /// Remove packages and their unneeded deps (not explicitly installed).
+    ALPM_TRANS_FLAG_RECURSE = (1 << 5),
+    /// Modify database but do not commit changes to the filesystem.
+    ALPM_TRANS_FLAG_DBONLY = (1 << 6),
+
+    // (1 << 7) flag can go here
+
+    /// Use ALPM_PKG_REASON_DEPEND when installing packages.
+    ALPM_TRANS_FLAG_ALLDEPS = (1 << 8),
+    /// Only download packages and do not actually install.
+    ALPM_TRANS_FLAG_DOWNLOADONLY = (1 << 9),
+    /// Do not execute install scriptlets after installing.
+    ALPM_TRANS_FLAG_NOSCRIPTLET = (1 << 10),
+    /// Ignore dependency conflicts.
+    ALPM_TRANS_FLAG_NOCONFLICTS = (1 << 11),
+    // (1 << 12) flag can go here
+    /// Do not install a package if it is already installed and up to date.
+    ALPM_TRANS_FLAG_NEEDED = (1 << 13),
+    /// Use ALPM_PKG_REASON_EXPLICIT when installing packages.
+    ALPM_TRANS_FLAG_ALLEXPLICIT = (1 << 14),
+    /// Do not remove a package if it is needed by another one.
+    ALPM_TRANS_FLAG_UNNEEDED = (1 << 15),
+    /// Remove also explicitly installed unneeded deps (use with ALPM_TRANS_FLAG_RECURSE).
+    ALPM_TRANS_FLAG_RECURSEALL = (1 << 16),
+    /// Do not lock the database during the operation.
+    ALPM_TRANS_FLAG_NOLOCK = (1 << 17),
+}
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+pub enum alpm_caps {
+    ALPM_CAPABILITY_NLS = 1,
+    ALPM_CAPABILITY_DOWNLOADER = 2,
+    ALPM_CAPABILITY_SIGNATURES = 4,
+}
+
+#[link(name = "alpm")]
 extern "C" {
+    pub fn alpm_logaction(
+        handle: *mut alpm_handle_t,
+        prefix: *const c_char,
+        fmt: *const c_char,
+        ...
+    ) -> c_int;
+
     /// Fetch a remote pkg.
     ///
     /// @param url URL of the package to download
@@ -1160,19 +1220,7 @@ extern "C" {
     /// @param needles a list of regular expressions to search for
     /// Returns the list of packages matching all regular expressions on success, NULL on error
     pub fn alpm_db_search(db: *mut alpm_db_t, needles: *const alpm_list_t) -> *mut alpm_list_t;
-}
 
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum alpm_db_usage_t {
-    ALPM_DB_USAGE_SYNC      = 0b0001,
-    ALPM_DB_USAGE_SEARCH    = 0b0010,
-    ALPM_DB_USAGE_INSTALL   = 0b0100,
-    ALPM_DB_USAGE_UPGRADE   = 0b1000,
-    ALPM_DB_USAGE_ALL       = 0b1111,
-}
-
-extern "C" {
     /// Sets the usage of a database.
     /// @param db pointer to the package database to set the status for
     /// @param usage a bitmask of alpm_db_usage_t values
@@ -1546,51 +1594,7 @@ extern "C" {
         pkg: *mut alpm_pkg_t,
         dbs_sync: *mut alpm_list_t,
     ) -> *mut alpm_pkg_t;
-}
 
-/// Transaction flags
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum alpm_transflag_t {
-    /// Ignore dependency checks.
-    ALPM_TRANS_FLAG_NODEPS = 1,
-    /// Ignore file conflicts and overwrite files.
-    ALPM_TRANS_FLAG_FORCE = (1 << 1),
-    /// Delete files even if they are tagged as backup.
-    ALPM_TRANS_FLAG_NOSAVE = (1 << 2),
-    /// Ignore version numbers when checking dependencies.
-    ALPM_TRANS_FLAG_NODEPVERSION = (1 << 3),
-    /// Remove also any packages depending on a package being removed.
-    ALPM_TRANS_FLAG_CASCADE = (1 << 4),
-    /// Remove packages and their unneeded deps (not explicitly installed).
-    ALPM_TRANS_FLAG_RECURSE = (1 << 5),
-    /// Modify database but do not commit changes to the filesystem.
-    ALPM_TRANS_FLAG_DBONLY = (1 << 6),
-
-    // (1 << 7) flag can go here
-
-    /// Use ALPM_PKG_REASON_DEPEND when installing packages.
-    ALPM_TRANS_FLAG_ALLDEPS = (1 << 8),
-    /// Only download packages and do not actually install.
-    ALPM_TRANS_FLAG_DOWNLOADONLY = (1 << 9),
-    /// Do not execute install scriptlets after installing.
-    ALPM_TRANS_FLAG_NOSCRIPTLET = (1 << 10),
-    /// Ignore dependency conflicts.
-    ALPM_TRANS_FLAG_NOCONFLICTS = (1 << 11),
-    // (1 << 12) flag can go here
-    /// Do not install a package if it is already installed and up to date.
-    ALPM_TRANS_FLAG_NEEDED = (1 << 13),
-    /// Use ALPM_PKG_REASON_EXPLICIT when installing packages.
-    ALPM_TRANS_FLAG_ALLEXPLICIT = (1 << 14),
-    /// Do not remove a package if it is needed by another one.
-    ALPM_TRANS_FLAG_UNNEEDED = (1 << 15),
-    /// Remove also explicitly installed unneeded deps (use with ALPM_TRANS_FLAG_RECURSE).
-    ALPM_TRANS_FLAG_RECURSEALL = (1 << 16),
-    /// Do not lock the database during the operation.
-    ALPM_TRANS_FLAG_NOLOCK = (1 << 17),
-}
-
-extern "C" {
     /// Returns the bitfield of flags for the current transaction.
     ///
     /// Returns the bitfield of transaction flags
@@ -1715,17 +1719,7 @@ extern "C" {
     pub fn alpm_release(handle: *mut alpm_handle_t) -> c_int;
 
     pub fn alpm_unlock(handle: *mut alpm_handle_t) -> c_int;
-}
 
-#[repr(C)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum alpm_caps {
-    ALPM_CAPABILITY_NLS = 1,
-    ALPM_CAPABILITY_DOWNLOADER = 2,
-    ALPM_CAPABILITY_SIGNATURES = 4,
-}
-
-extern "C" {
     pub fn alpm_version() -> *const c_char;
 
     pub fn alpm_capabilities() -> alpm_caps;

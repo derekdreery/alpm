@@ -1,8 +1,11 @@
 [package]
-name = "printf_helper"
+name = "printf-helper"
 version = "0.1.0"
 authors = ["Richard Dodd <richard.o.dodd@gmail.com>"]
 build = "build.rs"
+
+[dependencies]
+libc = "^0.2"
 
 [build-dependencies]
 cc = "^1.0"
