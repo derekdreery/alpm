@@ -54,10 +54,7 @@ fn print_pkg_info(pkg: &PackageRef) {
     println!("         licenses: {:?}", pkg.licenses());
     println!("         groups: {:?}", pkg.groups());
     println!("         dependencies: {:?}", pkg.depends());
-    println!(
-        "         optional dependencies: {:?}",
-        pkg.optionally_depends()
-    );
+    println!("         optional dependencies: {:?}", pkg.optionally_depends());
     //println!("         check dependencies: {:?}", pkg.check_depends());
     //println!("         make dependencies: {:?}", pkg.make_depends());
     println!("         conflicts: {:?}", pkg.conflicts());

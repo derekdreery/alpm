@@ -1,6 +1,6 @@
 [package]
 name = "alpm-sys"
-version = "0.1.2"
+version = "0.2.0"
 repository = "https://github.com/derekdreery/alpm-sys"
 documentation = "https://docs.rs/alpm-sys/"
 license = "MIT OR Apache-2.0"
