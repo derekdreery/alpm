@@ -116,18 +116,19 @@ impl LogLevels {
 
 impl Into<u32> for LogLevels {
     fn into(self) -> u32 {
+        use alpm_sys::alpm_loglevel_t::*;
         let mut acc = 0;
         if self.error {
-            acc |= ALPM_LOG_ERROR;
+            acc |= ALPM_LOG_ERROR as u32;
         };
         if self.warning {
-            acc |= ALPM_LOG_WARNING;
+            acc |= ALPM_LOG_WARNING as u32;
         };
         if self.debug {
-            acc |= ALPM_LOG_DEBUG;
+            acc |= ALPM_LOG_DEBUG as u32;
         };
         if self.function {
-            acc |= ALPM_LOG_FUNCTION;
+            acc |= ALPM_LOG_FUNCTION as u32;
         };
         acc
     }
@@ -135,18 +136,24 @@ impl Into<u32> for LogLevels {
 
 impl From<u32> for LogLevels {
     fn from(from: u32) -> LogLevels {
+        use alpm_loglevel_t::*;
         LogLevels {
-            error: from & ALPM_LOG_ERROR != 0,
-            warning: from & ALPM_LOG_WARNING != 0,
-            debug: from & ALPM_LOG_DEBUG != 0,
-            function: from & ALPM_LOG_FUNCTION != 0,
+            error: from & ALPM_LOG_ERROR as u32 != 0,
+            warning: from & ALPM_LOG_WARNING as u32 != 0,
+            debug: from & ALPM_LOG_DEBUG as u32 != 0,
+            function: from & ALPM_LOG_FUNCTION as u32 != 0,
         }
+    }
+}
+
+impl From<alpm_loglevel_t> for LogLevels {
+    fn from(from: alpm_loglevel_t) -> LogLevels {
+        LogLevels::from(from as u32)
     }
 }
 
 impl Into<LogLevel> for LogLevels {
     fn into(self) -> LogLevel {
-
         if self.error { LogLevel::Error }
         else if self.warning { LogLevel::Warning }
         else if self.debug { LogLevel::Debug }

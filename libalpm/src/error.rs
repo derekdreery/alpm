@@ -5,8 +5,6 @@ use std::fmt;
 use std::ffi;
 use std::str;
 
-use alpm_sys::*;
-
 /// An enum of possible errors in libalpm
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum Error {
@@ -206,72 +204,73 @@ impl fmt::Display for Error {
 
 impl From<u32> for Error {
     fn from(from: u32) -> Error {
+        use alpm_sys::alpm_errno_t::*;
         match from {
-            ALPM_ERR_MEMORY => Error::Memory,
-            ALPM_ERR_SYSTEM => Error::System,
-            ALPM_ERR_BADPERMS => Error::BadPerms,
-            ALPM_ERR_NOT_A_FILE => Error::NotAFile,
-            ALPM_ERR_NOT_A_DIR => Error::NotADir,
-            ALPM_ERR_WRONG_ARGS => Error::WrongArgs,
-            ALPM_ERR_DISK_SPACE => Error::DiskSpace,
+            x if x == ALPM_ERR_MEMORY as u32 => Error::Memory,
+            x if x == ALPM_ERR_SYSTEM as u32 => Error::System,
+            x if x == ALPM_ERR_BADPERMS as u32 => Error::BadPerms,
+            x if x == ALPM_ERR_NOT_A_FILE as u32 => Error::NotAFile,
+            x if x == ALPM_ERR_NOT_A_DIR as u32 => Error::NotADir,
+            x if x == ALPM_ERR_WRONG_ARGS as u32 => Error::WrongArgs,
+            x if x == ALPM_ERR_DISK_SPACE as u32 => Error::DiskSpace,
             /* Interface */
-            ALPM_ERR_HANDLE_NULL => Error::HandleNull,
-            ALPM_ERR_HANDLE_NOT_NULL => Error::HandleNotNull,
-            ALPM_ERR_HANDLE_LOCK => Error::HandleLock,
+            x if x == ALPM_ERR_HANDLE_NULL as u32 => Error::HandleNull,
+            x if x == ALPM_ERR_HANDLE_NOT_NULL as u32 => Error::HandleNotNull,
+            x if x == ALPM_ERR_HANDLE_LOCK as u32 => Error::HandleLock,
             /* Databases */
-            ALPM_ERR_DB_OPEN => Error::DbOpen,
-            ALPM_ERR_DB_CREATE => Error::DbCreate,
-            ALPM_ERR_DB_NULL => Error::DbNull,
-            ALPM_ERR_DB_NOT_NULL => Error::DbNotNull,
-            ALPM_ERR_DB_NOT_FOUND => Error::DbNotFound,
-            ALPM_ERR_DB_INVALID => Error::DbInvalid,
-            ALPM_ERR_DB_INVALID_SIG => Error::DbInvalidSig,
-            ALPM_ERR_DB_VERSION => Error::DbVersion,
-            ALPM_ERR_DB_WRITE => Error::DbWrite,
-            ALPM_ERR_DB_REMOVE => Error::DbRemove,
+            x if x == ALPM_ERR_DB_OPEN as u32 => Error::DbOpen,
+            x if x == ALPM_ERR_DB_CREATE as u32 => Error::DbCreate,
+            x if x == ALPM_ERR_DB_NULL as u32 => Error::DbNull,
+            x if x == ALPM_ERR_DB_NOT_NULL as u32 => Error::DbNotNull,
+            x if x == ALPM_ERR_DB_NOT_FOUND as u32 => Error::DbNotFound,
+            x if x == ALPM_ERR_DB_INVALID as u32 => Error::DbInvalid,
+            x if x == ALPM_ERR_DB_INVALID_SIG as u32 => Error::DbInvalidSig,
+            x if x == ALPM_ERR_DB_VERSION as u32 => Error::DbVersion,
+            x if x == ALPM_ERR_DB_WRITE as u32 => Error::DbWrite,
+            x if x == ALPM_ERR_DB_REMOVE as u32 => Error::DbRemove,
             /* Servers */
-            ALPM_ERR_SERVER_BAD_URL => Error::ServerBadUrl,
-            ALPM_ERR_SERVER_NONE => Error::ServerNone,
+            x if x == ALPM_ERR_SERVER_BAD_URL as u32 => Error::ServerBadUrl,
+            x if x == ALPM_ERR_SERVER_NONE as u32 => Error::ServerNone,
             /* Transactions */
-            ALPM_ERR_TRANS_NOT_NULL => Error::TransNotNull,
-            ALPM_ERR_TRANS_NULL => Error::TransNull,
-            ALPM_ERR_TRANS_DUP_TARGET => Error::TransDupTarget,
-            ALPM_ERR_TRANS_NOT_INITIALIZED => Error::TransNotInitialized,
-            ALPM_ERR_TRANS_NOT_PREPARED => Error::TransNotPrepared,
-            ALPM_ERR_TRANS_ABORT => Error::TransAbort,
-            ALPM_ERR_TRANS_TYPE => Error::TransType,
-            ALPM_ERR_TRANS_NOT_LOCKED => Error::TransNotLocked,
-            ALPM_ERR_TRANS_HOOK_FAILED => Error::TransHookFailed,
+            x if x == ALPM_ERR_TRANS_NOT_NULL as u32 => Error::TransNotNull,
+            x if x == ALPM_ERR_TRANS_NULL as u32 => Error::TransNull,
+            x if x == ALPM_ERR_TRANS_DUP_TARGET as u32 => Error::TransDupTarget,
+            x if x == ALPM_ERR_TRANS_NOT_INITIALIZED as u32 => Error::TransNotInitialized,
+            x if x == ALPM_ERR_TRANS_NOT_PREPARED as u32 => Error::TransNotPrepared,
+            x if x == ALPM_ERR_TRANS_ABORT as u32 => Error::TransAbort,
+            x if x == ALPM_ERR_TRANS_TYPE as u32 => Error::TransType,
+            x if x == ALPM_ERR_TRANS_NOT_LOCKED as u32 => Error::TransNotLocked,
+            x if x == ALPM_ERR_TRANS_HOOK_FAILED as u32 => Error::TransHookFailed,
             /* Packages */
-            ALPM_ERR_PKG_NOT_FOUND => Error::PkgNotFound,
-            ALPM_ERR_PKG_IGNORED => Error::PkgIgnored,
-            ALPM_ERR_PKG_INVALID => Error::PkgInvalid,
-            ALPM_ERR_PKG_INVALID_CHECKSUM => Error::PkgInvalidChecksum,
-            ALPM_ERR_PKG_INVALID_SIG => Error::PkgInvalidSig,
-            ALPM_ERR_PKG_MISSING_SIG => Error::PkgMissingSig,
-            ALPM_ERR_PKG_OPEN => Error::PkgOpen,
-            ALPM_ERR_PKG_CANT_REMOVE => Error::PkgCantRemove,
-            ALPM_ERR_PKG_INVALID_NAME => Error::PkgInvalidName,
-            ALPM_ERR_PKG_INVALID_ARCH => Error::PkgInvalidArch,
-            ALPM_ERR_PKG_REPO_NOT_FOUND => Error::PkgRepoNotFound,
+            x if x == ALPM_ERR_PKG_NOT_FOUND as u32 => Error::PkgNotFound,
+            x if x == ALPM_ERR_PKG_IGNORED as u32 => Error::PkgIgnored,
+            x if x == ALPM_ERR_PKG_INVALID as u32 => Error::PkgInvalid,
+            x if x == ALPM_ERR_PKG_INVALID_CHECKSUM as u32 => Error::PkgInvalidChecksum,
+            x if x == ALPM_ERR_PKG_INVALID_SIG as u32 => Error::PkgInvalidSig,
+            x if x == ALPM_ERR_PKG_MISSING_SIG as u32 => Error::PkgMissingSig,
+            x if x == ALPM_ERR_PKG_OPEN as u32 => Error::PkgOpen,
+            x if x == ALPM_ERR_PKG_CANT_REMOVE as u32 => Error::PkgCantRemove,
+            x if x == ALPM_ERR_PKG_INVALID_NAME as u32 => Error::PkgInvalidName,
+            x if x == ALPM_ERR_PKG_INVALID_ARCH as u32 => Error::PkgInvalidArch,
+            x if x == ALPM_ERR_PKG_REPO_NOT_FOUND as u32 => Error::PkgRepoNotFound,
             /* Signatures */
-            ALPM_ERR_SIG_MISSING => Error::SigMissing,
-            ALPM_ERR_SIG_INVALID => Error::SigInvalid,
+            x if x == ALPM_ERR_SIG_MISSING as u32 => Error::SigMissing,
+            x if x == ALPM_ERR_SIG_INVALID as u32 => Error::SigInvalid,
             /* Deltas */
-            ALPM_ERR_DLT_INVALID => Error::DltInvalid,
-            ALPM_ERR_DLT_PATCHFAILED => Error::DltPatchFailed,
+            x if x == ALPM_ERR_DLT_INVALID as u32 => Error::DltInvalid,
+            x if x == ALPM_ERR_DLT_PATCHFAILED as u32 => Error::DltPatchFailed,
             /* Dependencies */
-            ALPM_ERR_UNSATISFIED_DEPS => Error::UnsatisfiedDeps,
-            ALPM_ERR_CONFLICTING_DEPS => Error::ConflictingDeps,
-            ALPM_ERR_FILE_CONFLICTS => Error::FileConflicts,
+            x if x == ALPM_ERR_UNSATISFIED_DEPS as u32 => Error::UnsatisfiedDeps,
+            x if x == ALPM_ERR_CONFLICTING_DEPS as u32 => Error::ConflictingDeps,
+            x if x == ALPM_ERR_FILE_CONFLICTS as u32 => Error::FileConflicts,
             /* Misc */
-            ALPM_ERR_RETRIEVE => Error::Retrieve,
-            ALPM_ERR_INVALID_REGEX => Error::InvalidRegex,
+            x if x == ALPM_ERR_RETRIEVE as u32 => Error::Retrieve,
+            x if x == ALPM_ERR_INVALID_REGEX as u32 => Error::InvalidRegex,
             /* External library errors */
-            ALPM_ERR_LIBARCHIVE => Error::Libarchive,
-            ALPM_ERR_LIBCURL => Error::Libcurl,
-            ALPM_ERR_EXTERNAL_DOWNLOAD => Error::ExternalDownload,
-            ALPM_ERR_GPGME => Error::Gpgme,
+            x if x == ALPM_ERR_LIBARCHIVE as u32 => Error::Libarchive,
+            x if x == ALPM_ERR_LIBCURL as u32 => Error::Libcurl,
+            x if x == ALPM_ERR_EXTERNAL_DOWNLOAD as u32 => Error::ExternalDownload,
+            x if x == ALPM_ERR_GPGME as u32 => Error::Gpgme,
             _ => Error::__Unknown,
         }
     }
@@ -295,10 +294,11 @@ pub type AlpmResult<T> = Result<T, Error>;
 #[cfg(test)]
 mod test {
     use super::*;
+    extern crate alpm_sys;
 
     #[test]
     fn from_u32() {
-        let err = ALPM_ERR_MEMORY;
+        let err = alpm_sys::alpm_errno_t::ALPM_ERR_MEMORY as u32;
         assert_eq!(Error::Memory, err.into());
     }
 }

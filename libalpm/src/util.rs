@@ -6,7 +6,7 @@ use std::ptr;
 use std::ffi::{CStr, CString};
 use alpm_sys::*;
 
-/// A wrapper around a libc::utsname struct, holding information on the current computer and os.
+/// A wrapper around a `libc::utsname` struct, holding information on the current computer and os.
 pub struct UtsName(libc::utsname);
 
 impl UtsName {
@@ -51,7 +51,7 @@ impl UtsName {
     }
 }
 
-/// A simple safe wrapper round libc::uname.
+/// A simple safe wrapper round `libc::uname`.
 pub fn uname() -> UtsName {
     unsafe {
         let mut raw: libc::utsname = mem::zeroed();
@@ -67,46 +67,45 @@ pub fn uname() -> UtsName {
 // NOTE the linked list in alpm_list_t is actually a doubly linked list, where you can't rely on
 // the first item->prev = null
 
-/// Convert an alpm_list_t to a rust Vec.
+/// Convert an `alpm_list_t` to a rust Vec.
 ///
 /// It's important not to take ownership of the data pointer (raw->data). It should be cleared
 /// using the original data structure. If you do this you can let the vec go out of scope and not
 /// touch the original data. The vec must not outlive the underlying struct, this bound can be
 /// enforced by the type T having a lifetime parameter.
-pub(crate) unsafe fn alpm_list_to_vec<T, F>(raw: *const alpm_list_t, f: F) -> Vec<T>
-    where F: Fn(*const libc::c_void) -> T
+pub(crate) unsafe fn alpm_list_to_vec<T, F>(raw: *mut alpm_list_t, f: F) -> Vec<T>
+    where F: Fn(*mut libc::c_void) -> T
 {
     let mut vec = Vec::new();
     if raw.is_null() {
         return vec;
     }
     // get first node
-    let first = raw;
     let mut raw = raw;
 
     // copy list (not data)
-    vec.push(f((*raw).data as *const libc::c_void));
+    vec.push(f((*raw).data as *mut libc::c_void));
     while ! (*raw).next.is_null() {
         raw = (*raw).next;
-        vec.push(f((*raw).data as *const libc::c_void));
+        vec.push(f((*raw).data as *mut libc::c_void));
     }
     vec
 }
 
-/// Convert a rust_vec to an alpm_list_t.
+/// Convert a `rust_vec` to an `alpm_list_t`.
 ///
 /// This function passes ownership of the contained data to alpm - so it must be allocated with
-/// libc::malloc and friends
-pub(crate) unsafe fn vec_to_alpm_list<T, F>(v: Vec<T>, f: F) -> *const alpm_list_t
-    where F: Fn(&T) -> *const libc::c_void
+/// `libc::malloc` and friends
+pub(crate) unsafe fn vec_to_alpm_list<T, F>(v: Vec<T>, f: F) -> *mut alpm_list_t
+    where F: Fn(&T) -> *mut libc::c_void
 {
-    if v.len() == 0 {
-        return ptr::null();
+    if v.is_empty() {
+        return ptr::null_mut();
     }
 
     // init everything to null
-    let list = libc::calloc(1, mem::size_of::<alpm_list_t>()) as *const alpm_list_t;
-    let mut list_prev = list as *mut alpm_list_t;
+    let list = libc::calloc(1, mem::size_of::<alpm_list_t>()) as *mut alpm_list_t;
+    let mut list_prev = list;
     // convert first element and put it in
     (*list_prev).data = f(&v[0]);
     // for each remaining element
@@ -124,18 +123,18 @@ pub(crate) unsafe fn vec_to_alpm_list<T, F>(v: Vec<T>, f: F) -> *const alpm_list
     list
 }
 
-/// Borrow a rust_vec as an alpm_list_t. This list must be freed by the user using `alpm_list_free`.
+/// Borrow a `rust_vec` as an `alpm_list_t`. This list must be freed by the user using `alpm_list_free`.
 ///
 /// Borrowed vec must live longer than the c library needs it for (this can't be checked)
-pub(crate) unsafe fn vec_as_alpm_list<T, F>(v: &Vec<T>, f: F) -> *const alpm_list_t
-    where F: Fn(&T) -> *const libc::c_void
+pub(crate) unsafe fn slice_as_alpm_list<T, F>(v: &[T], f: F) -> *mut alpm_list_t
+    where F: Fn(&T) -> *mut libc::c_void
 {
-    if v.len() == 0 {
-        return ptr::null();
+    if v.is_empty() {
+        return ptr::null_mut();
     }
 
     // init everything to null
-    let list = libc::calloc(1, mem::size_of::<alpm_list_t>()) as *const alpm_list_t;
+    let list = libc::calloc(1, mem::size_of::<alpm_list_t>()) as *mut alpm_list_t;
     let mut list_prev = list as *mut alpm_list_t;
     // convert first element and put it in
     (*list_prev).data = f(&v[0]);
@@ -154,19 +153,19 @@ pub(crate) unsafe fn vec_as_alpm_list<T, F>(v: &Vec<T>, f: F) -> *const alpm_lis
     list
 }
 
-/// Convert a str to unowned raw mem allocated with libc::malloc, useful when a C library will
+/// Convert a str to unowned raw mem allocated with `libc::malloc`, useful when a C library will
 /// de-allocate
-pub(crate) unsafe fn str_to_unowned_char_array(s: *const &str) -> *const libc::c_void {
+pub(crate) unsafe fn str_to_unowned_char_array(s: *const &str) -> *mut libc::c_void {
     let len = (*s).len();
     // remember extra byte for '\0' (will be zero since calloc)
-    let mut p = libc::calloc(len + 1, mem::size_of::<libc::c_char>()) as *mut libc::c_char;
+    let p = libc::calloc(len + 1, mem::size_of::<libc::c_char>()) as *mut libc::c_char;
     ptr::copy::<libc::c_char>((*s).as_ptr() as *const i8, p, len);
-    p as *const libc::c_void
+    p as *mut libc::c_void
 }
 
 /// Convert a str to owned raw mem allocated (and deallocated) in rust
-pub(crate) fn cstring_to_owned_char_array(s: &CString) -> *const libc::c_void {
-    s.as_ptr() as *const libc::c_void
+pub(crate) fn cstring_to_owned_char_array(s: &CString) -> *mut libc::c_void {
+    s.as_ptr() as *mut libc::c_void
 }
 
 /// A TEMPORARY helper function to extract server urls from a pacman conf file (until I've

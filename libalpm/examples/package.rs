@@ -1,13 +1,14 @@
 extern crate libalpm;
 extern crate term;
 
-use std::error::Error;
-use libalpm::{Alpm, PackageRef, Config, SigLevel, LogLevels, LogLevel, util};
+use libalpm::{util, Alpm, Config, LogLevel, LogLevels, PackageRef, SigLevel};
 
 fn log(level: LogLevels, msg: String) {
     let mut t = match term::stdout() {
         Some(t) => t,
-        None => { return; }
+        None => {
+            return;
+        }
     };
     let level = level.into();
     let color = match level {
@@ -67,7 +68,7 @@ fn main() {
     let arch = util::uname().machine().to_owned();
     println!("arch: {:?}", arch);
     let options = Config::default();
-    let mut alpm = Alpm::new("./tmp", "./tmp/var/lib/pacman").unwrap();
+    let alpm = Alpm::new("./tmp", "./tmp/var/lib/pacman").unwrap();
     alpm.set_arch(&arch).unwrap();
     println!("arch: {:?}", alpm.arch());
     //panic!("bail");
@@ -87,11 +88,11 @@ fn main() {
     //println!("md5: {:?} - {:?}", pkg.md5(), pkg.check_md5());
     //println!("error: {:?}", alpm.error().unwrap().description());
 
-    for (name, repo) in options.repositories.iter() {
-        let db = alpm.register_sync_db(name, SigLevel::default()).unwrap();
-        let mut fixed_servers = repo.servers.iter().map(
-                |el| el.replace("$arch", &arch).replace("$repo", name)
-                );
+    for (name, repo) in &options.repositories {
+        let db = alpm.register_sync_db(name, &SigLevel::default()).unwrap();
+        let mut fixed_servers = repo.servers
+            .iter()
+            .map(|el| el.replace("$arch", &arch).replace("$repo", name));
         db.add_server(&fixed_servers.next().unwrap());
         println!("  name: {:?}", db.name());
     }
@@ -102,7 +103,7 @@ fn main() {
         println!("    group cache: {:?}", db.group_cache());
         //println!("  Updating: {:?}", db.name());
         //db.update(false).unwrap();
-        for pkg in db.search(vec!["gcc"]).unwrap() {
+        for pkg in db.search(&["gcc"]).unwrap() {
             print_pkg_info(pkg);
         }
     }

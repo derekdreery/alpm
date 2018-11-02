@@ -12,18 +12,15 @@
 //! let arch = util::uname().machine().to_owned();
 //!
 //! let alpm = Alpm::new("/", "/var/lib/pacman"); // default locations on arch linux
-//! alpm
 //! ```
 
-#![feature(untagged_unions)]
-#![feature(pub_restricted)]
-
 extern crate alpm_sys;
-extern crate url;
+extern crate chrono;
+#[macro_use]
+extern crate lazy_static;
 extern crate libc;
 extern crate printf;
-extern crate chrono;
-#[macro_use] extern crate lazy_static;
+extern crate url;
 
 mod error;
 mod event;
@@ -37,12 +34,10 @@ mod types;
 mod trans;
 pub mod util;
 
-use std::ffi::{CString, CStr};
+use std::ffi::{CStr, CString};
 use std::ops::Drop;
-use std::path::{PathBuf};
+use std::path::PathBuf;
 use std::sync::Mutex;
-use std::borrow::Borrow;
-use std::mem;
 use std::ptr;
 use std::marker::PhantomData;
 
@@ -50,16 +45,16 @@ use alpm_sys::*;
 use libc::{c_char, c_void};
 
 pub use options::{Config, RepoConfig};
-pub use error::{Error, AlpmResult};
+pub use error::{AlpmResult, Error};
 pub use log::{LogLevel, LogLevels};
 pub use event::Event;
-pub use package::{Package, PackageRef, Group, PackageVersion, PackageFrom, Reason, Validation,
-    ValidationMethod, Dependency, FileList, File, Backup, VersionConstraintType};
+pub use package::{Backup, Dependency, File, FileList, Group, Package, PackageFrom, PackageRef,
+                  PackageVersion, Reason, Validation, ValidationMethod, VersionConstraintType};
 pub use db::Db;
 pub use pgp::SigLevel;
 pub use types::{Caps, DownloadResult};
-pub use trans::{TransactionError, Transaction, Initialized, Prepared, TransactionFlags};
-use callbacks::{alpm_cb_log, alpm_cb_download, alpm_cb_totaldl, alpm_cb_fetch, alpm_cb_event};
+pub use trans::{Initialized, Prepared, Transaction, TransactionError, TransactionFlags};
+use callbacks::{alpm_cb_download, alpm_cb_event, alpm_cb_fetch, alpm_cb_log, alpm_cb_totaldl};
 
 // callbacks
 lazy_static! {
@@ -80,7 +75,7 @@ lazy_static! {
 /// will be changed for all.
 #[derive(Debug)]
 pub struct Alpm {
-    handle: *const Struct_alpm_handle,
+    handle: *mut alpm_handle_t,
 }
 
 impl Alpm {
@@ -90,14 +85,12 @@ impl Alpm {
         let root = CString::new(root)?;
         let db_path = CString::new(db_path)?;
         unsafe {
-            let mut err: alpm_errno_t = 0;
+            let mut err = alpm_errno_t::ALPM_ERR_OK;
             let handle = alpm_initialize(root.as_ptr(), db_path.as_ptr(), &mut err);
-            if err != 0 {
-                Err(Error::from(err))
+            if err != alpm_errno_t::ALPM_ERR_OK {
+                Err(Error::from(err as u32))
             } else {
-                let alpm = Alpm {
-                    handle: handle
-                };
+                let alpm = Alpm { handle: handle };
                 Ok(alpm)
             }
         }
@@ -115,11 +108,11 @@ impl Alpm {
         };
         let alpm = Alpm::new(&config.root_dir, &config.db_path)?;
 
-        for (name, repo) in config.repositories.iter() {
-            let db = alpm.register_sync_db(name, SigLevel::default()).unwrap();
-            let mut fixed_servers = repo.servers.iter().map(
-                |el| el.replace("$arch", &arch).replace("$repo", name)
-            );
+        for (name, repo) in &config.repositories {
+            let db = alpm.register_sync_db(name, &SigLevel::default()).unwrap();
+            let mut fixed_servers = repo.servers
+                .iter()
+                .map(|el| el.replace("$arch", arch).replace("$repo", name));
             for server in fixed_servers {
                 db.add_server(&server).unwrap();
             }
@@ -132,10 +125,10 @@ impl Alpm {
     /// error type to return, so there isn't much need to use this externally.
     pub fn error(&self) -> Option<Error> {
         let code = unsafe { alpm_errno(self.handle) };
-        if code == 0 {
+        if code == alpm_errno_t::ALPM_ERR_OK {
             None
         } else {
-            Some(code.into())
+            Some((code as u32).into())
         }
     }
 
@@ -145,7 +138,7 @@ impl Alpm {
     pub fn log_action<T, U>(&self, prefix: &str, msg: &str) -> AlpmResult<()> {
         let prefix = CString::new(prefix)?;
         let msg = CString::new(msg.replace("%", "%%"))?;
-        let res = unsafe {alpm_logaction(self.handle, prefix.as_ptr(), msg.as_ptr()) };
+        let res = unsafe { alpm_logaction(self.handle, prefix.as_ptr(), msg.as_ptr()) };
         if res == 0 {
             Ok(())
         } else {
@@ -171,50 +164,65 @@ impl Alpm {
 
     /// Set the callback called when a log message is received.
     pub fn log_function<F>(&self, func: F)
-        where F: FnMut(LogLevels, String) + Send + 'static
+    where
+        F: FnMut(LogLevels, String) + Send + 'static,
     {
         let mut cb = LOG_CB.lock().unwrap();
         (*cb) = Some(Box::new(func));
-        unsafe { alpm_option_set_logcb(self.handle, Some(alpm_cb_log)); }
+        unsafe {
+            alpm_option_set_logcb(self.handle, Some(alpm_cb_log));
+        }
     }
 
     /// Clears the log callback.
     pub fn clear_log_function(&self) {
         let mut cb = LOG_CB.lock().unwrap();
         (*cb) = None;
-        unsafe { alpm_option_set_logcb(self.handle, None); }
+        unsafe {
+            alpm_option_set_logcb(self.handle, None);
+        }
     }
 
     /// Set the callback called to report progress on downloading a file.
     pub fn file_download_progress_function<F>(&self, func: F)
-        where F: FnMut(&str, u64, u64) + Send + 'static
+    where
+        F: FnMut(&str, u64, u64) + Send + 'static,
     {
         let mut cb = DOWNLOAD_CB.lock().unwrap();
         (*cb) = Some(Box::new(func));
-        unsafe { alpm_option_set_dlcb(self.handle, Some(alpm_cb_download)); }
+        unsafe {
+            alpm_option_set_dlcb(self.handle, Some(alpm_cb_download));
+        }
     }
 
     /// Clears the file download progress callback.
     pub fn clear_file_download_progress_function(&self) {
         let mut cb = DOWNLOAD_CB.lock().unwrap();
         (*cb) = None;
-        unsafe { alpm_option_set_dlcb(self.handle, None); }
+        unsafe {
+            alpm_option_set_dlcb(self.handle, None);
+        }
     }
 
     /// Set the callback called to report progress on total download
     pub fn total_download_progress_function<F>(&self, func: F)
-        where F: FnMut(u64) + Send + 'static
+    where
+        F: FnMut(u64) + Send + 'static,
     {
         let mut cb = DLTOTAL_CB.lock().unwrap();
         (*cb) = Some(Box::new(func));
-        unsafe { alpm_option_set_totaldlcb(self.handle, Some(alpm_cb_totaldl)); }
+        unsafe {
+            alpm_option_set_totaldlcb(self.handle, Some(alpm_cb_totaldl));
+        }
     }
 
     /// Clears the total download progress callback.
     pub fn clear_total_download_progress_function(&self) {
         let mut cb = DLTOTAL_CB.lock().unwrap();
         (*cb) = None;
-        unsafe { alpm_option_set_totaldlcb(self.handle, None); }
+        unsafe {
+            alpm_option_set_totaldlcb(self.handle, None);
+        }
     }
 
     /// Set the callback called to download a file.
@@ -232,7 +240,8 @@ impl Alpm {
     ///
     /// TODO investigate whether safe to relax 'static bound
     pub unsafe fn fetch_function<F>(&self, func: F)
-        where F: FnMut(&str, &str, bool) -> DownloadResult + Send + 'static
+    where
+        F: FnMut(&str, &str, bool) -> DownloadResult + Send + 'static,
     {
         let mut cb = FETCH_CB.lock().unwrap();
         (*cb) = Some(Box::new(func));
@@ -243,28 +252,36 @@ impl Alpm {
     pub fn clear_fetch_function(&self) {
         let mut cb = DLTOTAL_CB.lock().unwrap();
         (*cb) = None;
-        unsafe { alpm_option_set_fetchcb(self.handle, None); }
+        unsafe {
+            alpm_option_set_fetchcb(self.handle, None);
+        }
     }
 
     /// Sets the function called when an event occurs
     pub fn event_function<F>(&self, func: F)
-        where F: FnMut(Event) + Send + 'static
+    where
+        F: FnMut(Event) + Send + 'static,
     {
         let mut cb = EVENT_CB.lock().unwrap();
         (*cb) = Some(Box::new(func));
-        unsafe { alpm_option_set_eventcb(self.handle, Some(alpm_cb_event)); }
+        unsafe {
+            alpm_option_set_eventcb(self.handle, Some(alpm_cb_event));
+        }
     }
 
     /// Clears the file download callback, falling back to built-in fetch functionality.
     pub fn clear_event_function(&self) {
         let mut cb = DLTOTAL_CB.lock().unwrap();
         (*cb) = None;
-        unsafe { alpm_option_set_eventcb(self.handle, None); }
+        unsafe {
+            alpm_option_set_eventcb(self.handle, None);
+        }
     }
 
     /// Sets the function called when a question needs answering (todo i think)
-    pub fn question_function<F>(&self, func: F)
-        where F: FnMut() + Send + 'static
+    pub fn question_function<F>(&self, _func: F)
+    where
+        F: FnMut() + Send + 'static,
     {
         unimplemented!()
     }
@@ -275,8 +292,9 @@ impl Alpm {
     }
 
     /// Sets the function called to show operation progress
-    pub fn progress_function<F>(&self, func: F)
-        where F: FnMut() + Send + 'static
+    pub fn progress_function<F>(&self, _func: F)
+    where
+        F: FnMut() + Send + 'static,
     {
         unimplemented!()
     }
@@ -290,21 +308,23 @@ impl Alpm {
     ///
     /// The api doesn't make clear the lifetime of the result, so I am conservative (same goes for
     /// db_path)
-    pub fn root<'a>(&'a self) -> &'a str {
+    pub fn root(&self) -> &str {
         let root = unsafe { CStr::from_ptr(alpm_option_get_root(self.handle)) };
-        root.to_str().ok().expect("instance root path is not utf8")
+        root.to_str().expect("instance root path is not utf8")
     }
 
     /// Get the database path used in this instance of alpm
-    pub fn db_path<'a>(&'a self) -> &'a str {
+    pub fn db_path(&self) -> &str {
         let db_path = unsafe { CStr::from_ptr(alpm_option_get_dbpath(self.handle)) };
-        db_path.to_str().ok().expect("instance db path is not utf8")
+        db_path.to_str().expect("instance db path is not utf8")
     }
 
     /// Get the lockfile path used in this instance of alpm
-    pub fn lockfile<'a>(&'a self) -> &'a str {
+    pub fn lockfile(&self) -> &str {
         let lockfile = unsafe { CStr::from_ptr(alpm_option_get_lockfile(self.handle)) };
-        lockfile.to_str().ok().expect("instance lockfile path is not utf8")
+        lockfile
+            .to_str()
+            .expect("instance lockfile path is not utf8")
     }
 
     /// Gets a list of the cache directories in use by this instance of alpm
@@ -469,8 +489,11 @@ impl Alpm {
             if arch.is_null() {
                 None
             } else {
-                Some(CStr::from_ptr(arch).to_str().ok()
-                    .expect("targeted arch is not utf8"))
+                Some(
+                    CStr::from_ptr(arch)
+                        .to_str()
+                        .expect("targeted arch is not utf8"),
+                )
             }
         }
     }
@@ -508,7 +531,8 @@ impl Alpm {
 
     /// Sets the targeted architecture
     pub fn set_check_space(&self, check: bool) -> AlpmResult<()> {
-        let res = unsafe { alpm_option_set_checkspace(self.handle, if check { 1 } else { 0 }) };
+        let res =
+            unsafe { alpm_option_set_checkspace(self.handle, if check { 1 } else { 0 }) };
         if res == 0 {
             Ok(())
         } else {
@@ -521,7 +545,9 @@ impl Alpm {
         unsafe {
             let ext = alpm_option_get_dbext(self.handle);
             assert!(!ext.is_null(), "Database extension should never be null");
-            CStr::from_ptr(ext).to_str().ok().expect("Database extensions not valid utf8")
+            CStr::from_ptr(ext)
+                .to_str()
+                .expect("Database extensions not valid utf8")
         }
     }
 
@@ -538,12 +564,12 @@ impl Alpm {
 
     /// Gets the default signing level
     pub fn default_sign_level(&self) -> SigLevel {
-        unsafe { alpm_option_get_default_siglevel(self.handle).into() }
+        unsafe { (alpm_option_get_default_siglevel(self.handle) as u32).into() }
     }
 
     /// Sets the default signing level
     pub fn set_default_sign_level(&self, s: SigLevel) -> AlpmResult<()> {
-        let res = unsafe { alpm_option_set_default_siglevel(self.handle, s.into()) };
+        let res = unsafe { alpm_option_set_default_siglevel(self.handle, u32::from(s) as i32) };
         if res == 0 {
             Ok(())
         } else {
@@ -553,12 +579,12 @@ impl Alpm {
 
     /// Gets the default signing level
     pub fn local_file_sign_level(&self) -> SigLevel {
-        unsafe { alpm_option_get_local_file_siglevel(self.handle).into() }
+        unsafe { (alpm_option_get_local_file_siglevel(self.handle) as u32).into() }
     }
 
     /// Sets the default signing level
     pub fn set_local_file_sign_level(&self, s: SigLevel) -> AlpmResult<()> {
-        let res = unsafe { alpm_option_set_local_file_siglevel(self.handle, s.into()) };
+        let res = unsafe { alpm_option_set_local_file_siglevel(self.handle, u32::from(s) as i32) };
         if res == 0 {
             Ok(())
         } else {
@@ -568,12 +594,12 @@ impl Alpm {
 
     /// Gets the default signing level
     pub fn remote_file_sign_level(&self) -> SigLevel {
-        unsafe { alpm_option_get_remote_file_siglevel(self.handle).into() }
+        unsafe { (alpm_option_get_remote_file_siglevel(self.handle) as u32).into() }
     }
 
     /// Sets the default signing level
     pub fn set_remote_file_sign_level(&self, s: SigLevel) -> AlpmResult<()> {
-        let res = unsafe { alpm_option_set_remote_file_siglevel(self.handle, s.into()) };
+        let res = unsafe { alpm_option_set_remote_file_siglevel(self.handle, u32::from(s) as i32) };
         if res == 0 {
             Ok(())
         } else {
@@ -582,30 +608,48 @@ impl Alpm {
     }
 
     /// Get the local database instance.
-    pub fn local_db<'a>(&'a self) -> Db<'a> {
+    pub fn local_db(&self) -> Db {
         unsafe { Db::new(alpm_get_localdb(self.handle), self) }
     }
 
     /// Get a list of remote databases registered.
-    pub fn sync_dbs<'a>(&'a self) -> Vec<Db<'a>> {
+    pub fn sync_dbs(&self) -> Vec<Db> {
         //use std::error::Error;
         unsafe {
             let raw_list = alpm_get_syncdbs(self.handle);
             //println!("{:?}", raw_list);
             //println!("error: {:?}", self.error().unwrap().description());
-            util::alpm_list_to_vec(raw_list, |ptr| {
-                Db::new(ptr as *const Struct_alpm_db, &self)
-            })
+            util::alpm_list_to_vec(raw_list, |ptr| Db::new(ptr as *mut alpm_sys::alpm_db_t, self))
+        }
+    }
+
+    /// Gets a package that satisfies the given depstring
+    pub fn find_satisfier(&self, depstring: &str) -> AlpmResult<Option<&PackageRef>> {
+        let depstring_cstr = CString::new(depstring)?;
+        unsafe {
+            let db_list = alpm_get_syncdbs(self.handle);
+            let pkg_ptr = alpm_find_dbs_satisfier(self.handle, db_list, depstring_cstr.as_ptr());
+            if !pkg_ptr.is_null() {
+                Ok(Some(PackageRef::new(pkg_ptr)))
+            } else {
+                Ok(None)
+            }
         }
     }
 
     /// Register a sync db (remote db). You will need to attach servers to the db to be able to
     /// sync
-    pub fn register_sync_db<'a>(&'a self, treename: &str, level: SigLevel) -> AlpmResult<Db<'a>> {
+    pub fn register_sync_db<S>(&self, tree_name: S, level: &SigLevel) -> AlpmResult<Db>
+    where
+        S: AsRef<str>,
+    {
         unsafe {
-            let db = alpm_register_syncdb(self.handle,
-                                          (CString::new(treename)?).as_ptr(),
-                                          level.into());
+            let tree_name = CString::new(tree_name.as_ref())?;
+            let db = alpm_register_syncdb(
+                self.handle,
+                tree_name.as_ptr(),
+                u32::from(level) as i32,
+            );
             if db.is_null() {
                 Err(self.error().unwrap_or(Error::__Unknown))
             } else {
@@ -632,10 +676,11 @@ impl Alpm {
     /// Start a package modification transaction
     ///
     /// This locks the database (creates the lockfile).
-    pub fn init_transaction<'a>(&'a self, flags: TransactionFlags)
-        -> AlpmResult<Transaction<'a, Initialized>>
-    {
-        let res = unsafe { alpm_trans_init(self.handle, flags.into()) };
+    pub fn init_transaction(
+        &self,
+        flags: TransactionFlags,
+    ) -> AlpmResult<Transaction<Initialized>> {
+        let res = unsafe { alpm_trans_init(self.handle, u32::from(flags) as i32) };
         if res == 0 {
             Ok(Transaction {
                 alpm: self,
@@ -649,16 +694,22 @@ impl Alpm {
     }
 
     /// Creates a package from a file
-    pub fn load_package<'a>(&'a self, filename: &str, full: bool, level: SigLevel)
-        -> AlpmResult<Package<'a>>
-    {
+    pub fn load_package<'a>(
+        &'a self,
+        filename: &str,
+        full: bool,
+        level: SigLevel,
+    ) -> AlpmResult<Package<'a>> {
         unsafe {
-            let pkg: *mut Struct_alpm_pkg = ptr::null_mut();
-            let res = alpm_pkg_load(self.handle,
-                                    CString::new(filename).unwrap().as_ptr(),
-                                    if full { 1 } else { 0 },
-                                    level.into(),
-                                    &pkg as *const *mut Struct_alpm_pkg);
+            let mut pkg: *mut alpm_pkg_t = ptr::null_mut();
+            let filename = CString::new(filename).unwrap();
+            let res = alpm_pkg_load(
+                self.handle,
+                filename.as_ptr(),
+                if full { 1 } else { 0 },
+                u32::from(level) as i32,
+                &mut pkg as *mut *mut alpm_pkg_t,
+            );
             if res == 0 {
                 Ok(Package::new(pkg))
             } else {
@@ -666,13 +717,14 @@ impl Alpm {
             }
         }
     }
-
 }
 
 impl Drop for Alpm {
     // deletes the lockfile, amongst other things.
     fn drop(&mut self) {
-        unsafe { alpm_release(self.handle); }
+        unsafe {
+            alpm_release(self.handle);
+        }
     }
 }
 
@@ -680,7 +732,8 @@ impl Drop for Alpm {
 pub fn version() -> &'static str {
     unsafe {
         let v = CStr::from_ptr(alpm_version());
-        v.to_str().ok().expect("For some reason the libalpm version is not utf8")
+        v.to_str()
+            .expect("For some reason the libalpm version is not utf8")
     }
 }
 

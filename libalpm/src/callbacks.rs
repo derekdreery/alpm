@@ -11,7 +11,7 @@ use event::Event;
 /// Function with C calling convention and required type signature to wrap our callback
 pub unsafe extern "C" fn alpm_cb_log(level: alpm_loglevel_t,
                                  fmt: *const c_char,
-                                 args: *const Struct_va_list) {
+                                 args: *const va_list) {
     let out = printf(fmt, args as *mut c_void);
     panic::catch_unwind(|| {
         let mut cb = LOG_CB.lock().unwrap();
@@ -82,7 +82,7 @@ pub unsafe extern "C" fn alpm_cb_fetch(url: *const c_char,
 }
 
 /** Event callback */
-pub unsafe extern "C" fn alpm_cb_event(evt: *const alpm_event_t) {
+pub unsafe extern "C" fn alpm_cb_event(evt: *mut alpm_event_t) {
     let evt = Event::new(evt);
     panic::catch_unwind(|| {
         let mut cb = EVENT_CB.lock().unwrap();

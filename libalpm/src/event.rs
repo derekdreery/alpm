@@ -1,8 +1,8 @@
-//! Utility types/fn for alpm_event_t
+//! Utility types/fn for `alpm_event_t`
 
 use alpm_sys::*;
 
-use package::{Package, PackageOperation};
+use package::PackageOperation;
 
 /// An event emitted from libalpm
 pub enum Event<'a> {
@@ -94,11 +94,12 @@ pub enum Event<'a> {
     HookRunStart,
     /// A hook has finished running
     HookRunDone,
-    __Unknown
+    // __Unknown
 }
 
 impl<'a> Event<'a> {
     pub(crate) unsafe fn new(e: *const alpm_event_t) -> Event<'static> {
+        use alpm_event_type_t::*;
         match (*e).type_ {
             ALPM_EVENT_CHECKDEPS_START => Event::CheckDepsStart,
             ALPM_EVENT_CHECKDEPS_DONE => Event::CheckDepsDone,
@@ -146,7 +147,7 @@ impl<'a> Event<'a> {
             ALPM_EVENT_HOOK_DONE => Event::HookDone,
             ALPM_EVENT_HOOK_RUN_START => Event::HookRunStart,
             ALPM_EVENT_HOOK_RUN_DONE => Event::HookRunDone,
-            _ => Event::__Unknown
+            // _ => Event::__Unknown
         }
     }
 }

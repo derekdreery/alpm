@@ -4,12 +4,11 @@ use libc::{self, c_char, c_ulong};
 use chrono::{NaiveDateTime, NaiveDate};
 
 use util;
-use {Alpm, SigLevel, AlpmResult, Error, Db};
+use {Alpm, Db};
 
 use std::ops::Deref;
 use std::ffi::{CStr, CString};
 use std::cmp;
-use std::ptr;
 use std::mem;
 use std::fmt;
 use std::marker::PhantomData;
@@ -17,15 +16,15 @@ use std::marker::PhantomData;
 // https://github.com/jeremyletang/rust-sfml/blob/csfml-2.4/src/graphics/texture.rs#L44-L60 for
 // pattern
 
-/// An owning version of PackageRef
+/// An owning version of `PackageRef`
 pub struct Package<'a> {
-    inner: *const Struct_alpm_pkg,
+    inner: *mut alpm_pkg_t,
     /// This makes sure we can't outlive the Alpm instance.
     _lifetime: PhantomData<&'a u8> // u8 is arbitary here
 }
 
 impl<'b> Package<'b> {
-    pub(crate) fn new<'a>(raw: *const Struct_alpm_pkg) -> Package<'a> {
+    pub(crate) fn new<'a>(raw: *mut alpm_pkg_t) -> Package<'a> {
         Package {
             inner: raw,
             // Is this safe? What are the single-threaded issues. What are the multi-threaded
@@ -37,7 +36,7 @@ impl<'b> Package<'b> {
     /// Unwraps the raw pointer without running destructor. Private
     ///
     /// This is used to move ownership into the C library
-    pub(crate) unsafe fn forget(self) -> *const Struct_alpm_pkg {
+    pub(crate) unsafe fn forget(self) -> *const alpm_pkg_t {
         let raw = self.inner;
         mem::forget(self);
         raw
@@ -70,7 +69,7 @@ impl fmt::Debug for PackageRef {
 impl PackageRef {
 
     /// Use this to turn a raw ptr into a reference. Private
-    pub(crate) unsafe fn new<'b>(p: *const Struct_alpm_pkg) -> &'b PackageRef {
+    pub(crate) unsafe fn new<'b>(p: *const alpm_pkg_t) -> &'b PackageRef {
         &*(p as *const PackageRef as *mut PackageRef)
     }
 
@@ -145,7 +144,7 @@ impl PackageRef {
     }
 
     /// Gets the package version.
-    pub fn version<'a>(&'a self) -> PackageVersion<'a> {
+    pub fn version(&self) -> PackageVersion {
         unsafe {
             let v = alpm_pkg_get_version(self as *const _ as _);
             PackageVersion::new(v)
@@ -154,7 +153,7 @@ impl PackageRef {
 
     /// Gets the origin of the package.
     pub fn origin(&self) -> PackageFrom {
-        unsafe { alpm_pkg_get_origin(self as *const _ as _).into() }
+        unsafe { (alpm_pkg_get_origin(self as *const _ as _) as u32).into() }
     }
 
     /// Gets the package description.
@@ -273,7 +272,7 @@ impl PackageRef {
     }
 
     /// Gets the packages this package depends on.
-    pub fn depends<'a>(&'a self) -> Vec<Dependency<'a>> {
+    pub fn depends(&self) -> Vec<Dependency> {
         unsafe {
             let deps = alpm_pkg_get_depends(self as *const _ as _);
             util::alpm_list_to_vec(deps, |dep| {
@@ -283,7 +282,7 @@ impl PackageRef {
     }
 
     /// Gets the packages this package optionally depends on.
-    pub fn optionally_depends<'a>(&'a self) -> Vec<Dependency<'a>> {
+    pub fn optionally_depends(&self) -> Vec<Dependency> {
         unsafe {
             let deps = alpm_pkg_get_optdepends(self as *const _ as _);
             util::alpm_list_to_vec(deps, |dep| {
@@ -315,7 +314,7 @@ impl PackageRef {
     */
 
     /// Gets the packages this package conflicts with.
-    pub fn conflicts<'a>(&'a self) -> Vec<Dependency<'a>> {
+    pub fn conflicts(&self) -> Vec<Dependency> {
         unsafe {
             let deps = alpm_pkg_get_conflicts(self as *const _ as _);
             util::alpm_list_to_vec(deps, |dep| {
@@ -325,7 +324,7 @@ impl PackageRef {
     }
 
     /// Gets the packages provided by this package.
-    pub fn provides<'a>(&'a self) -> Vec<Dependency<'a>> {
+    pub fn provides(&self) -> Vec<Dependency> {
         unsafe {
             let deps = alpm_pkg_get_provides(self as *const _ as _);
             util::alpm_list_to_vec(deps, |dep| {
@@ -345,7 +344,7 @@ impl PackageRef {
     }
 
     /// Gets a list of packages to be replaced by this package.
-    pub fn replaces<'a>(&'a self) -> Vec<Dependency<'a>> {
+    pub fn replaces(&self) -> Vec<Dependency> {
         unsafe {
             let deps = alpm_pkg_get_replaces(self as *const _ as _);
             util::alpm_list_to_vec(deps, |dep| {
@@ -355,12 +354,12 @@ impl PackageRef {
     }
 
     /// Gets a list of files installed by this package.
-    pub fn files<'a>(&'a self) -> FileList<'a> {
+    pub fn files(&self) -> FileList {
         unsafe { FileList::from_raw(alpm_pkg_get_files(self as *const _ as _)) }
     }
 
     /// Gets a list of files backed up when installing this package.
-    pub fn backup<'a>(&self) -> Vec<Backup<'a>> {
+    pub fn backup(&self) -> Vec<Backup> {
         unsafe {
             let backups = alpm_pkg_get_backup(self as *const _ as _);
             util::alpm_list_to_vec(backups, |bkup| Backup {
@@ -391,7 +390,7 @@ impl PackageRef {
 
     /// Gets the method used to validate a package during install
     pub fn validation(&self) -> Validation {
-        unsafe { alpm_pkg_get_validation(self as *const _ as _).into() }
+        unsafe { (alpm_pkg_get_validation(self as *const _ as _) as u32).into() }
     }
 
     /// Opens the changelog for reading
@@ -443,7 +442,7 @@ impl PackageRef {
     /// Returns the first newer version found
     pub fn sync_new_version<'a>(&self, dbs: Vec<Db<'a>>) -> Option<&'a PackageRef> {
         unsafe {
-            let dbs = util::vec_to_alpm_list(dbs, |db| db.inner as *const libc::c_void);
+            let dbs = util::vec_to_alpm_list(dbs, |db| db.inner as *mut libc::c_void);
             let new_pkg_ptr = alpm_sync_newversion(self as *const _ as _, dbs);
             if new_pkg_ptr.is_null() {
                 None
@@ -483,6 +482,7 @@ pub enum PackageOperation<'a> {
 
 impl<'a> PackageOperation<'a> {
     pub(crate) unsafe fn new<'b>(op: &alpm_event_package_operation_t) -> PackageOperation<'b> {
+        use alpm_package_operation_t::*;
         match op.operation {
             ALPM_PACKAGE_INSTALL => PackageOperation::Install {
                 new_pkg: PackageRef::new(op.newpkg),
@@ -502,7 +502,7 @@ impl<'a> PackageOperation<'a> {
             ALPM_PACKAGE_REMOVE => PackageOperation::Remove {
                 old_pkg: PackageRef::new(op.oldpkg),
             },
-            _ => panic!("Unrecognised package operation"),
+            // _ => panic!("Unrecognised package operation"),
         }
     }
 }
@@ -520,14 +520,14 @@ impl<'a> fmt::Debug for Group<'a> {
 }
 
 impl<'a> Group<'a> {
-    pub(crate) unsafe fn new<'b>(name: *const c_char, packages: *const alpm_list_t) -> Group<'b> {
+    pub(crate) unsafe fn new<'b>(name: *const c_char, packages: *mut alpm_list_t) -> Group<'b> {
         let name = CStr::from_ptr(name).to_str().unwrap(); //probably should't fail
         let packages = util::alpm_list_to_vec(packages, |pkg_ptr| {
             &*(pkg_ptr as *const PackageRef)
         });
         Group {
-            name: name,
-            packages: packages,
+            name,
+            packages,
         }
     }
 }
@@ -583,20 +583,18 @@ impl<'a> cmp::PartialOrd for PackageVersion<'a> {
 #[test]
 fn test_cmp_pkg_version() {
     use std::ffi::CString;
-    unsafe {
-        let less = CString::new("1.0").unwrap();
-        let greater = CString::new("1.1").unwrap();
-        let less_v = PackageVersion::new(less.as_ptr());
-        let greater_v = PackageVersion::new(greater.as_ptr());
-        assert!(less_v < greater_v);
-        assert!(!(less_v >= greater_v));
-        assert!(greater_v > less_v);
-        assert!(!(greater_v <= less_v));
-        assert!(greater_v <= greater_v);
-        assert!(!(greater_v > greater_v));
-        assert!(greater_v >= greater_v);
-        assert!(!(greater_v < greater_v));
-    }
+    let less = CString::new("1.0").unwrap();
+    let greater = CString::new("1.1").unwrap();
+    let less_v = PackageVersion::new(less.as_ptr());
+    let greater_v = PackageVersion::new(greater.as_ptr());
+    assert!(less_v < greater_v);
+    assert!(!(less_v >= greater_v));
+    assert!(greater_v > less_v);
+    assert!(!(greater_v <= less_v));
+    assert!(greater_v <= greater_v);
+    assert!(!(greater_v > greater_v));
+    assert!(greater_v >= greater_v);
+    assert!(!(greater_v < greater_v));
 }
 
 /// Where a package came from
@@ -609,20 +607,22 @@ pub enum PackageFrom {
 
 impl Into<u32> for PackageFrom {
     fn into(self) -> u32 {
+        use alpm_sys::alpm_pkgfrom_t::*;
         match self {
-            PackageFrom::File => ALPM_PKG_FROM_FILE,
-            PackageFrom::LocalDb => ALPM_PKG_FROM_LOCALDB,
-            PackageFrom::SyncDb => ALPM_PKG_FROM_SYNCDB,
+            PackageFrom::File => ALPM_PKG_FROM_FILE as u32,
+            PackageFrom::LocalDb => ALPM_PKG_FROM_LOCALDB as u32,
+            PackageFrom::SyncDb => ALPM_PKG_FROM_SYNCDB as u32,
         }
     }
 }
 
 impl From<u32> for PackageFrom {
     fn from(f: u32) -> Self {
+        use alpm_pkgfrom_t::*;
         match f {
-            ALPM_PKG_FROM_FILE => PackageFrom::File,
-            ALPM_PKG_FROM_LOCALDB => PackageFrom::LocalDb,
-            ALPM_PKG_FROM_SYNCDB => PackageFrom::SyncDb,
+            f if f == ALPM_PKG_FROM_FILE as u32 => PackageFrom::File,
+            f if f == ALPM_PKG_FROM_LOCALDB as u32 => PackageFrom::LocalDb,
+            f if f == ALPM_PKG_FROM_SYNCDB as u32 => PackageFrom::SyncDb,
             _ => unreachable!()
         }
     }
@@ -640,19 +640,43 @@ pub enum Reason {
 
 impl Into<u32> for Reason {
     fn into(self) -> u32 {
+        use alpm_sys::alpm_pkgreason_t::*;
         match self {
-            Reason::Explicit => ALPM_PKG_REASON_EXPLICIT,
-            Reason::Depend => ALPM_PKG_REASON_DEPEND,
+            Reason::Explicit => ALPM_PKG_REASON_EXPLICIT as u32,
+            Reason::Depend => ALPM_PKG_REASON_DEPEND as u32,
         }
     }
 }
 
 impl From<u32> for Reason {
     fn from(f: u32) -> Self {
+        use alpm_sys::alpm_pkgreason_t::*;
+        if f == ALPM_PKG_REASON_EXPLICIT as u32 {
+            Reason::Explicit
+        } else if f == ALPM_PKG_REASON_DEPEND as u32 {
+            Reason::Depend
+        } else {
+            unreachable!()
+        }
+    }
+}
+
+impl From<Reason> for alpm_pkgreason_t {
+    fn from(from: Reason) -> Self {
+        use alpm_sys::alpm_pkgreason_t::*;
+        match from {
+            Reason::Explicit => ALPM_PKG_REASON_EXPLICIT,
+            Reason::Depend => ALPM_PKG_REASON_DEPEND,
+        }
+    }
+}
+
+impl From<alpm_pkgreason_t> for Reason {
+    fn from(f: alpm_pkgreason_t) -> Self {
+        use alpm_pkgreason_t::*;
         match f {
             ALPM_PKG_REASON_EXPLICIT => Reason::Explicit,
-            ALPM_PKG_REASON_DEPEND  => Reason::Depend,
-            _ => unreachable!()
+            ALPM_PKG_REASON_DEPEND => Reason::Depend,
         }
     }
 }
@@ -716,21 +740,22 @@ impl Validation {
     }
 }
 
-impl Into<u32> for Validation {
-    fn into(self) -> u32 {
-        match self {
-            Validation::Unknown => ALPM_PKG_VALIDATION_UNKNOWN,
-            Validation::None => ALPM_PKG_VALIDATION_NONE,
+impl From<Validation> for u32 {
+    fn from(from: Validation) -> Self {
+        use alpm_sys::alpm_pkgvalidation_t::*;
+        match from {
+            Validation::Unknown => ALPM_PKG_VALIDATION_UNKNOWN as u32,
+            Validation::None => ALPM_PKG_VALIDATION_NONE as u32,
             Validation::Some(methods) => {
                 let mut acc = 0;
                 if methods.md5sum {
-                    acc |= ALPM_PKG_VALIDATION_MD5SUM;
+                    acc |= ALPM_PKG_VALIDATION_MD5SUM as u32;
                 };
                 if methods.sha256sum {
-                    acc |= ALPM_PKG_VALIDATION_SHA256SUM;
+                    acc |= ALPM_PKG_VALIDATION_SHA256SUM as u32;
                 };
                 if methods.signature {
-                    acc |= ALPM_PKG_VALIDATION_SIGNATURE;
+                    acc |= ALPM_PKG_VALIDATION_SIGNATURE as u32;
                 };
                 acc
             }
@@ -740,14 +765,17 @@ impl Into<u32> for Validation {
 
 impl From<u32> for Validation {
     fn from(from: u32) -> Validation {
-        match from {
-            ALPM_PKG_VALIDATION_UNKNWON => Validation::Unknown,
-            ALPM_PKG_VALIDATION_NONE => Validation::None,
-            other => Validation::Some(ValidationMethod {
-                md5sum: from & ALPM_PKG_VALIDATION_MD5SUM != 0,
-                sha256sum: from & ALPM_PKG_VALIDATION_SHA256SUM != 0,
-                signature: from & ALPM_PKG_VALIDATION_SIGNATURE != 0,
-            }),
+        use alpm_pkgvalidation_t::*;
+        if from == ALPM_PKG_VALIDATION_UNKNOWN as u32 {
+            Validation::Unknown
+        } else if from == ALPM_PKG_VALIDATION_NONE as u32 {
+            Validation::None
+        } else {
+            Validation::Some(ValidationMethod {
+                md5sum: from & ALPM_PKG_VALIDATION_MD5SUM as u32 != 0,
+                sha256sum: from & ALPM_PKG_VALIDATION_SHA256SUM as u32 != 0,
+                signature: from & ALPM_PKG_VALIDATION_SIGNATURE as u32 != 0,
+            })
         }
     }
 }
@@ -774,7 +802,7 @@ impl<'a> Dependency<'a> {
             version: PackageVersion::new((*raw).version),
             description: (*raw).desc,
             name_hash: (*raw).name_hash,
-            version_constraint_type: (*raw).mod_.into()
+            version_constraint_type: ((*raw).mod_ as u32).into()
         }
     }
 
@@ -817,13 +845,14 @@ pub enum VersionConstraintType {
 
 impl From<u32> for VersionConstraintType {
     fn from(f: u32) -> VersionConstraintType {
+        use alpm_depmod_t::*;
         match f {
-            ALPM_DEP_MOD_ANY => VersionConstraintType::Any,
-            ALPM_DEP_MOD_EQ => VersionConstraintType::Equal,
-            ALPM_DEP_MOD_GE => VersionConstraintType::GreaterOrEqual,
-            ALPM_DEP_MOD_LE => VersionConstraintType::LessOrEqual,
-            ALPM_DEP_MOD_GT => VersionConstraintType::Greater,
-            ALPM_DEP_MOD_LT => VersionConstraintType::Less,
+            f if f == ALPM_DEP_MOD_ANY as u32 => VersionConstraintType::Any,
+            f if f == ALPM_DEP_MOD_EQ as u32 => VersionConstraintType::Equal,
+            f if f == ALPM_DEP_MOD_GE as u32 => VersionConstraintType::GreaterOrEqual,
+            f if f == ALPM_DEP_MOD_LE as u32 => VersionConstraintType::LessOrEqual,
+            f if f == ALPM_DEP_MOD_GT as u32 => VersionConstraintType::Greater,
+            f if f == ALPM_DEP_MOD_LT as u32 => VersionConstraintType::Less,
             _ => unreachable!()
         }
     }
@@ -834,15 +863,15 @@ impl From<u32> for VersionConstraintType {
 pub struct FileList<'a> {
     /// Thie files this filelist contains
     pub list: Vec<File<'a>>,
-    inner: *const alpm_filelist_t,
+    inner: *mut alpm_filelist_t,
 }
 
 impl<'a> FileList<'a> {
-    pub(crate) unsafe fn from_raw<'b>(raw: *const alpm_filelist_t) -> FileList<'b> {
+    pub(crate) unsafe fn from_raw<'b>(raw: *mut alpm_filelist_t) -> FileList<'b> {
         let count = (*raw).count;
         let mut file_ptr = (*raw).files;
         let mut files: Vec<File<'b>> = Vec::new();
-        for i in 0..count {
+        for _ in 0..count {
             files.push(File::new(file_ptr));
             file_ptr = file_ptr.offset(1);
         }

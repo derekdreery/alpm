@@ -1,8 +1,8 @@
-extern crate libalpm_utils;
 extern crate libalpm;
+extern crate libalpm_utils;
 
 use libalpm_utils::ini::parse_ini;
-use libalpm::{Alpm};
+use libalpm::Alpm;
 
 fn main() {
     // Load config

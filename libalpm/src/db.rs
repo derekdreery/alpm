@@ -4,52 +4,25 @@ use std::mem;
 
 use alpm_sys::*;
 use pgp::SigLevel;
-use libc::{self, c_char};
+use libc::{c_char};
 
 use {Alpm, AlpmResult, Error, PackageRef, Group};
 use util::{self, alpm_list_to_vec, vec_to_alpm_list, str_to_unowned_char_array,
-    cstring_to_owned_char_array};
+           cstring_to_owned_char_array};
 
 /// A database of packages. This is only ever available as a reference
 #[derive(Debug)]
 pub struct Db<'a> {
-    pub(crate) inner: *const Struct_alpm_db,
+    pub(crate) inner: *mut alpm_db_t,
     // we need this handle so we can get error codes
     handle: &'a Alpm,
 }
 
-/* we don't run db_unregister, as alpm_cleanup will handle this
-impl<'a> Drop for Db<'a> {
-    fn drop(&mut self) {
-        unsafe { alpm_db_unregister(self.inner); }
-    }
-}
-*/
-
 impl<'a> Db<'a> {
 
-    pub(crate) fn new(inner: *const Struct_alpm_db, handle: &'a Alpm) -> Db<'a> {
-        Db {
-            inner: inner,
-            handle: handle,
-        }
+    pub(crate) fn new(inner: *mut alpm_db_t, handle: &'a Alpm) -> Db<'a> {
+        Db { inner, handle }
     }
-
-    /* permanently removed, on advice of @guinux, alpm_db_unregister doesn't work well
-    /// Consumes the Db, unregistering it from the alpm instance
-    ///
-    /// # Safety
-    /// There must be no other references to this database stored.
-    pub unsafe fn unregister(self) -> AlpmResult<()> {
-        unsafe {
-            if alpm_db_unregister(self.inner) == 0 {
-                Ok(())
-            } else {
-                Err(self.handle.error().unwrap_or(Error::__Unknown))
-            }
-        }
-    }
-    */
 
     /// Gets the name of the database.
     pub fn name(&self) -> Result<&'a str, Utf8Error> {
@@ -60,7 +33,7 @@ impl<'a> Db<'a> {
 
     /// Gets the signature checking level of the database.
     pub fn siglevel(&self) -> SigLevel {
-        unsafe { alpm_db_get_siglevel(self.inner).into() }
+        unsafe { (alpm_db_get_siglevel(self.inner) as u32).into() }
     }
 
     /// Checks the database is valid. If not, an error
@@ -87,7 +60,7 @@ impl<'a> Db<'a> {
         where R: AsRef<str>
     {
         unsafe {
-            let list = vec_to_alpm_list(servers, |s| unsafe {
+            let list = vec_to_alpm_list(servers, |s| {
                 str_to_unowned_char_array(&s.as_ref())
             });
             let res = alpm_db_set_servers(self.inner, list);
@@ -127,13 +100,11 @@ impl<'a> Db<'a> {
         let force = if force { 1 } else { 0 };
         if unsafe { alpm_db_update(force, self.inner) } == 0 {
             Ok(())
+        } else if let Some(err) = self.handle.error() {
+            Err(err)
         } else {
-            if let Some(err) = self.handle.error() {
-                Err(err)
-            } else {
-                // Update not needed (and force == false)
-                Ok(())
-            }
+            // Update not needed (and force == false)
+            Ok(())
         }
     }
 
@@ -156,6 +127,20 @@ impl<'a> Db<'a> {
             alpm_list_to_vec(cache_ptr, |pkg_ptr| {
                 &*(pkg_ptr as *const PackageRef)
             })
+        }
+    }
+
+    /// Gets a package that satisfies the given depstring
+    pub fn find_satisfier(&self, depstring: &str) -> AlpmResult<Option<&PackageRef>> {
+        let depstring_cstr = CString::new(depstring)?;
+        unsafe {
+            let cache_ptr = alpm_db_get_pkgcache(self.inner);
+            let pkg_ptr = alpm_find_satisfier(cache_ptr, depstring_cstr.as_ptr());
+            if !pkg_ptr.is_null() {
+                Ok(Some(PackageRef::new(pkg_ptr)))
+            } else {
+                Ok(None)
+            }
         }
     }
 
@@ -202,13 +187,13 @@ impl<'a> Db<'a> {
     ///
     /// This function has a memory leak, but I'm 99% sure it's internal to libalpm. Needs more
     /// testing.
-    pub fn search(&self, needles: Vec<&str>) -> AlpmResult<Vec<&PackageRef>> {
+    pub fn search(&self, needles: &[&str]) -> AlpmResult<Vec<&PackageRef>> {
         let needles_outer: Vec<CString> = needles.iter()
             .map(|s| CString::new(*s).unwrap())
             .collect();
         println!("{:?}", needles_outer);
         unsafe {
-            let needles = util::vec_as_alpm_list(&needles_outer, cstring_to_owned_char_array);
+            let needles = util::slice_as_alpm_list(&needles_outer, cstring_to_owned_char_array);
             let pkgs = alpm_db_search(self.inner, needles);
             alpm_list_free(needles);
             if ! pkgs.is_null() {
@@ -223,7 +208,7 @@ impl<'a> Db<'a> {
 
     /// Sets what this database is to be used for.
     pub fn set_usage(&self, usage: Usage) -> AlpmResult<()> {
-        if unsafe { alpm_db_set_usage(self.inner, usage.into()) } == 0 {
+        if unsafe { alpm_db_set_usage(self.inner, u32::from(usage) as i32) } == 0 {
             Ok(())
         } else {
             Err(self.handle.error().unwrap_or(Error::__Unknown))
@@ -233,9 +218,9 @@ impl<'a> Db<'a> {
     /// Gets what this database is to be used for.
     pub fn usage(&self) -> AlpmResult<Usage> {
         unsafe {
-            let usage: u32 = mem::zeroed();
-            if alpm_db_get_usage(self.inner, &usage) == 0 {
-                Ok(usage.into())
+            let mut usage: i32 = mem::zeroed();
+            if alpm_db_get_usage(self.inner, &mut usage) == 0 {
+                Ok((usage as u32).into())
             } else {
                 Err(self.handle.error().unwrap_or(Error::__Unknown))
             }
@@ -253,15 +238,15 @@ pub struct Usage {
 }
 
 impl Usage {
-    #[inline(always)]
+    #[inline]
     pub fn sync() -> Usage { Usage { sync: true, ..Default::default() } }
-    #[inline(always)]
+    #[inline]
     pub fn search() -> Usage { Usage { search: true, ..Default::default() } }
-    #[inline(always)]
+    #[inline]
     pub fn install() -> Usage { Usage { install: true, ..Default::default() } }
-    #[inline(always)]
+    #[inline]
     pub fn upgrade() -> Usage { Usage { upgrade: true, ..Default::default() } }
-    #[inline(always)]
+    #[inline]
     pub fn all() -> Usage {
         Usage {
             sync: true,
@@ -283,20 +268,21 @@ impl Default for Usage {
     }
 }
 
-impl Into<u32> for Usage {
-    fn into(self) -> u32 {
+impl From<Usage> for u32 {
+    fn from(from: Usage) -> Self {
+        use alpm_sys::alpm_db_usage_t::*;
         let mut acc = 0;
-        if self.sync {
-            acc |= ALPM_DB_USAGE_SYNC;
+        if from.sync {
+            acc |= ALPM_DB_USAGE_SYNC as u32;
         };
-        if self.search {
-            acc |= ALPM_DB_USAGE_SEARCH;
+        if from.search {
+            acc |= ALPM_DB_USAGE_SEARCH as u32;
         };
-        if self.install {
-            acc |= ALPM_DB_USAGE_INSTALL;
+        if from.install {
+            acc |= ALPM_DB_USAGE_INSTALL as u32;
         };
-        if self.upgrade {
-            acc |= ALPM_DB_USAGE_UPGRADE;
+        if from.upgrade {
+            acc |= ALPM_DB_USAGE_UPGRADE as u32;
         };
         acc
     }
@@ -304,11 +290,12 @@ impl Into<u32> for Usage {
 
 impl From<u32> for Usage {
     fn from(from: u32) -> Self {
+        use alpm_sys::alpm_db_usage_t::*;
         Usage {
-            sync: from & ALPM_DB_USAGE_SYNC != 0,
-            search: from & ALPM_DB_USAGE_SEARCH != 0,
-            install: from & ALPM_DB_USAGE_INSTALL != 0,
-            upgrade: from & ALPM_DB_USAGE_UPGRADE != 0,
+            sync: from & ALPM_DB_USAGE_SYNC as u32 != 0,
+            search: from & ALPM_DB_USAGE_SEARCH as u32 != 0,
+            install: from & ALPM_DB_USAGE_INSTALL as u32 != 0,
+            upgrade: from & ALPM_DB_USAGE_UPGRADE as u32 != 0,
         }
     }
 }
