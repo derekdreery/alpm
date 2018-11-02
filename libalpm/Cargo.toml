@@ -1,7 +1,10 @@
 [package]
 name = "libalpm"
 version = "0.1.3"
-authors = ["Richard Dodd <richard.o.dodd@gmail.com>"]
+authors = [
+    "Richard Dodd <richard.o.dodd@gmail.com>",
+    "James Zhu <jameszhu@berkeley.edu>",
+]
 license = "MIT/Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/derekdreery/alpm"
