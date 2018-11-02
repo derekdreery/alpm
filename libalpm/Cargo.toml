@@ -1,6 +1,6 @@
 [package]
 name = "libalpm"
-version = "0.1.3"
+version = "0.2.0"
 authors = [
     "Richard Dodd <richard.o.dodd@gmail.com>",
     "James Zhu <jameszhu@berkeley.edu>",
@@ -15,12 +15,13 @@ An aspirationally safe wrapper around libalpm (the Arch Linux Package Manager).
 """
 
 [dependencies]
-alpm-sys = "0.2"
 printf = "0.1"
 libc = "0.2"
 url = "1.4"
 lazy_static = "0.2"
 chrono = "0.3"
+alpm-sys = { path = "../alpm-sys" }
+#alpm-sys = "0.2.0"
 
 [dev-dependencies]
 term = "0.4"
