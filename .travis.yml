@@ -13,7 +13,7 @@ script:
   - cargo build
   - cargo doc --no-deps
   - if [ "$TRAVIS_RUST_VERSION" == "nightly" ]; then
-    docker run --rm -it archlinux/base sh -c "pacman -Syu --noconfirm >/dev/null 2>/dev/null && pacman -S --noconfirm git cargo libarchive && mkdir build && cd build && git clone --branch '$TRAVIS_BRANCH' https://github.com/derekdreery/alpm-sys.git && cd alpm-sys && cargo test" ;
+    docker run --rm -it archlinux/base sh -c "pacman -Syu --noconfirm >/dev/null 2>/dev/null && pacman -S --noconfirm git cargo libarchive gcc && mkdir build && cd build && git clone --branch '$TRAVIS_BRANCH' https://github.com/derekdreery/alpm-sys.git && cd alpm-sys && cargo test" ;
     fi
 notifications:
   on_success: change
